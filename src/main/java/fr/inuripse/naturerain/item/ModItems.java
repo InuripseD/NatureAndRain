@@ -2,6 +2,8 @@ package fr.inuripse.naturerain.item;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
+import fr.inuripse.naturerain.item.tiers.ModTiers;
+import fr.inuripse.naturerain.item.toolandweapon.LeafyZirmsSword;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -35,6 +37,12 @@ public class ModItems {
 
     public static final RegistryObject<Item> SOFTENED_SLIMEBALL = ITEMS.register("softened_slimeball",
             () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
+
+
+    /*------------------- Tools and Weapons -----------------*/
+    public static final RegistryObject<Item> LEAFY_ZIRMS_SWORD = ITEMS.register("leafy_zirms_sword",
+            () -> new LeafyZirmsSword(ModTiers.LEAFY_ZIRMS, 2, -2.4F,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
 
     //Register items.
     public static void register(IEventBus eventBus){
