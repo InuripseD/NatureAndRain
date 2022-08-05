@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "naturerain:wet_branch"
+    },
+    {
+      "item": "naturerain:zirms"
+    }
+  ],
+  "result": {
+    "item": "naturerain:leafy_zirms"
+  }
+}

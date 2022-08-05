@@ -8,6 +8,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.OreBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -29,7 +30,10 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK)), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> ZIRMS_ORE = registerBlock("zirms_ore",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)), ModGroupTab.NATURERAIN_TAB);
+            () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> DEEPSLATE_ZIRMS_ORE = registerBlock("deepslate_zirms_ore",
+            () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_DIAMOND_ORE)), ModGroupTab.NATURERAIN_TAB);
 
     /*---------Register Block and linked Item---------*/
     private static <T extends Block> RegistryObject<T> registerBlock(

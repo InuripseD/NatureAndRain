@@ -1,4 +1,13 @@
 {
   "item.naturerain.zirms": "Zirms",
+  "item.naturerain.wet_branch": "Wet Branch",
+  "item.naturerain.leafy_zirms": "Leafy Zirms",
+  "item.naturerain.leaf": "Leaf",
+  "item.naturerain.wet_leaf": "Wet Leaf",
+  "item.naturerain.softened_honeycomb": "Softened Honeycomb",
+  "item.naturerain.softened_slimeball": "Softened Slimeball",
+  "block.naturerain.zirms_block": "Zirms Block",
+  "block.naturerain.deepslate_zirms_ore": "Deepslate Zirms Ore",
+  "block.naturerain.zirms_ore": "Zirms Ore",
   "itemGroup.naturerain_tab": "Nature and Rain"
 }

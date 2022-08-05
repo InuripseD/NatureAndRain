@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "naturerain:deepslate_zirms_ore"
+  },
+  "result": "naturerain:zirms",
+  "experience": 1.0,
+  "cookingtime": 100
+}
