@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "naturerain:zirms_block"
+    }
+  ],
+  "result": {
+    "item": "naturerain:zirms",
+    "count": 9
+  }
+}

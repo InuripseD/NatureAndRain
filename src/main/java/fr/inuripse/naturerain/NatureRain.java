@@ -1,6 +1,7 @@
 package fr.inuripse.naturerain;
 
 import com.mojang.logging.LogUtils;
+import fr.inuripse.naturerain.block.ModBlocks;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -33,6 +34,7 @@ public class NatureRain
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(eventBus);
+        ModBlocks.register(eventBus);
 
         eventBus.addListener(this::setup);
 
