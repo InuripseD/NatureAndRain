@@ -1,6 +1,7 @@
 package fr.inuripse.naturerain.item;
 
 import fr.inuripse.naturerain.NatureRain;
+import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,7 +16,7 @@ public class ModItems {
 
     /*------------------- Simple Items ----------------*/
     public static final RegistryObject<Item> ZIRMS = ITEMS.register("zirms",
-            () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS)));
+            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
