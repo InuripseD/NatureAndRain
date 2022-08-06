@@ -69,7 +69,6 @@ public class LeafyZirmsSword extends SwordItem {
             for (Entity entity : entitiesAround) {
                 if (entity instanceof LivingEntity) {
                     entity.hurt(DamageSource.playerAttack(pPlayer), POWER_DAMAGE);
-                    addPowerParticles(pLevel, entity);
                     atLeastOneLivingEntityAround = true;
                 }
             }
@@ -79,24 +78,12 @@ public class LeafyZirmsSword extends SwordItem {
                 double j = pPlayer.getY();
                 double k = pPlayer.getZ();
                 pLevel.playSound(null,pPlayer,SoundEvents.AMBIENT_UNDERWATER_EXIT, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
-                ((ServerLevel)pLevel).sendParticles((ServerPlayer) pPlayer,ParticleTypes.DRIPPING_WATER, true, i,j,k, 60, 0.1d,0.1d,0.1d,3);
-                addPowerParticles(pLevel,pPlayer);
+                ((ServerLevel)pLevel).sendParticles((ServerPlayer) pPlayer,ParticleTypes.DRIPPING_WATER, true, i,j,k, 63, 3.0D,3.0D,3.0D,1);
+                ((ServerLevel)pLevel).sendParticles((ServerPlayer) pPlayer,ParticleTypes.RAIN, true, i,j,k, 127, 3.0D,3.0D,3.0D,1);
             }
             return atLeastOneLivingEntityAround;
         }else{
             return false;
-        }
-    }
-
-    /*A methode to spawn Particles around hitted entities*/
-    private void addPowerParticles(Level pLevel, Entity entity) {
-        for(int i = 0; i < 20; ++i) {
-            double d0 = random.nextGaussian() * 0.02D;
-            double d1 = random.nextGaussian() * 0.02D;
-            double d2 = random.nextGaussian() * 0.02D;
-            //((ServerLevel)pLevel).sendParticles(entity)
-            pLevel.addParticle(ParticleTypes.RAIN, entity.getRandomX(1.0D), entity.getRandomY() + 1.0D, entity.getRandomZ(1.0D), d0, d1, d2);
-            pLevel.addParticle(ParticleTypes.DRIPPING_WATER, entity.getRandomX(1.0D), entity.getRandomY() + 1.0D, entity.getRandomZ(1.0D), d0, d1, d2);
         }
     }
 
