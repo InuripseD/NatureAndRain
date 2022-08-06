@@ -43,6 +43,9 @@ public class LeafyZirmsPickaxe extends PickaxeItem {
         return new InteractionResultHolder<>(tryPlace(blockPlaceContext), pPlayer.getItemInHand(pUsedHand));
     }
 
+    /*When right click, this methode is called to check if
+    * the pos the player clicked is a lava source or lava flow
+    * and then replace it by */
     private InteractionResult tryPlace(BlockPlaceContext pContext) {
 
         /*Can we replace the target block ?*/
@@ -93,7 +96,6 @@ public class LeafyZirmsPickaxe extends PickaxeItem {
 
                         /*Decrease durability and return.*/
                         if (!level.isClientSide) {
-                            //level.levelEvent(1505, blockpos, 0);
                             itemstack.hurtAndBreak(5, player, (player1) -> player1.broadcastBreakEvent(itemstack.getEquipmentSlot()));
                             player.getCooldowns().addCooldown(this, 20);
                         }
