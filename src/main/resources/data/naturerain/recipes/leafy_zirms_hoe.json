@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX",
+    " #",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "naturerain:leafy_zirms"
+    }
+  },
+  "result": {
+    "item": "naturerain:leafy_zirms_hoe"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "naturerain:item/wet_stuff_launcher"
+  }
+}

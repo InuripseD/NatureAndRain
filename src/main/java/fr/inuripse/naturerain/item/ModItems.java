@@ -3,7 +3,7 @@ package fr.inuripse.naturerain.item;
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import fr.inuripse.naturerain.item.tiers.ModTiers;
-import fr.inuripse.naturerain.item.toolandweapon.LeafyZirmsSword;
+import fr.inuripse.naturerain.item.toolandweapon.*;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -43,6 +43,27 @@ public class ModItems {
     public static final RegistryObject<Item> LEAFY_ZIRMS_SWORD = ITEMS.register("leafy_zirms_sword",
             () -> new LeafyZirmsSword(ModTiers.LEAFY_ZIRMS, 2, -2.4F,
                     new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> LEAFY_ZIRMS_PICKAXE = ITEMS.register("leafy_zirms_pickaxe",
+            () -> new LeafyZirmsPickaxe(ModTiers.LEAFY_ZIRMS, 0, -2.8f,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> LEAFY_ZIRMS_SHOVEL = ITEMS.register("leafy_zirms_shovel",
+            () -> new LeafyZirmsShovel(ModTiers.LEAFY_ZIRMS, 1.0f, -3.0f,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> LEAFY_ZIRMS_AXE = ITEMS.register("leafy_zirms_axe",
+            () -> new LeafyZirmsAxe(ModTiers.LEAFY_ZIRMS, 4, -3.0f,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> LEAFY_ZIRMS_HOE = ITEMS.register("leafy_zirms_hoe",
+            () -> new LeafyZirmsHoe(ModTiers.LEAFY_ZIRMS, -4, 0.0f,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> WET_STUFF_LAUNCHER = ITEMS.register("wet_stuff_launcher",
+            () -> new WetStuffLauncher(
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB).defaultDurability(834)));
+
 
     //Register items.
     public static void register(IEventBus eventBus){
