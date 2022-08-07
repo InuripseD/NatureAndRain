@@ -53,7 +53,7 @@ public class LeafyZirmsShovel extends ShovelItem {
         BlockHitResult blockhitresult = getPlayerPOVHitResult(pLevel, pPlayer, ClipContext.Fluid.SOURCE_ONLY);
         if(pPlayer!=null) {
 
-            /*if player sneak, we try to activate the power!*/
+            /*if player sneak, we try to activate the power! */
             if (pPlayer.isCrouching()) {
                 if (this.activePower(pPlayer, pLevel, pUsedHand, blockhitresult)) {
                     if (!pLevel.isClientSide()) {
