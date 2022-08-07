@@ -45,7 +45,7 @@ public class LeafyZirmsPickaxe extends PickaxeItem {
 
     /*When right click, this methode is called to check if
     * the pos the player clicked is a lava source or lava flow
-    * and then replace it by */
+    * and then replace it by obsi or stone if it's modifiable*/
     private InteractionResult tryPlace(BlockPlaceContext pContext) {
 
         /*Can we replace the target block ?*/
