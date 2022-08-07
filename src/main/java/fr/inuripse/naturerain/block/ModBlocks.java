@@ -1,20 +1,30 @@
 package fr.inuripse.naturerain.block;
 
+import ca.weblite.objc.Proxy;
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.item.ModItems;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.OreBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Random;
 import java.util.function.Supplier;
 
 public class ModBlocks {
@@ -35,6 +45,24 @@ public class ModBlocks {
     public static final RegistryObject<Block> DEEPSLATE_ZIRMS_ORE = registerBlock("deepslate_zirms_ore",
             () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_DIAMOND_ORE)), ModGroupTab.NATURERAIN_TAB);
 
+    public static final RegistryObject<Block> WET_FARMLAND = registerBlockWithoutItem("wet_farmland",
+            () -> new FarmBlock(BlockBehaviour.Properties.copy(Blocks.FARMLAND)){
+                @Override
+                public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
+                    return (plantable.getPlantType(world, pos) != null);
+                }
+
+                @Override
+                public boolean isFertile(BlockState state, BlockGetter level, BlockPos pos) {
+                    return true;
+                }
+
+                @Override
+                public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
+                    pLevel.setBlock(pPos,pState.setValue(MOISTURE, Integer.valueOf(7)),2);
+                }
+            });
+
     /*---------Register Block and linked Item---------*/
     private static <T extends Block> RegistryObject<T> registerBlock(
             String name, Supplier<T> block, CreativeModeTab tab){
@@ -46,7 +74,7 @@ public class ModBlocks {
     private static <T extends Block> RegistryObject<T> registerBlockWithoutItem(
             String name, Supplier<T> block){
         RegistryObject<T> blockToReturn = BLOCKS.register(name,block);
-        return BLOCKS.register(name, block);
+        return blockToReturn;
     }
 
     private static <T extends Block> void registerBlockItem(
