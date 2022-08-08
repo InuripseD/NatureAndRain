@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"facing=north,under_rain=false": { "model": "naturerain:block/raindrop_catcher" },
+		"facing=south,under_rain=false": { "model": "naturerain:block/raindrop_catcher", "y": 180 },
+		"facing=west,under_rain=false":  { "model": "naturerain:block/raindrop_catcher", "y": 270 },
+		"facing=east,under_rain=false":  { "model": "naturerain:block/raindrop_catcher", "y": 90 },
+		"facing=north,under_rain=true": { "model": "naturerain:block/raindrop_catcher_wet" },
+		"facing=south,under_rain=true": { "model": "naturerain:block/raindrop_catcher_wet", "y": 180 },
+		"facing=west,under_rain=true":  { "model": "naturerain:block/raindrop_catcher_wet", "y": 270 },
+		"facing=east,under_rain=true":  { "model": "naturerain:block/raindrop_catcher_wet", "y": 90 }
+	}
+}
