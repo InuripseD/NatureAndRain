@@ -2,8 +2,11 @@ package fr.inuripse.naturerain.item;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
+import fr.inuripse.naturerain.item.tiers.ModArmorMaterials;
 import fr.inuripse.naturerain.item.tiers.ModTiers;
 import fr.inuripse.naturerain.item.toolandweapon.*;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -63,6 +66,23 @@ public class ModItems {
     public static final RegistryObject<Item> WET_STUFF_LAUNCHER = ITEMS.register("wet_stuff_launcher",
             () -> new WetStuffLauncher(
                     new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB).defaultDurability(834)));
+
+    /*------------------- Armor and Wearable -----------------*/
+    public static final RegistryObject<Item> LEAFY_ZIRMS_BOOTS = ITEMS.register("leafy_zirms_boots",
+            () -> new ArmorItem(ModArmorMaterials.LEAFY_ZIRMS, EquipmentSlot.FEET,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> LEAFY_ZIRMS_LEGGINGS = ITEMS.register("leafy_zirms_leggings",
+            () -> new ArmorItem(ModArmorMaterials.LEAFY_ZIRMS, EquipmentSlot.LEGS,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> LEAFY_ZIRMS_CHESTPLATE = ITEMS.register("leafy_zirms_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.LEAFY_ZIRMS, EquipmentSlot.CHEST,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> LEAFY_ZIRMS_HELMET = ITEMS.register("leafy_zirms_helmet",
+            () -> new ArmorItem(ModArmorMaterials.LEAFY_ZIRMS, EquipmentSlot.HEAD,
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB)));
 
 
     //Register items.

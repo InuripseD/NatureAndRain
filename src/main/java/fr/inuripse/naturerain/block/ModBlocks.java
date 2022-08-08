@@ -7,6 +7,7 @@ import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -39,11 +40,15 @@ public class ModBlocks {
     public static final RegistryObject<Block> ZIRMS_BLOCK = registerBlock("zirms_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK)), ModGroupTab.NATURERAIN_TAB);
 
+    /*------------ Ore Blocks ------------*/
+
     public static final RegistryObject<Block> ZIRMS_ORE = registerBlock("zirms_ore",
-            () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)), ModGroupTab.NATURERAIN_TAB);
+            () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE), UniformInt.of(3,7)), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> DEEPSLATE_ZIRMS_ORE = registerBlock("deepslate_zirms_ore",
-            () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_DIAMOND_ORE)), ModGroupTab.NATURERAIN_TAB);
+            () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_DIAMOND_ORE), UniformInt.of(5,10)), ModGroupTab.NATURERAIN_TAB);
+
+    /*----------- Custom Blocks -----------*/
 
     public static final RegistryObject<Block> WET_FARMLAND = registerBlockWithoutItem("wet_farmland",
             () -> new FarmBlock(BlockBehaviour.Properties.copy(Blocks.FARMLAND)){

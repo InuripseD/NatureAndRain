@@ -35,9 +35,6 @@ public class LeafyZirmsHoe extends HoeItem {
         Level level = pContext.getLevel();
         BlockPos blockpos = pContext.getClickedPos();
         BlockState toolModifiedState = getCorrespondingBlockWhenUseHoeOn(level.getBlockState(blockpos), blockpos, level, pContext);
-        if(toolModifiedState==null) {
-            toolModifiedState = level.getBlockState(blockpos).getToolModifiedState(pContext, net.minecraftforge.common.ToolActions.HOE_TILL, false);
-        }
         Pair<Predicate<UseOnContext>, Consumer<UseOnContext>> pair = toolModifiedState == null ? null : Pair.of(ctx -> true, changeIntoState(toolModifiedState));
         if (pair == null) {
             return InteractionResult.PASS;
@@ -73,9 +70,13 @@ public class LeafyZirmsHoe extends HoeItem {
         }
     }
 
+    /*Methode that return the blockstate for the right clicked block.*/
     private BlockState getCorrespondingBlockWhenUseHoeOn(BlockState blockState, BlockPos blockpos, Level level, UseOnContext pContext) {
         if(blockState== Blocks.GRASS_BLOCK.defaultBlockState()||blockState==Blocks.DIRT.defaultBlockState()||blockState==Blocks.DIRT_PATH.defaultBlockState()) {
-            return ModBlocks.WET_FARMLAND.get().defaultBlockState().setValue(MOISTURE, Integer.valueOf(7));
+            if(level.getBlockState(blockpos.above())==Blocks.AIR.defaultBlockState()) {
+                return ModBlocks.WET_FARMLAND.get().defaultBlockState().setValue(MOISTURE, Integer.valueOf(7));
+            }
+            return null;
         } else {
             return level.getBlockState(blockpos).getToolModifiedState(pContext, net.minecraftforge.common.ToolActions.HOE_TILL, false);
         }

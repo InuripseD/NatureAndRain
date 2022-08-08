@@ -2,6 +2,7 @@ package fr.inuripse.naturerain;
 
 import com.mojang.logging.LogUtils;
 import fr.inuripse.naturerain.block.ModBlocks;
+import fr.inuripse.naturerain.enchantment.ModEnchantments;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -35,6 +36,7 @@ public class NatureRain
 
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
+        ModEnchantments.register(eventBus);
 
         eventBus.addListener(this::setup);
 
