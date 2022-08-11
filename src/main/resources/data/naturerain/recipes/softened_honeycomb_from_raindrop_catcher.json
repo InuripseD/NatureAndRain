@@ -1,0 +1,11 @@
+{
+  "type": "naturerain:hydration",
+  "ingredients": [
+    {
+    "item": "minecraft:honeycomb"
+    }
+  ],
+  "output": {
+    "item": "naturerain:softened_honeycomb"
+  }
+}

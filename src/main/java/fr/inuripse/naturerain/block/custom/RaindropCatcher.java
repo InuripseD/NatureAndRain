@@ -1,28 +1,36 @@
 package fr.inuripse.naturerain.block.custom;
 
+import fr.inuripse.naturerain.block.blockentity.ModBlockEntities;
+import fr.inuripse.naturerain.block.blockentity.RaindropCatcherEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class RaindropCatcher extends Block {
+public class RaindropCatcher extends BaseEntityBlock {
 
     //Update under water section
     public static final BooleanProperty UNDER_RAIN = BooleanProperty.create("under_rain");
@@ -38,13 +46,10 @@ public class RaindropCatcher extends Block {
 
     /*---------- Shape Section ----------*/
     private static final VoxelShape SHAPE = Stream.of(
-        Block.box(1, 0, 1, 15, 10, 15),
-        Block.box(3, 10, 3, 5, 11, 13),
-        Block.box(11, 10, 3, 13, 11, 13),
-        Block.box(5, 10, 3, 11, 11, 5),
-        Block.box(5, 10, 11, 11, 11, 13),
-        Block.box(5, 10, 5, 11, 10.1, 11)
-        ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+            Block.box(1, 0, 1, 15, 9, 15),
+            Block.box(5, 9, 5, 11, 10, 11),
+            Block.box(4, 10, 4, 12, 11, 12)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
@@ -78,7 +83,6 @@ public class RaindropCatcher extends Block {
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
         pLevel.setBlock(pPos, pState.setValue(UNDER_RAIN, Boolean.valueOf(pLevel.isRainingAt(pPos.above()))), 2);
-        //super.tick(pState, pLevel, pPos, pRandom);
     }
     /*--------------------------------------*/
 
@@ -88,5 +92,51 @@ public class RaindropCatcher extends Block {
         pBuilder.add(FACING, UNDER_RAIN);
     }
 
+
+    /*--------- Block Entity Properties ---------*/
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+        if (!pState.is(pNewState.getBlock())) {
+            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+            if (blockentity instanceof RaindropCatcherEntity) {
+                if (pLevel instanceof ServerLevel) {
+                    ((RaindropCatcherEntity)blockentity).drops();
+                }
+            }
+            super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+        }
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new RaindropCatcherEntity(pPos, pState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        return pLevel.isClientSide ? null : createTickerHelper(pBlockEntityType, ModBlockEntities.RAINDROP_CATCHER_ENTITY.get(), RaindropCatcherEntity::tick);
+    }
+
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (pLevel.isClientSide) {
+            return InteractionResult.SUCCESS;
+        } else {
+            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+            if (blockentity instanceof RaindropCatcherEntity) {
+                NetworkHooks.openGui(((ServerPlayer)pPlayer), (RaindropCatcherEntity)blockentity, pPos);
+                //pPlayer.openMenu((MenuProvider)blockentity);
+            }
+            return InteractionResult.CONSUME;
+        }
+    }
+    /*-------------------------------------------*/
 
 }

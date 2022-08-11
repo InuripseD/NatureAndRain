@@ -64,7 +64,6 @@ public class LeafyZirmsAxe extends AxeItem {
                     level.levelEvent(1505, blockpos1, 0);
                     holdItem.hurtAndBreak(5, pPlayer, (player) -> player.broadcastBreakEvent(holdItem.getEquipmentSlot()));
                     pPlayer.getCooldowns().addCooldown(this, 20);
-                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             } else {

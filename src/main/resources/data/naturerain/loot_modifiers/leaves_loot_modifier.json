@@ -3,7 +3,7 @@
   "conditions": [
     {
       "condition": "forge:loot_table_id",
-      "loot_table_id": "minecraft:blocks/dark_oak_leaves", "minecraft:blocks/oak_leaves", "minecraft:blocks/birch_leaves", "minecraft:blocks/jungle_leaves"
+      "loot_table_id": "minecraft:blocks/dark_oak_leaves"
     },
     {
       "condition": "minecraft:match_tool",

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "naturerain:leafy_zirms"
+    }
+  },
+  "result": {
+    "item": "naturerain:leafy_zirms_helmet"
+  }
+}

@@ -96,8 +96,13 @@ public class LeafyZirmsPickaxe extends PickaxeItem {
 
                         /*Decrease durability and return.*/
                         if (!level.isClientSide) {
-                            itemstack.hurtAndBreak(5, player, (player1) -> player1.broadcastBreakEvent(itemstack.getEquipmentSlot()));
-                            player.getCooldowns().addCooldown(this, 20);
+                            if (pContext.getLevel().dimensionType().ultraWarm()) {
+                                itemstack.hurtAndBreak(7, player, (player1) -> player1.broadcastBreakEvent(itemstack.getEquipmentSlot()));
+                                player.getCooldowns().addCooldown(this, 30);
+                            }else{
+                                itemstack.hurtAndBreak(5, player, (player1) -> player1.broadcastBreakEvent(itemstack.getEquipmentSlot()));
+                                player.getCooldowns().addCooldown(this, 10);
+                            }
                         }
                         return InteractionResult.sidedSuccess(level.isClientSide);
                     }

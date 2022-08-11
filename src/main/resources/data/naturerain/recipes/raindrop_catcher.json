@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "###",
+    "OZO"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:oak_leaves"
+    },
+    "X": {
+      "item": "minecraft:hopper"
+    },
+    "O": {
+      "item": "minecraft:oak_log"
+    },
+    "Z": {
+      "item": "naturerain:leafy_zirms"
+    }
+  },
+  "result": {
+    "item": "naturerain:raindrop_catcher"
+  }
+}

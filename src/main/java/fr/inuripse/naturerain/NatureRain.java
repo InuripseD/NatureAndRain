@@ -2,8 +2,14 @@ package fr.inuripse.naturerain;
 
 import com.mojang.logging.LogUtils;
 import fr.inuripse.naturerain.block.ModBlocks;
+import fr.inuripse.naturerain.block.blockentity.ModBlockEntities;
+import fr.inuripse.naturerain.block.recipe.ModRecipes;
+import fr.inuripse.naturerain.block.screen.ModMenuTypes;
+import fr.inuripse.naturerain.block.screen.RaindropCatcherMenu;
+import fr.inuripse.naturerain.block.screen.RaindropCatcherScreen;
 import fr.inuripse.naturerain.enchantment.ModEnchantments;
 import fr.inuripse.naturerain.item.ModItems;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
@@ -40,6 +46,9 @@ public class NatureRain
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
         ModEnchantments.register(eventBus);
+        ModBlockEntities.register(eventBus);
+        ModMenuTypes.register(eventBus);
+        ModRecipes.register(eventBus);
 
         eventBus.addListener(this::setup);
 
@@ -51,6 +60,8 @@ public class NatureRain
 
     private void clientSetup(final FMLClientSetupEvent event){
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAINDROP_CATCHER.get(), RenderType.translucent());
+
+        MenuScreens.register(ModMenuTypes.RAINDROP_CATCHER_MENU.get(), RaindropCatcherScreen::new);
     }
 
     private void setup(final FMLCommonSetupEvent event)

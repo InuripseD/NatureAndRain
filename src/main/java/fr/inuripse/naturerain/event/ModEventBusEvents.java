@@ -1,8 +1,11 @@
 package fr.inuripse.naturerain.event;
 
 import fr.inuripse.naturerain.NatureRain;
+import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;
 import fr.inuripse.naturerain.event.loot.LeavesAdditionModifier;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,6 +28,11 @@ public class ModEventBusEvents {
                 new LeavesAdditionModifier.ModGlobalLootModifierSerilizer().setRegistryName(
                         new ResourceLocation(NatureRain.MOD_ID, "oak_leaves_glm"))
         );
+    }
+
+    @SubscribeEvent
+    public static void registerRecipeType(final RegistryEvent.Register<RecipeSerializer<?>> event){
+        Registry.register(Registry.RECIPE_TYPE, RaindropCatcherRecipe.Type.ID, RaindropCatcherRecipe.Type.INSTANCE);
     }
 
 }
