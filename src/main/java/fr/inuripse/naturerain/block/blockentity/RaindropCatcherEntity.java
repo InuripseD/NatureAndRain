@@ -125,8 +125,6 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
     }
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, RaindropCatcherEntity pBlockEntity) {
-        System.out.println(hasRecipe(pBlockEntity)+" recipe");
-        System.out.println(pState.getValue(UNDER_RAIN)+" rain");
         if(hasRecipe(pBlockEntity) && pState.getValue(UNDER_RAIN)) {
             pBlockEntity.progress++;
             setChanged(pLevel, pPos, pState);
@@ -149,6 +147,12 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
 
         Optional<RaindropCatcherRecipe> match = level.getRecipeManager()
                 .getRecipeFor(RaindropCatcherRecipe.Type.INSTANCE, inventory, level);
+
+        for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
+            System.out.println(inventory.getItem(i));
+        }
+
+        System.out.println(match.isPresent()+" match");
 
         return match.isPresent() && canInsertAmountIntoOutputSlot(inventory)
                 && canInsertItemIntoOutputSlot(inventory, match.get().getResultItem());

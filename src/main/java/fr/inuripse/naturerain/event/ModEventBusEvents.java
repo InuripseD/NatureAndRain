@@ -31,7 +31,7 @@ public class ModEventBusEvents {
     }
 
     @SubscribeEvent
-    public static void registerRecipeType(final RegistryEvent.Register<RecipeSerializer<?>> event){
+    public static void registerRecipeTypes(final RegistryEvent.Register<RecipeSerializer<?>> event){
         Registry.register(Registry.RECIPE_TYPE, RaindropCatcherRecipe.Type.ID, RaindropCatcherRecipe.Type.INSTANCE);
     }
 

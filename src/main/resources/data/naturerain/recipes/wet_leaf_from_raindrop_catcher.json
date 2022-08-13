@@ -1,8 +1,10 @@
 {
   "type": "naturerain:hydration",
-  "ingredients": [{
-    "item": "naturerain:leaf"
-  }],
+  "ingredients": [
+    {
+      "item": "naturerain:leaf"
+    }
+  ],
   "output": {
     "item": "naturerain:wet_leaf"
   }
