@@ -8,10 +8,15 @@ import fr.inuripse.naturerain.block.screen.ModMenuTypes;
 import fr.inuripse.naturerain.block.screen.RaindropCatcherMenu;
 import fr.inuripse.naturerain.block.screen.RaindropCatcherScreen;
 import fr.inuripse.naturerain.enchantment.ModEnchantments;
+import fr.inuripse.naturerain.entity.ModEntityTypes;
+import fr.inuripse.naturerain.entity.projectile.wetshooterprojectile.modelrenderer.SoftenedHoneycombModel;
+import fr.inuripse.naturerain.entity.projectile.wetshooterprojectile.modelrenderer.SoftenedHoneycombRenderer;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -49,6 +54,7 @@ public class NatureRain
         ModBlockEntities.register(eventBus);
         ModMenuTypes.register(eventBus);
         ModRecipes.register(eventBus);
+        ModEntityTypes.register(eventBus);
 
         eventBus.addListener(this::setup);
 
@@ -62,6 +68,8 @@ public class NatureRain
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAINDROP_CATCHER.get(), RenderType.translucent());
 
         MenuScreens.register(ModMenuTypes.RAINDROP_CATCHER_MENU.get(), RaindropCatcherScreen::new);
+
+        EntityRenderers.register(ModEntityTypes.SOFTENED_HONEYCOMB.get(), SoftenedHoneycombRenderer::new);
     }
 
     private void setup(final FMLCommonSetupEvent event)
