@@ -16,9 +16,9 @@ public class ModEntityTypes {
             DeferredRegister.create(ForgeRegistries.ENTITIES, NatureRain.MOD_ID);
 
     public static final RegistryObject<EntityType<SoftenedHoneycombEntity>> SOFTENED_HONEYCOMB = ENTITY_TYPES.register("softened_honeycomb",
-            () -> EntityType.Builder.of(SoftenedHoneycombEntity::new, MobCategory.MISC)
-                    .sized(0.25F, 0.25F)
-                    .clientTrackingRange(4)
+            () -> EntityType.Builder.of((EntityType.EntityFactory<SoftenedHoneycombEntity>)SoftenedHoneycombEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(8)
                     .updateInterval(10)
                     .build(new ResourceLocation(NatureRain.MOD_ID, "softened_honeycomb").toString()));
 

@@ -30,7 +30,7 @@ public class SoftenedHoneycombModel<T extends Entity> extends EntityModel<T> {
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         partdefinition.addOrReplaceChild("main", CubeListBuilder.create().texOffs(0, 0)
-                .addBox(-1.0F, -2.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
+                .addBox(-1.0F, -2.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(2.5F)),
                 PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 16, 16);
