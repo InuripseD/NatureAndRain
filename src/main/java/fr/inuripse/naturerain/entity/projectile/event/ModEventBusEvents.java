@@ -1,8 +1,8 @@
-package fr.inuripse.naturerain.event;
+package fr.inuripse.naturerain.entity.projectile.event;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;
-import fr.inuripse.naturerain.event.loot.LeavesAdditionModifier;
+import fr.inuripse.naturerain.entity.projectile.event.loot.LeavesAdditionModifier;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;

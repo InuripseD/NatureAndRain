@@ -1,39 +1,30 @@
 package fr.inuripse.naturerain.entity.projectile.wetshooterprojectile;
 
 import fr.inuripse.naturerain.entity.ModEntityTypes;
-import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.GlowLichenBlock;
-import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.TheEndGatewayBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
+import java.util.List;
+
 import static net.minecraft.world.level.block.MultifaceBlock.getFaceProperty;
-import static net.minecraft.world.level.block.VineBlock.getPropertyForFace;
-import static net.minecraft.world.level.block.VineBlock.isAcceptableNeighbour;
 
 public class SoftenedHoneycombEntity extends Projectile {
 
@@ -112,29 +103,79 @@ public class SoftenedHoneycombEntity extends Projectile {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        this.tryToPlaceRelativeBlock(result);
+        this.spreadAround(result);
         this.discard();
     }
 
-    private void tryToPlaceRelativeBlock(BlockHitResult result){
+    private void spreadAround(BlockHitResult result) {
         BlockPos blockPos = result.getBlockPos();
-        Direction direction = result.getDirection();
-        BlockPos blockPos1 = blockPos.relative(direction);
-        BlockState blockState = level.getBlockState(blockPos);
-
-        BlockState finalBlock = Blocks.GLOW_LICHEN.defaultBlockState().setValue(getFaceProperty(direction.getOpposite()), Boolean.valueOf(true));
-
-        if(Block.isFaceFull(blockState.getCollisionShape(level, blockPos), direction.getOpposite())){
-            if(finalBlock!=null && blockState!= Blocks.AIR.defaultBlockState()){
-                level.setBlock(blockPos1, finalBlock,11);
+        for(BlockPos pPos : getPosesToPlace(result.getBlockPos(), result.getDirection())){
+            BlockState blockState = level.getBlockState(pPos);
+            if(blockState.getMaterial().isReplaceable() || blockState==Blocks.AIR.defaultBlockState()) {
+                int x = Math.abs(blockPos.getX());
+                int y = Math.abs(blockPos.getY());
+                int z = Math.abs(blockPos.getZ());
+                int d1 = Math.abs(Math.abs(pPos.getX()) - x);
+                int d2 = Math.abs(Math.abs(pPos.getY()) - y);
+                int d3 = Math.abs(Math.abs(pPos.getZ()) - z);
+                int sum = d1 + d2 + d3;
+                if (sum < 3){
+                    tryToPlaceRelativeBlock(pPos);
+                } else if (sum < 5) {
+                    if(random.nextInt(100)<60){
+                        tryToPlaceRelativeBlock(pPos);
+                    }
+                } else {
+                    if(random.nextInt(100)<20){
+                        tryToPlaceRelativeBlock(pPos);
+                    }
+                }
             }
         }
-        /*BlockPlaceContext context = new BlockPlaceContext(new UseOnContext(level,(Player) this.getOwner(), InteractionHand.MAIN_HAND, ModItems.WET_STUFF_LAUNCHER.get().getDefaultInstance(), result));
-        BlockState finalBlock = Blocks.GLOW_LICHEN.getStateForPlacement(context);
-        if(finalBlock!=null){
-            level.setBlock(blockPos1, finalBlock,11);
-        }*/
+    }
 
+    private void tryToPlaceRelativeBlock(BlockPos blockPos){
+        BlockState blockState = blockForPlace(blockPos);
+        if(blockState!=null){
+            level.setBlock(blockPos, blockState,11);
+
+        }
+    }
+
+    private Iterable<BlockPos> getPosesToPlace(BlockPos blockPos, Direction direction){
+        BlockPos bP1 = blockPos.relative(direction);
+        BlockPos bP2 = blockPos.relative(direction.getOpposite());
+        if(direction==Direction.DOWN || direction==Direction.UP){
+            bP1 = bP1.relative(Direction.SOUTH).relative(Direction.SOUTH).relative(Direction.SOUTH);
+            bP2 = bP2.relative(Direction.NORTH).relative(Direction.NORTH).relative(Direction.NORTH);
+            Direction dir1 = Direction.SOUTH.getClockWise();
+            bP1 = bP1.relative(dir1).relative(dir1).relative(dir1);
+            bP2 = bP2.relative(dir1.getOpposite()).relative(dir1.getOpposite()).relative(dir1.getOpposite());
+        }else{
+            Direction dir1 = direction.getClockWise();
+            bP1 = bP1.relative(dir1).relative(dir1).relative(dir1);
+            bP2 = bP2.relative(dir1.getOpposite()).relative(dir1.getOpposite()).relative(dir1.getOpposite());
+            bP1 = bP1.relative(Direction.UP).relative(Direction.UP).relative(Direction.UP);
+            bP2 = bP2.relative(Direction.DOWN).relative(Direction.DOWN).relative(Direction.DOWN);
+        }
+        return BlockPos.betweenClosed(bP1,bP2);
+    }
+
+    private BlockState blockForPlace(BlockPos blockPos){
+        BlockState blockState = Blocks.GLOW_LICHEN.defaultBlockState();
+        boolean atLeastOneFace = false;
+        for(Direction direction : Direction.values()){
+            BlockPos blockPosTest = blockPos.relative(direction);
+            BlockState blockStateTest = level.getBlockState(blockPosTest);
+            boolean fullFace = Block.isFaceFull(blockStateTest.getCollisionShape(level, blockPosTest), direction);
+            if(fullFace){
+                if(random.nextInt(100)<60){
+                    blockState = blockState.setValue(getFaceProperty(direction),Boolean.valueOf(true));
+                    atLeastOneFace = true;
+                }
+            }
+        }
+        return atLeastOneFace ? blockState : null;
     }
 
     @Override

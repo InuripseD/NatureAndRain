@@ -1,6 +1,7 @@
 package fr.inuripse.naturerain.item;
 
 import fr.inuripse.naturerain.NatureRain;
+import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import fr.inuripse.naturerain.item.tiers.ModArmorMaterials;
 import fr.inuripse.naturerain.item.tiers.ModTiers;
@@ -65,7 +66,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> WET_STUFF_LAUNCHER = ITEMS.register("wet_stuff_launcher",
             () -> new WetStuffLauncher(
-                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB).defaultDurability(834)));
+                    new Item.Properties().fireResistant().tab(ModGroupTab.NATURERAIN_TAB).defaultDurability(NatureRainCommonConfigs.DURABILITY.get())));
 
     /*------------------- Armor and Wearable -----------------*/
     public static final RegistryObject<Item> LEAFY_ZIRMS_BOOTS = ITEMS.register("leafy_zirms_boots",

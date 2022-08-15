@@ -1,0 +1,11 @@
+{
+  "type": "naturerain:hydration",
+  "ingredients": [
+    {
+    "item": "minecraft:slime_ball"
+    }
+  ],
+  "output": {
+    "item": "naturerain:softened_slimeball"
+  }
+}

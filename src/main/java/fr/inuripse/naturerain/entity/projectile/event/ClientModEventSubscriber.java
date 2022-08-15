@@ -1,4 +1,4 @@
-package fr.inuripse.naturerain.event;
+package fr.inuripse.naturerain.entity.projectile.event;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.entity.projectile.wetshooterprojectile.modelrenderer.SoftenedHoneycombModel;

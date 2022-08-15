@@ -1,4 +1,4 @@
-package fr.inuripse.naturerain.event.loot;
+package fr.inuripse.naturerain.entity.projectile.event.loot;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;

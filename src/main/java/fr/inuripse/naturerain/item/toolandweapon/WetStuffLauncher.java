@@ -3,17 +3,11 @@ package fr.inuripse.naturerain.item.toolandweapon;
 
 import fr.inuripse.naturerain.entity.projectile.wetshooterprojectile.SoftenedHoneycombEntity;
 import fr.inuripse.naturerain.item.ModItems;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import java.util.function.Predicate;

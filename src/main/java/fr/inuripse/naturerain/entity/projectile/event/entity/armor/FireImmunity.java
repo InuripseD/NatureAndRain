@@ -1,4 +1,4 @@
-package fr.inuripse.naturerain.event.entity.armor;
+package fr.inuripse.naturerain.entity.projectile.event.entity.armor;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.item.armor.LeafyZirmsHelmet;

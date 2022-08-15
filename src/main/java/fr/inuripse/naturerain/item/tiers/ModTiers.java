@@ -2,9 +2,7 @@ package fr.inuripse.naturerain.item.tiers;
 
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeTier;
 
 public class ModTiers {
