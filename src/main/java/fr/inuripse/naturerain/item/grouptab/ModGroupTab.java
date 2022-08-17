@@ -9,7 +9,7 @@ public class ModGroupTab {
     public static final CreativeModeTab NATURERAIN_TAB = new CreativeModeTab("naturerain_tab") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.ZIRMS.get());
+            return new ItemStack(ModItems.WET_LEAF.get());
         }
     };
 

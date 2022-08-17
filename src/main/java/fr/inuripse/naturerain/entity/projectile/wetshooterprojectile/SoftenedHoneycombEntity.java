@@ -1,5 +1,6 @@
 package fr.inuripse.naturerain.entity.projectile.wetshooterprojectile;
 
+import fr.inuripse.naturerain.block.ModBlocks;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -162,13 +163,13 @@ public class SoftenedHoneycombEntity extends Projectile {
     }
 
     private BlockState blockForPlace(BlockPos blockPos){
-        BlockState blockState = Blocks.GLOW_LICHEN.defaultBlockState();
+        BlockState blockState = ModBlocks.WET_HONEY_PUDDLE.get().defaultBlockState();
         boolean atLeastOneFace = false;
         for(Direction direction : Direction.values()){
             BlockPos blockPosTest = blockPos.relative(direction);
             BlockState blockStateTest = level.getBlockState(blockPosTest);
             boolean fullFace = Block.isFaceFull(blockStateTest.getCollisionShape(level, blockPosTest), direction);
-            if(fullFace){
+            if(fullFace && blockStateTest.getBlock().defaultBlockState()!=ModBlocks.WET_HONEY_PUDDLE.get().defaultBlockState()){
                 if(random.nextInt(100)<60){
                     blockState = blockState.setValue(getFaceProperty(direction),Boolean.valueOf(true));
                     atLeastOneFace = true;

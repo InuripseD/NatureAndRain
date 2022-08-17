@@ -2,6 +2,7 @@ package fr.inuripse.naturerain.block;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.block.custom.RaindropCatcher;
+import fr.inuripse.naturerain.block.custom.WetHoneyPuddle;
 import fr.inuripse.naturerain.item.ModItems;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import net.minecraft.core.BlockPos;
@@ -12,17 +13,17 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FarmBlock;
-import net.minecraft.world.level.block.OreBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.lwjgl.system.CallbackI;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -48,10 +49,11 @@ public class ModBlocks {
             () -> new OreBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_DIAMOND_ORE), UniformInt.of(5,10)), ModGroupTab.NATURERAIN_TAB);
 
     /*----------- Custom Blocks -----------*/
-
-
     public static final RegistryObject<Block> RAINDROP_CATCHER = registerBlock("raindrop_catcher",
             () -> new RaindropCatcher(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> WET_HONEY_PUDDLE = registerBlock("wet_honey_puddle",
+            () -> new WetHoneyPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_FIREPROOF_PLANT, MaterialColor.COLOR_ORANGE).strength(0.25F).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK)), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> WET_FARMLAND = registerBlockWithoutItem("wet_farmland",
             () -> new FarmBlock(BlockBehaviour.Properties.copy(Blocks.FARMLAND)){
@@ -70,6 +72,8 @@ public class ModBlocks {
                     pLevel.setBlock(pPos,pState.setValue(MOISTURE, Integer.valueOf(7)),2);
                 }
             });
+
+
 
 
     /*---------Register Block and linked Item---------*/
