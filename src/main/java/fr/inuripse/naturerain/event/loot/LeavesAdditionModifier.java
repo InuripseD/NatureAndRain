@@ -1,4 +1,4 @@
-package fr.inuripse.naturerain.entity.projectile.event.loot;
+package fr.inuripse.naturerain.event.loot;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
@@ -19,18 +19,20 @@ public class LeavesAdditionModifier extends LootModifier {
 
     private Random rand = new Random();
 
-    private static final int ADD1_CHANCE_FOR_1000 = 100;
-    private static final int ADD2_CHANCE_FOR_1000 = 50;
-    private static final int ADD3_CHANCE_FOR_1000 = 1;
+    private static final int ADD1_CHANCE_FOR_1000 = 175;
+    private static final int ADD2_CHANCE_FOR_1000 = 100;
+    private static final int ADD3_CHANCE_FOR_1000 = 3;
     private Item addition1;
     private Item addition2;
     private Item addition3;
+    private Item addition4;
 
-    protected LeavesAdditionModifier(LootItemCondition[] conditionsIn, Item addition1, Item addition2, Item addition3) {
+    protected LeavesAdditionModifier(LootItemCondition[] conditionsIn, Item addition1, Item addition2, Item addition3, Item addition4) {
         super(conditionsIn);
         this.addition1 = addition1;
         this.addition2 = addition2;
         this.addition3 = addition3;
+        this.addition4 = addition4;
     }
 
     @NotNull
@@ -50,6 +52,9 @@ public class LeavesAdditionModifier extends LootModifier {
             if(rand.nextInt(1000)<ADD1_CHANCE_FOR_1000){
                 generatedLoot.add(new ItemStack(addition1,1));
             }
+            if(rand.nextInt(1000)<ADD3_CHANCE_FOR_1000){
+                generatedLoot.add(new ItemStack(addition4,1));
+            }
         }
         return generatedLoot;
     }
@@ -60,7 +65,8 @@ public class LeavesAdditionModifier extends LootModifier {
             Item addition1 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object,"addition1")));
             Item addition2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object,"addition2")));
             Item addition3 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object,"addition3")));
-            return new LeavesAdditionModifier(ailootcondition, addition1, addition2, addition3);
+            Item addition4 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object,"addition4")));
+            return new LeavesAdditionModifier(ailootcondition, addition1, addition2, addition3, addition4);
         }
 
         @Override
@@ -69,6 +75,7 @@ public class LeavesAdditionModifier extends LootModifier {
             json.addProperty("addition1", ForgeRegistries.ITEMS.getKey(instance.addition1).toString());
             json.addProperty("addition2", ForgeRegistries.ITEMS.getKey(instance.addition2).toString());
             json.addProperty("addition3", ForgeRegistries.ITEMS.getKey(instance.addition3).toString());
+            json.addProperty("addition4", ForgeRegistries.ITEMS.getKey(instance.addition4).toString());
             return json;
         }
 

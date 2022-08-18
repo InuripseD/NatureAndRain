@@ -1,11 +1,13 @@
 {
   "item.naturerain.zirms": "Zirms",
+  "item.naturerain.branch": "Branch",
   "item.naturerain.wet_branch": "Wet Branch",
   "item.naturerain.leafy_zirms": "Leafy Zirms",
   "item.naturerain.leaf": "Leaf",
   "item.naturerain.wet_leaf": "Wet Leaf",
   "item.naturerain.softened_honeycomb": "Softened Honeycomb",
   "item.naturerain.softened_slimeball": "Softened Slimeball",
+  "item.naturerain.flowing_glow_ink": "Flowing Glow Ink",
 
   "item.naturerain.leafy_zirms_sword": "Leafy Zirms Sword",
   "item.naturerain.leafy_zirms_pickaxe": "Leafy Zirms Pickaxe",
@@ -26,6 +28,10 @@
   "block.naturerain.zirms_ore": "Zirms Ore",
   "block.naturerain.raindrop_catcher": "Raindrop Catcher",
   "block.naturerain.wet_honey_puddle": "Wet Honey Puddle",
+  "block.naturerain.wet_slimeball_puddle": "Wet Slimeball Puddle",
+  "block.naturerain.flowing_glow_ink_puddle": "Flowing Glow Ink Puddle",
+  "block.naturerain.wet_leaves_carpet": "Wet Leaves Carpet",
+
 
 
   "itemGroup.naturerain_tab": "Nature and Rain"

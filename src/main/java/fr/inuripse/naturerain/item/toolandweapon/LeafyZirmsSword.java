@@ -19,12 +19,10 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 
 public class LeafyZirmsSword extends SwordItem {
 
-    private final Random random = new Random();
     private static final float POWER_DAMAGE = 8.0F;
     private static final Predicate<ItemStack> WET_STUFF = (stack) -> stack.getItem().equals(ModItems.WET_LEAF.get());
 
@@ -78,6 +76,7 @@ public class LeafyZirmsSword extends SwordItem {
                 pLevel.playSound(null,pPlayer,SoundEvents.AMBIENT_UNDERWATER_EXIT, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
                 ((ServerLevel)pLevel).sendParticles((ServerPlayer) pPlayer,ParticleTypes.DRIPPING_WATER, true, i,j,k, 63, 3.0D,3.0D,3.0D,1);
                 ((ServerLevel)pLevel).sendParticles((ServerPlayer) pPlayer,ParticleTypes.RAIN, true, i,j,k, 127, 3.0D,3.0D,3.0D,1);
+                ((ServerLevel)pLevel).sendParticles((ServerPlayer) pPlayer,ParticleTypes.HAPPY_VILLAGER, true, i,j,k, 63, 3.0D,3.0D,3.0D,1);
             }
             return atLeastOneLivingEntityAround;
         }else{

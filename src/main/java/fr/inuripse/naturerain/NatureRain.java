@@ -10,7 +10,10 @@ import fr.inuripse.naturerain.config.NatureRainClientConfigs;
 import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
 import fr.inuripse.naturerain.enchantment.ModEnchantments;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
-import fr.inuripse.naturerain.entity.projectile.wetshooterprojectile.modelrenderer.SoftenedHoneycombRenderer;
+import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.FlowingGlowInkRenderer;
+import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedHoneycombRenderer;
+import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedSlimeballRenderer;
+import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.WetLeafRenderer;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -62,10 +65,16 @@ public class NatureRain
     private void clientSetup(final FMLClientSetupEvent event){
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAINDROP_CATCHER.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_HONEY_PUDDLE.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_SLIMEBALL_PUDDLE.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWING_GLOW_INK_PUDDLE.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_LEAVES_CARPET.get(), RenderType.translucent());
 
         MenuScreens.register(ModMenuTypes.RAINDROP_CATCHER_MENU.get(), RaindropCatcherScreen::new);
 
         EntityRenderers.register(ModEntityTypes.SOFTENED_HONEYCOMB.get(), SoftenedHoneycombRenderer::new);
+        EntityRenderers.register(ModEntityTypes.FLOWING_GLOW_INK.get(), FlowingGlowInkRenderer::new);
+        EntityRenderers.register(ModEntityTypes.SOFTENED_SLIMEBALL.get(), SoftenedSlimeballRenderer::new);
+        EntityRenderers.register(ModEntityTypes.WET_LEAF.get(), WetLeafRenderer::new);
     }
 
     private void setup(final FMLCommonSetupEvent event)

@@ -132,7 +132,6 @@ public class RaindropCatcher extends BaseEntityBlock {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
             if (blockentity instanceof RaindropCatcherEntity) {
                 NetworkHooks.openGui(((ServerPlayer)pPlayer), (RaindropCatcherEntity)blockentity, pPos);
-                //pPlayer.openMenu((MenuProvider)blockentity);
             }
             return InteractionResult.CONSUME;
         }

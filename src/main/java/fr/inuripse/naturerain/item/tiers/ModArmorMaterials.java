@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial {
-    LEAFY_ZIRMS("leafy_zirms", 37, new int[]{3, 6, 8, 3}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.0F, 0.0F, () -> {
+    LEAFY_ZIRMS("leafy_zirms", 37, new int[]{3, 6, 8, 3}, 15, SoundEvents.WET_GRASS_PLACE, 2.0F, 0.0F, () -> {
         return Ingredient.of(ModItems.LEAFY_ZIRMS.get());
     });
 

@@ -1,8 +1,7 @@
 package fr.inuripse.naturerain.block;
 
 import fr.inuripse.naturerain.NatureRain;
-import fr.inuripse.naturerain.block.custom.RaindropCatcher;
-import fr.inuripse.naturerain.block.custom.WetHoneyPuddle;
+import fr.inuripse.naturerain.block.custom.*;
 import fr.inuripse.naturerain.item.ModItems;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import net.minecraft.core.BlockPos;
@@ -54,6 +53,16 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> WET_HONEY_PUDDLE = registerBlock("wet_honey_puddle",
             () -> new WetHoneyPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_FIREPROOF_PLANT, MaterialColor.COLOR_ORANGE).strength(0.25F).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK)), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> WET_SLIMEBALL_PUDDLE = registerBlock("wet_slimeball_puddle",
+            () -> new WetSlimeballPuddle(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.GRASS).friction(0.8F).sound(SoundType.SLIME_BLOCK).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> FLOWING_GLOW_INK_PUDDLE = registerBlock("flowing_glow_ink_puddle",
+            () -> new FlowingGlowInkPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_LIGHT_BLUE).noCollission().strength(0.2F).sound(SoundType.AMETHYST).lightLevel((light) -> { return 12;})), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> WET_LEAVES_CARPET = registerBlock("wet_leaves_carpet",
+            () -> new WetLeavesCarpet(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_GREEN).noCollission().strength(0.2F).sound(SoundType.GRASS)), ModGroupTab.NATURERAIN_TAB);
+
 
     public static final RegistryObject<Block> WET_FARMLAND = registerBlockWithoutItem("wet_farmland",
             () -> new FarmBlock(BlockBehaviour.Properties.copy(Blocks.FARMLAND)){

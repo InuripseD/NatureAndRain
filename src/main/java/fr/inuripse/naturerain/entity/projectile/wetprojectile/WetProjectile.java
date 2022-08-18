@@ -1,14 +1,11 @@
-package fr.inuripse.naturerain.entity.projectile.wetshooterprojectile;
+package fr.inuripse.naturerain.entity.projectile.wetprojectile;
 
-import fr.inuripse.naturerain.block.ModBlocks;
-import fr.inuripse.naturerain.entity.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
@@ -23,20 +20,22 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
-import java.util.List;
-
 import static net.minecraft.world.level.block.MultifaceBlock.getFaceProperty;
 
-public class SoftenedHoneycombEntity extends Projectile {
+public abstract class WetProjectile extends Projectile {
 
-    public SoftenedHoneycombEntity(EntityType<? extends Projectile> entityType, Level level) {
+    public WetProjectile(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
     }
 
-    public SoftenedHoneycombEntity(Level pLevel, Player pPlayer) {
-        this(ModEntityTypes.SOFTENED_HONEYCOMB.get(), pLevel);
-        super.setOwner(pPlayer);
-        this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.1F, pPlayer.getZ());
+    public boolean shouldRenderAtSqrDistance(double pDistance) {
+        double d0 = this.getBoundingBox().getSize() * 10.0D;
+        if (Double.isNaN(d0)) {
+            d0 = 1.0D;
+        }
+
+        d0 *= 64.0D * getViewScale();
+        return pDistance < d0 * d0;
     }
 
     @Override
@@ -139,7 +138,6 @@ public class SoftenedHoneycombEntity extends Projectile {
         BlockState blockState = blockForPlace(blockPos);
         if(blockState!=null){
             level.setBlock(blockPos, blockState,11);
-
         }
     }
 
@@ -163,13 +161,13 @@ public class SoftenedHoneycombEntity extends Projectile {
     }
 
     private BlockState blockForPlace(BlockPos blockPos){
-        BlockState blockState = ModBlocks.WET_HONEY_PUDDLE.get().defaultBlockState();
+        BlockState blockState = getBlockForScratch();
         boolean atLeastOneFace = false;
         for(Direction direction : Direction.values()){
             BlockPos blockPosTest = blockPos.relative(direction);
             BlockState blockStateTest = level.getBlockState(blockPosTest);
             boolean fullFace = Block.isFaceFull(blockStateTest.getCollisionShape(level, blockPosTest), direction);
-            if(fullFace && blockStateTest.getBlock().defaultBlockState()!=ModBlocks.WET_HONEY_PUDDLE.get().defaultBlockState()){
+            if(fullFace && blockStateTest.getBlock().defaultBlockState()!=getBlockForScratch()){
                 if(random.nextInt(100)<60){
                     blockState = blockState.setValue(getFaceProperty(direction),Boolean.valueOf(true));
                     atLeastOneFace = true;
@@ -190,7 +188,9 @@ public class SoftenedHoneycombEntity extends Projectile {
     }
 
     protected float getGravity() {
-        return 0.015F;
+        return 0.0185F;
     }
+
+    public abstract BlockState getBlockForScratch();
 
 }

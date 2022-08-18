@@ -35,7 +35,8 @@ public class RaindropCatcherScreen extends AbstractContainerScreen<RaindropCatch
         }
 
         if(menu.isCrafting()){
-            this.blit(pPoseStack, x + 110, y + 40,176,0,13, menu.getScaledProgress());
+            this.blit(pPoseStack, x + 4, y + 20,176,17,76, menu.getScaledProgress());
+            this.blit(pPoseStack, x + 97, y + 20,176,17,76, menu.getScaledProgress());
         }
 
     }

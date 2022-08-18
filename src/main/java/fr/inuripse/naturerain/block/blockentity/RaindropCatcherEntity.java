@@ -42,7 +42,7 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
 
     protected final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 80;
+    private int maxProgress = 120;
 
     public RaindropCatcherEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModBlockEntities.RAINDROP_CATCHER_ENTITY.get(), pWorldPosition, pBlockState);
@@ -127,7 +127,6 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
             pBlockEntity.progress++;
             setChanged(pLevel, pPos, pState);
             if(pBlockEntity.progress > pBlockEntity.maxProgress) {
-                System.out.println((pBlockEntity.progress > pBlockEntity.maxProgress)+" progress");
                 craftItem(pBlockEntity);
             }
         } else {
@@ -146,12 +145,6 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
         Optional<RaindropCatcherRecipe> match = level.getRecipeManager()
                 .getRecipeFor(RaindropCatcherRecipe.Type.INSTANCE, inventory, level);
 
-        for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
-            System.out.println(inventory.getItem(i));
-        }
-
-        System.out.println(match.isPresent()+" match");
-
         return match.isPresent() && canInsertAmountIntoOutputSlot(inventory)
                 && canInsertItemIntoOutputSlot(inventory, match.get().getResultItem());
     }
@@ -165,7 +158,6 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
 
         Optional<RaindropCatcherRecipe> match = level.getRecipeManager()
                 .getRecipeFor(RaindropCatcherRecipe.Type.INSTANCE, inventory, level);
-        System.out.println(match.isPresent()+" match");
         if(match.isPresent()) {
             entity.itemHandler.extractItem(0,1, false);
             entity.itemHandler.setStackInSlot(1, new ItemStack(match.get().getResultItem().getItem(),

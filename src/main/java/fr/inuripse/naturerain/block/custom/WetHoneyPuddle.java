@@ -51,7 +51,6 @@ public class WetHoneyPuddle extends MultifaceBlock {
     /*---------- HoneyBlock LIKE ----------*/
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return getShape(pState,pLevel,pPos,pContext);
-        //return Shapes.empty();
     }
 
     public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float p_153376_) {
@@ -59,7 +58,6 @@ public class WetHoneyPuddle extends MultifaceBlock {
         if (!pLevel.isClientSide) {
             pLevel.broadcastEntityEvent(pEntity, (byte)54);
         }
-
         if (pEntity.causeFallDamage(p_153376_, 0.2F, DamageSource.FALL)) {
             pEntity.playSound(this.soundType.getFallSound(), this.soundType.getVolume() * 0.5F, this.soundType.getPitch() * 0.75F);
         }
@@ -71,24 +69,13 @@ public class WetHoneyPuddle extends MultifaceBlock {
             this.doSlideMovement(pEntity);
             this.maybeDoSlideEffects(pLevel, pEntity);
         }
-
         super.entityInside(pState, pLevel, pPos, pEntity);
     }
 
     private boolean isSlidingDown(BlockPos pPos, Entity pEntity) {
         if (pEntity.isOnGround()) {
             return false;
-        }/* else if (pEntity.getY() > (double)pPos.getY() + 0.9375D - 1.0E-7D) {
-            return false;
-        } else if (pEntity.getDeltaMovement().y >= -0.08D) {
-            return false;
-        } else {
-            double d0 = Math.abs((double)pPos.getX() + 0.5D - pEntity.getX());
-            double d1 = Math.abs((double)pPos.getZ() + 0.5D - pEntity.getZ());
-            double d2 = 0.4375D + (double)(pEntity.getBbWidth() / 2.0F);
-            return d0 + 1.0E-7D > d2 || d1 + 1.0E-7D > d2;
-        }*/
-        else if (pEntity.getDeltaMovement().y >= -0.08D) {
+        }else if (pEntity.getDeltaMovement().y >= -0.08D) {
             return false;
         }else{
             double d0 = Math.abs((double)pPos.getX() - pEntity.getX());
@@ -109,7 +96,6 @@ public class WetHoneyPuddle extends MultifaceBlock {
         } else {
             pEntity.setDeltaMovement(new Vec3(vec3.x, -0.05D, vec3.z));
         }
-
         pEntity.resetFallDistance();
     }
 
@@ -118,12 +104,10 @@ public class WetHoneyPuddle extends MultifaceBlock {
             if (pLevel.random.nextInt(5) == 0) {
                 pEntity.playSound(SoundEvents.HONEY_BLOCK_SLIDE, 1.0F, 1.0F);
             }
-
             if (!pLevel.isClientSide && pLevel.random.nextInt(5) == 0) {
                 pLevel.broadcastEntityEvent(pEntity, (byte)53);
             }
         }
-
     }
 
     private static boolean doesEntityDoHoneyBlockSlideEffects(Entity pEntity) {

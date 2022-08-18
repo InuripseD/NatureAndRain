@@ -1,8 +1,9 @@
 package fr.inuripse.naturerain.item.toolandweapon;
 
 
-import fr.inuripse.naturerain.entity.projectile.wetshooterprojectile.SoftenedHoneycombEntity;
+import fr.inuripse.naturerain.entity.projectile.wetprojectile.WetProjectile;
 import fr.inuripse.naturerain.item.ModItems;
+import fr.inuripse.naturerain.item.custom.WetItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,8 +15,10 @@ import java.util.function.Predicate;
 
 public class WetStuffLauncher extends ProjectileWeaponItem {
 
-    public static final Predicate<ItemStack> WET_STUFFS = (stack) -> {
-        return stack.getItem().equals(ModItems.SOFTENED_HONEYCOMB.get());
+    //Items that are allowed to be shot.
+    public static final Predicate<ItemStack> WET_STUFF = (stack) -> {
+        return stack.getItem().equals(ModItems.SOFTENED_HONEYCOMB.get()) || stack.getItem().equals(ModItems.FLOWING_GLOW_INK.get())
+                || stack.getItem().equals(ModItems.WET_LEAF.get()) || stack.getItem().equals(ModItems.SOFTENED_SLIMEBALL.get());
     };
 
     public WetStuffLauncher(Properties properties) {
@@ -28,28 +31,28 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
             Player pPlayer = (Player)pEntityLiving;
             ItemStack itemstack = pPlayer.getProjectile(pStack);
             int i = this.getUseDuration(pStack) - pTimeLeft;
-            if(i>30) {
-                if (!itemstack.isEmpty() && !pLevel.isClientSide()) {
-                    SoftenedHoneycombEntity honeycomb = new SoftenedHoneycombEntity(pLevel, pPlayer);
-                    honeycomb.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 0.4f * 3.0F, 1.0F);
-                    pLevel.addFreshEntity(honeycomb);
+            if(i>20) {
+                if (!itemstack.isEmpty() && !pLevel.isClientSide() && !itemstack.is(Items.ARROW)) {
+                    WetProjectile wetStuffToShoot = ((WetItem)itemstack.getItem()).getStuffToShoot(pLevel, pPlayer);
+                    wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F,  2.75F, 1.0F);
+                    pLevel.addFreshEntity(wetStuffToShoot);
                     itemstack.shrink(1);
                     pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pStack.getEquipmentSlot()));
                 }
             }
         }
-
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        boolean flag = !pPlayer.getProjectile(itemstack).isEmpty();
+        ItemStack itemstack1 = pPlayer.getProjectile(itemstack);
+        boolean flag = !itemstack1.isEmpty();
 
         InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, pLevel, pPlayer, pHand, flag);
         if (ret != null) return ret;
 
-        if (!pPlayer.getAbilities().instabuild && !flag) {
+        if (!pPlayer.getAbilities().instabuild && !flag && itemstack1.is(Items.ARROW)) {
             return InteractionResultHolder.fail(itemstack);
         } else {
             pPlayer.startUsingItem(pHand);
@@ -59,7 +62,7 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
 
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
-        return WET_STUFFS;
+        return WET_STUFF;
     }
 
     @Override

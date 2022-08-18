@@ -1,0 +1,11 @@
+{
+  "type": "naturerain:hydration",
+  "ingredients": [
+    {
+    "item": "minecraft:glow_ink_sac"
+    }
+  ],
+  "output": {
+    "item": "naturerain:flowing_glow_ink"
+  }
+}
