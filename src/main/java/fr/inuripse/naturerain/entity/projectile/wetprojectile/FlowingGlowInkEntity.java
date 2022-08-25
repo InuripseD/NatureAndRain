@@ -6,10 +6,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class FlowingGlowInkEntity extends WetProjectile{
+
+    public static final float FLOWING_GLOW_INK_DAMAGE = 2.0F;
 
     public FlowingGlowInkEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
@@ -24,5 +25,10 @@ public class FlowingGlowInkEntity extends WetProjectile{
     @Override
     public BlockState getBlockForScratch() {
         return ModBlocks.FLOWING_GLOW_INK_PUDDLE.get().defaultBlockState();
+    }
+
+    @Override
+    public float getDamageToDeal() {
+        return FLOWING_GLOW_INK_DAMAGE;
     }
 }

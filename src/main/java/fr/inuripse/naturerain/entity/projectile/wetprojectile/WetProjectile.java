@@ -33,7 +33,6 @@ public abstract class WetProjectile extends Projectile {
         if (Double.isNaN(d0)) {
             d0 = 1.0D;
         }
-
         d0 *= 64.0D * getViewScale();
         return pDistance < d0 * d0;
     }
@@ -72,7 +71,6 @@ public abstract class WetProjectile extends Projectile {
         float f;
         if (this.isInWater()) {
             for(int i = 0; i < 4; ++i) {
-                float f1 = 0.25F;
                 this.level.addParticle(ParticleTypes.BUBBLE, d2 - vec3.x * 0.25D, d0 - vec3.y * 0.25D, d1 - vec3.z * 0.25D, vec3.x, vec3.y, vec3.z);
             }
 
@@ -96,7 +94,7 @@ public abstract class WetProjectile extends Projectile {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        pResult.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), 4.0F);
+        pResult.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), getDamageToDeal());
         this.discard();
     }
 
@@ -192,5 +190,7 @@ public abstract class WetProjectile extends Projectile {
     }
 
     public abstract BlockState getBlockForScratch();
+
+    public abstract float getDamageToDeal();
 
 }

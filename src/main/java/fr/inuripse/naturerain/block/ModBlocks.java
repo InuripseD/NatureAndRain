@@ -58,7 +58,7 @@ public class ModBlocks {
             () -> new WetSlimeballPuddle(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.GRASS).friction(0.8F).sound(SoundType.SLIME_BLOCK).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> FLOWING_GLOW_INK_PUDDLE = registerBlock("flowing_glow_ink_puddle",
-            () -> new FlowingGlowInkPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_LIGHT_BLUE).noCollission().strength(0.2F).sound(SoundType.AMETHYST).lightLevel((light) -> { return 12;})), ModGroupTab.NATURERAIN_TAB);
+            () -> new FlowingGlowInkPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_LIGHT_BLUE).noCollission().strength(0.2F).sound(SoundType.AMETHYST).lightLevel((light) -> { return 14;})), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> WET_LEAVES_CARPET = registerBlock("wet_leaves_carpet",
             () -> new WetLeavesCarpet(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_GREEN).noCollission().strength(0.2F).sound(SoundType.GRASS)), ModGroupTab.NATURERAIN_TAB);

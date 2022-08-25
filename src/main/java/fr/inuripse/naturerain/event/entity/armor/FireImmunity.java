@@ -1,10 +1,10 @@
 package fr.inuripse.naturerain.event.entity.armor;
 
 import fr.inuripse.naturerain.NatureRain;
-import fr.inuripse.naturerain.item.armor.LeafyZirmsHelmet;
+import fr.inuripse.naturerain.item.armor.LeafyZirmsArmor;
+import fr.inuripse.naturerain.item.tiers.ModArmorMaterials;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.ai.behavior.PrepareRamNearestTarget;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -15,18 +15,18 @@ public class FireImmunity {
     @SubscribeEvent
     public static void livingAttackEvent(final LivingAttackEvent event){
         if(!event.getEntity().getLevel().isClientSide()){
-            if(event.getEntityLiving() instanceof Player){
-                Player player = (Player)event.getEntityLiving();
-                if(LeafyZirmsHelmet.hasFullLeafyZirmsArmor(player)){
+            if(event.getEntityLiving() instanceof ServerPlayer){
+                ServerPlayer player = (ServerPlayer)event.getEntityLiving();
+                if(LeafyZirmsArmor.hasFullArmorSet(player, ModArmorMaterials.LEAFY_ZIRMS)){
                     DamageSource source = event.getSource();
                     if(source.isFire()) {
                         event.setCanceled(true);
                         if(source == DamageSource.HOT_FLOOR || source == DamageSource.IN_FIRE || source == DamageSource.LAVA){
                             if(player.getRandom().nextInt(35)<1) {
-                                LeafyZirmsHelmet.reduceDurability(player);
+                                LeafyZirmsArmor.reduceDurability(player);
                             }
                         } else {
-                            LeafyZirmsHelmet.reduceDurability(player);
+                            LeafyZirmsArmor.reduceDurability(player);
                         }
                     }
                 }

@@ -9,6 +9,7 @@ import fr.inuripse.naturerain.block.screen.RaindropCatcherScreen;
 import fr.inuripse.naturerain.config.NatureRainClientConfigs;
 import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
 import fr.inuripse.naturerain.enchantment.ModEnchantments;
+import fr.inuripse.naturerain.entity.LittleSnailEntity;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.FlowingGlowInkRenderer;
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedHoneycombRenderer;
@@ -19,7 +20,10 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -53,8 +57,6 @@ public class NatureRain
 
         eventBus.addListener(this::setup);
 
-        eventBus.addListener(this::clientSetup);
-
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NatureRainClientConfigs.SPEC, "naturerain-client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NatureRainCommonConfigs.SPEC, "naturerain-common.toml");
 
@@ -62,26 +64,17 @@ public class NatureRain
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void clientSetup(final FMLClientSetupEvent event){
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAINDROP_CATCHER.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_HONEY_PUDDLE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_SLIMEBALL_PUDDLE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWING_GLOW_INK_PUDDLE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_LEAVES_CARPET.get(), RenderType.translucent());
-
-        MenuScreens.register(ModMenuTypes.RAINDROP_CATCHER_MENU.get(), RaindropCatcherScreen::new);
-
-        EntityRenderers.register(ModEntityTypes.SOFTENED_HONEYCOMB.get(), SoftenedHoneycombRenderer::new);
-        EntityRenderers.register(ModEntityTypes.FLOWING_GLOW_INK.get(), FlowingGlowInkRenderer::new);
-        EntityRenderers.register(ModEntityTypes.SOFTENED_SLIMEBALL.get(), SoftenedSlimeballRenderer::new);
-        EntityRenderers.register(ModEntityTypes.WET_LEAF.get(), WetLeafRenderer::new);
-    }
-
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        SpawnPlacements.register(ModEntityTypes.LITTLE_SNAIL.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.WORLD_SURFACE,
+                LittleSnailEntity::checkMobSpawnRules);
+
     }
 
 

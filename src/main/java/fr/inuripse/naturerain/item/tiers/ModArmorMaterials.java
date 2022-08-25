@@ -14,6 +14,9 @@ import java.util.function.Supplier;
 public enum ModArmorMaterials implements ArmorMaterial {
     LEAFY_ZIRMS("leafy_zirms", 37, new int[]{3, 6, 8, 3}, 15, SoundEvents.WET_GRASS_PLACE, 2.0F, 0.0F, () -> {
         return Ingredient.of(ModItems.LEAFY_ZIRMS.get());
+    }),
+    SNAIL_SHELL("snail_shell",34, new int[]{3,6,8,3}, 12, SoundEvents.CANDLE_STEP,1.0F,0.8F, () -> {
+        return Ingredient.of(ModItems.SNAIL_SHELL_FRAGMENT.get());
     });
 
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};

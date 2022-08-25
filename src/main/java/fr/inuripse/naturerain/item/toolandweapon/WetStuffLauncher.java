@@ -34,7 +34,7 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
             if(i>20) {
                 if (!itemstack.isEmpty() && !pLevel.isClientSide() && !itemstack.is(Items.ARROW)) {
                     WetProjectile wetStuffToShoot = ((WetItem)itemstack.getItem()).getStuffToShoot(pLevel, pPlayer);
-                    wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F,  2.75F, 1.0F);
+                    wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F,  2.0F, 1.0F);
                     pLevel.addFreshEntity(wetStuffToShoot);
                     itemstack.shrink(1);
                     pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pStack.getEquipmentSlot()));

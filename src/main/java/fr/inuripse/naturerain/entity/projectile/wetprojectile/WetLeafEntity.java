@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class WetLeafEntity extends WetProjectile{
 
+    public static final float WET_LEAF_DAMAGE = 8.0F;
+
     public WetLeafEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
     }
@@ -23,5 +25,10 @@ public class WetLeafEntity extends WetProjectile{
     @Override
     public BlockState getBlockForScratch() {
         return ModBlocks.WET_LEAVES_CARPET.get().defaultBlockState();
+    }
+
+    @Override
+    public float getDamageToDeal() {
+        return WET_LEAF_DAMAGE;
     }
 }
