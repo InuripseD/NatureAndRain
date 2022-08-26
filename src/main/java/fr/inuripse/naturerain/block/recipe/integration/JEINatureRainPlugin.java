@@ -1,4 +1,4 @@
-package fr.inuripse.naturerain.integration;
+package fr.inuripse.naturerain.block.recipe.integration;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;

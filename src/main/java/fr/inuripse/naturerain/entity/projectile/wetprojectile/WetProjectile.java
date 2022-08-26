@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.TheEndGatewayBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -105,11 +107,12 @@ public abstract class WetProjectile extends Projectile {
         this.discard();
     }
 
-    private void spreadAround(BlockHitResult result) {
+    protected void spreadAround(BlockHitResult result) {
         BlockPos blockPos = result.getBlockPos();
         for(BlockPos pPos : getPosesToPlace(result.getBlockPos(), result.getDirection())){
             BlockState blockState = level.getBlockState(pPos);
-            if(blockState.getMaterial().isReplaceable() || blockState==Blocks.AIR.defaultBlockState()) {
+            FluidState fluidState = level.getFluidState(pPos);
+            if((blockState.getMaterial().isReplaceable() || blockState==Blocks.AIR.defaultBlockState()) && fluidState.getType()!=Fluids.LAVA && fluidState.getType()!=Fluids.WATER) {
                 int x = Math.abs(blockPos.getX());
                 int y = Math.abs(blockPos.getY());
                 int z = Math.abs(blockPos.getZ());
@@ -140,7 +143,7 @@ public abstract class WetProjectile extends Projectile {
     }
 
     private Iterable<BlockPos> getPosesToPlace(BlockPos blockPos, Direction direction){
-        BlockPos bP1 = blockPos.relative(direction);
+        BlockPos bP1 = blockPos.relative(direction).relative(direction);
         BlockPos bP2 = blockPos.relative(direction.getOpposite());
         if(direction==Direction.DOWN || direction==Direction.UP){
             bP1 = bP1.relative(Direction.SOUTH).relative(Direction.SOUTH).relative(Direction.SOUTH);
@@ -158,7 +161,7 @@ public abstract class WetProjectile extends Projectile {
         return BlockPos.betweenClosed(bP1,bP2);
     }
 
-    private BlockState blockForPlace(BlockPos blockPos){
+    protected BlockState blockForPlace(BlockPos blockPos){
         BlockState blockState = getBlockForScratch();
         boolean atLeastOneFace = false;
         for(Direction direction : Direction.values()){

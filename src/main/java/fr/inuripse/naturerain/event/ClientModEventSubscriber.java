@@ -25,6 +25,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 @Mod.EventBusSubscriber(modid = NatureRain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
@@ -36,7 +37,6 @@ public class ClientModEventSubscriber {
         event.registerLayerDefinition(SoftenedSlimeballModel.MODEL_LAYER_LOCATION, SoftenedSlimeballModel::createBodyLayer);
         event.registerLayerDefinition(WetLeafModel.MODEL_LAYER_LOCATION, WetLeafModel::createBodyLayer);
         event.registerLayerDefinition(LittleSnailModel.LAYER_LOCATION, LittleSnailModel::createBodyLayer);
-        event.registerLayerDefinition(SnailShellChestplateModel.LAYER_LOCATION, SnailShellChestplateModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -55,5 +55,11 @@ public class ClientModEventSubscriber {
         EntityRenderers.register(ModEntityTypes.WET_LEAF.get(), WetLeafRenderer::new);
         EntityRenderers.register(ModEntityTypes.LITTLE_SNAIL.get(), LittleSnailRenderer::new);
     }
+
+    @SubscribeEvent
+    public static void registerArmorRenderers(final EntityRenderersEvent.AddLayers event){
+        GeoArmorRenderer.registerArmorRenderer(SnailShellChestplate.class, new SnailShellChestplateRenderer());
+    }
+
 
 }

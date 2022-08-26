@@ -2,7 +2,11 @@ package fr.inuripse.naturerain.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,10 +16,15 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.antlr.v4.tool.LabelElementPair;
+
+import java.util.Random;
 
 public class WetHoneyPuddle extends WetMultifaceBlock {
 
@@ -23,9 +32,49 @@ public class WetHoneyPuddle extends WetMultifaceBlock {
         super(p_153822_);
     }
 
+
+    /*------------ Things to do above lava ----------*/
+    @Override
+    public boolean isRandomlyTicking(BlockState pState) {
+        return hasFace(pState, Direction.DOWN);
+    }
+
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRand) {
+        if (lavaBelow(pPos, pLevel)) {
+            if (pRand.nextInt(30) == 20) {
+                if(Math.random()>0.5){
+                    pLevel.playLocalSound((double)pPos.getX() + 0.5D, (double)pPos.getY() + 0.5D, (double)pPos.getZ() + 0.5D, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, 0.2F + pRand.nextFloat(), pRand.nextFloat() * 0.7F + 0.6F, false);
+
+                }else{
+                    pLevel.playLocalSound((double)pPos.getX() + 0.5D, (double)pPos.getY() + 0.5D, (double)pPos.getZ() + 0.5D, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.2F + pRand.nextFloat(), pRand.nextFloat() * 0.7F + 0.6F, false);
+
+                }
+                for(int l = 0; l < 8; ++l) {
+                    pLevel.addParticle(ParticleTypes.LARGE_SMOKE, (double)pPos.getX()+ Math.random(), (double)pPos.getY() + Math.random(), (double)pPos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
+        if(lavaBelow(pPos, pLevel)){
+            if(pRandom.nextInt(2)==1){
+                pLevel.destroyBlock(pPos, false);
+            }
+        }
+    }
+
+    public static boolean lavaBelow(BlockPos pPos, Level pLevel){
+        return pLevel.getFluidState(pPos.below()).getType()==Fluids.LAVA || pLevel.getFluidState(pPos.below()).getType()==Fluids.FLOWING_LAVA;
+    }
+    /*-------------------------------------*/
+
+
     /*---------- HoneyBlock LIKE ----------*/
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return getShape(pState,pLevel,pPos,pContext);
+        return hasFace(pState, Direction.DOWN) ? DOWN_AABB : Shapes.empty();
     }
 
     public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float p_153376_) {
@@ -58,7 +107,8 @@ public class WetHoneyPuddle extends WetMultifaceBlock {
             BlockState blockState = pEntity.level.getBlockState(pPos);
             double xBonus = (((hasFace(blockState, Direction.SOUTH)) || (hasFace(blockState, Direction.NORTH))) ? 0.85 : 0);
             double zBonus = (((hasFace(blockState, Direction.EAST)) || (hasFace(blockState, Direction.WEST))) ? 0.85 : 0);
-            return (d0 >= 0.425 - xBonus) && (d0 <= 0.575 + xBonus) && (d1>= 0.425 - zBonus) && (d1<= 0.575 + zBonus) ;
+            return (d0 >= 0.300 - xBonus) && (d0 <= 0.700 + xBonus) && (d1>= 0.300 - zBonus) && (d1<= 0.700 + zBonus) ;
+            //return (d0 >= 0.425 - xBonus) && (d0 <= 0.575 + xBonus) && (d1>= 0.425 - zBonus) && (d1<= 0.575 + zBonus) ;
         }
     }
 

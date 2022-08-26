@@ -33,8 +33,8 @@ public class RaindropCatcherMenu extends AbstractContainerMenu {
         addPlayerInventory(inventory);
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0,80,31));
-            this.addSlot(new ModResultSlot(handler, 1,80,53));
+            this.addSlot(new SlotItemHandler(handler, 0,80,41));
+            this.addSlot(new ModResultSlot(handler, 1,80,63));
         });
 
         addDataSlots(data);

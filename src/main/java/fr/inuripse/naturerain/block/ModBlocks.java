@@ -52,10 +52,10 @@ public class ModBlocks {
             () -> new RaindropCatcher(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> WET_HONEY_PUDDLE = registerBlock("wet_honey_puddle",
-            () -> new WetHoneyPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_FIREPROOF_PLANT, MaterialColor.COLOR_ORANGE).strength(0.25F).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK)), ModGroupTab.NATURERAIN_TAB);
+            () -> new WetHoneyPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_FIREPROOF_PLANT, MaterialColor.COLOR_ORANGE).randomTicks().strength(0.25F).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK)), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> WET_SLIMEBALL_PUDDLE = registerBlock("wet_slimeball_puddle",
-            () -> new WetSlimeballPuddle(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.GRASS).friction(0.8F).sound(SoundType.SLIME_BLOCK).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
+            () -> new WetSlimeballPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.GRASS).strength(0.25F).friction(0.8F).sound(SoundType.SLIME_BLOCK).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
 
     public static final RegistryObject<Block> FLOWING_GLOW_INK_PUDDLE = registerBlock("flowing_glow_ink_puddle",
             () -> new FlowingGlowInkPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_LIGHT_BLUE).noCollission().strength(0.2F).sound(SoundType.AMETHYST).lightLevel((light) -> { return 14;})), ModGroupTab.NATURERAIN_TAB);

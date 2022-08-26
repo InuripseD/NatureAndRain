@@ -5,14 +5,18 @@ import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;
 import fr.inuripse.naturerain.entity.LittleSnailEntity;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import fr.inuripse.naturerain.event.loot.LeavesAdditionModifier;
+import fr.inuripse.naturerain.item.armor.SnailShellChestplate;
+import fr.inuripse.naturerain.item.armor.renderer.SnailShellChestplateRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import javax.annotation.Nonnull;
 

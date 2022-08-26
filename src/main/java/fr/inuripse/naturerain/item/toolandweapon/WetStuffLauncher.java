@@ -4,6 +4,8 @@ package fr.inuripse.naturerain.item.toolandweapon;
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.WetProjectile;
 import fr.inuripse.naturerain.item.ModItems;
 import fr.inuripse.naturerain.item.custom.WetItem;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,6 +38,7 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
                     WetProjectile wetStuffToShoot = ((WetItem)itemstack.getItem()).getStuffToShoot(pLevel, pPlayer);
                     wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F,  2.0F, 1.0F);
                     pLevel.addFreshEntity(wetStuffToShoot);
+                    pLevel.playSound(null,pPlayer, SoundEvents.SLIME_JUMP, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
                     itemstack.shrink(1);
                     pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pStack.getEquipmentSlot()));
                 }
