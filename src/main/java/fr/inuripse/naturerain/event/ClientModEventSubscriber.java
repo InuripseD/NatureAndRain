@@ -36,7 +36,6 @@ public class ClientModEventSubscriber {
         event.registerLayerDefinition(FlowingGlowInkModel.MODEL_LAYER_LOCATION, FlowingGlowInkModel::createBodyLayer);
         event.registerLayerDefinition(SoftenedSlimeballModel.MODEL_LAYER_LOCATION, SoftenedSlimeballModel::createBodyLayer);
         event.registerLayerDefinition(WetLeafModel.MODEL_LAYER_LOCATION, WetLeafModel::createBodyLayer);
-        event.registerLayerDefinition(LittleSnailModel.LAYER_LOCATION, LittleSnailModel::createBodyLayer);
     }
 
     @SubscribeEvent

@@ -47,9 +47,8 @@ public class ModEntityTypes {
                     .build(new ResourceLocation(NatureRain.MOD_ID, "wet_leaf").toString()));
 
     public static final RegistryObject<EntityType<LittleSnailEntity>> LITTLE_SNAIL = ENTITY_TYPES.register("little_snail",
-            () -> EntityType.Builder.of(LittleSnailEntity::new, MobCategory.AMBIENT)
-                    .sized(0.1F, 0.1F)
-                    .clientTrackingRange(6)
+            () -> EntityType.Builder.of(LittleSnailEntity::new, MobCategory.CREATURE)
+                    .sized(0.2F, 0.2F)
                     .build(new ResourceLocation(NatureRain.MOD_ID, "little_snail").toString()));
 
     public static void register(IEventBus eventBus){
