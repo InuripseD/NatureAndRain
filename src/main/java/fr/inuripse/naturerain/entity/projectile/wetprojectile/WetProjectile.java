@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -45,7 +46,7 @@ public abstract class WetProjectile extends Projectile {
         HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
         boolean flag = false;
         if (hitresult.getType() == HitResult.Type.BLOCK) {
-            BlockPos blockpos = ((BlockHitResult)hitresult).getBlockPos();
+            BlockPos blockpos = ((BlockHitResult) hitresult).getBlockPos();
             BlockState blockstate = this.level.getBlockState(blockpos);
             if (blockstate.is(Blocks.NETHER_PORTAL)) {
                 this.handleInsidePortal(blockpos);
@@ -53,7 +54,7 @@ public abstract class WetProjectile extends Projectile {
             } else if (blockstate.is(Blocks.END_GATEWAY)) {
                 BlockEntity blockentity = this.level.getBlockEntity(blockpos);
                 if (blockentity instanceof TheEndGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
-                    TheEndGatewayBlockEntity.teleportEntity(this.level, blockpos, blockstate, this, (TheEndGatewayBlockEntity)blockentity);
+                    TheEndGatewayBlockEntity.teleportEntity(this.level, blockpos, blockstate, this, (TheEndGatewayBlockEntity) blockentity);
                 }
 
                 flag = true;
@@ -72,7 +73,7 @@ public abstract class WetProjectile extends Projectile {
         this.updateRotation();
         float f;
         if (this.isInWater()) {
-            for(int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i) {
                 this.level.addParticle(ParticleTypes.BUBBLE, d2 - vec3.x * 0.25D, d0 - vec3.y * 0.25D, d1 - vec3.z * 0.25D, vec3.x, vec3.y, vec3.z);
             }
 
@@ -81,22 +82,24 @@ public abstract class WetProjectile extends Projectile {
             f = 0.99F;
         }
 
-        this.setDeltaMovement(vec3.scale((double)f));
+        this.setDeltaMovement(vec3.scale((double) f));
         if (!this.isNoGravity()) {
             Vec3 vec31 = this.getDeltaMovement();
-            this.setDeltaMovement(vec31.x, vec31.y - (double)this.getGravity(), vec31.z);
+            this.setDeltaMovement(vec31.x, vec31.y - (double) this.getGravity(), vec31.z);
         }
 
         this.setPos(d2, d0, d1);
 
-        this.level.addParticle(ParticleTypes.RAIN, d2 - vec3.x * 0.25D, d0 - vec3.y * 0.25D, d1 - vec3.z * 0.25D, vec3.x, vec3.y, vec3.z);
-
+        for (int j = 0; j < 3; ++j) {
+            this.level.addParticle(ParticleTypes.RAIN, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), vec3.x, vec3.y, vec3.z);
+        }
     }
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         pResult.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), getDamageToDeal());
+        this.playSound(SoundEvents.WATER_AMBIENT, 0.3F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.discard();
     }
 
@@ -104,6 +107,7 @@ public abstract class WetProjectile extends Projectile {
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         this.spreadAround(result);
+        this.playSound(SoundEvents.WATER_AMBIENT, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.discard();
     }
 

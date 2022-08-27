@@ -33,7 +33,7 @@ public class SoftenedHoneycombEntity extends WetProjectile {
     public SoftenedHoneycombEntity(Level pLevel, Player pPlayer) {
         this(ModEntityTypes.SOFTENED_HONEYCOMB.get(), pLevel);
         super.setOwner(pPlayer);
-        this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.1F, pPlayer.getZ());
+        this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.2F, pPlayer.getZ());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SoftenedHoneycombEntity extends WetProjectile {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        if(pResult.getEntity() instanceof LivingEntity){
+        if(!level.isClientSide() && pResult.getEntity() instanceof LivingEntity){
             ((LivingEntity)pResult.getEntity()).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,200,1));
         }
     }

@@ -19,7 +19,7 @@ public class WetLeafEntity extends WetProjectile{
     public WetLeafEntity(Level level, Player pPlayer) {
         this(ModEntityTypes.WET_LEAF.get(), level);
         super.setOwner(pPlayer);
-        this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.1F, pPlayer.getZ());
+        this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.2F, pPlayer.getZ());
     }
 
     @Override

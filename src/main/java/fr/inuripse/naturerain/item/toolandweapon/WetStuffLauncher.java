@@ -17,8 +17,8 @@ import java.util.function.Predicate;
 
 public class WetStuffLauncher extends ProjectileWeaponItem {
 
-    //Items that are allowed to be shot.
-    public static final Predicate<ItemStack> WET_STUFF = (stack) -> {
+    /*-- Items that are allowed to be shot --*/
+    private static final Predicate<ItemStack> WET_STUFF = (stack) -> {
         return stack.getItem().equals(ModItems.SOFTENED_HONEYCOMB.get()) || stack.getItem().equals(ModItems.FLOWING_GLOW_INK.get())
                 || stack.getItem().equals(ModItems.WET_LEAF.get()) || stack.getItem().equals(ModItems.SOFTENED_SLIMEBALL.get());
     };
@@ -27,40 +27,47 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
         super(properties);
     }
 
+    /*----- Do stuff like a bow -----*/
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+        ItemStack launcherItemStack = pPlayer.getItemInHand(pHand);
+        ItemStack projectile = pPlayer.getProjectile(launcherItemStack);
+        boolean flag = !projectile.isEmpty() && !projectile.is(Items.ARROW);
+        InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(launcherItemStack, pLevel, pPlayer, pHand, flag);
+        if (ret != null) return ret;
+        if (flag) {
+                pPlayer.startUsingItem(pHand);
+                return InteractionResultHolder.consume(launcherItemStack);
+        }
+        return InteractionResultHolder.fail(launcherItemStack);
+    }
+
     @Override
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving, int pTimeLeft) {
         if (pEntityLiving instanceof Player) {
             Player pPlayer = (Player)pEntityLiving;
             ItemStack itemstack = pPlayer.getProjectile(pStack);
             int i = this.getUseDuration(pStack) - pTimeLeft;
-            if(i>20) {
+            if(i>5) {
                 if (!itemstack.isEmpty() && !pLevel.isClientSide() && !itemstack.is(Items.ARROW)) {
-                    WetProjectile wetStuffToShoot = ((WetItem)itemstack.getItem()).getStuffToShoot(pLevel, pPlayer);
-                    wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F,  2.0F, 1.0F);
+                    WetProjectile wetStuffToShoot = ((WetItem) itemstack.getItem()).getStuffToShoot(pLevel, pPlayer);
+                    wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, getProjectileVelocity(i), 1.0F);
                     pLevel.addFreshEntity(wetStuffToShoot);
-                    pLevel.playSound(null,pPlayer, SoundEvents.SLIME_JUMP, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
-                    itemstack.shrink(1);
-                    pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pStack.getEquipmentSlot()));
+                    if (!pPlayer.isCreative()) {
+                        itemstack.shrink(1);
+                        if (itemstack.isEmpty()) {
+                            pPlayer.getInventory().removeItem(itemstack);
+                        }
+                        pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(player.getUsedItemHand()));
+                    }
                 }
+                pLevel.playSound(null,pPlayer, SoundEvents.SLIME_JUMP, SoundSource.PLAYERS, 0.8f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
             }
         }
     }
 
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
-        ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        ItemStack itemstack1 = pPlayer.getProjectile(itemstack);
-        boolean flag = !itemstack1.isEmpty();
-
-        InteractionResultHolder<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, pLevel, pPlayer, pHand, flag);
-        if (ret != null) return ret;
-
-        if (!pPlayer.getAbilities().instabuild && !flag && itemstack1.is(Items.ARROW)) {
-            return InteractionResultHolder.fail(itemstack);
-        } else {
-            pPlayer.startUsingItem(pHand);
-            return InteractionResultHolder.consume(itemstack);
-        }
+    private float getProjectileVelocity(int timeUse){
+        return (timeUse > 30) ? 2.0F : 0.5F + (float)timeUse * 0.05F;
     }
 
     @Override
@@ -74,8 +81,13 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) { return 72000; }
+    public int getUseDuration(ItemStack pStack) {
+        return 72000;
+    }
 
     @Override
-    public int getDefaultProjectileRange() { return 15; }
+    public int getDefaultProjectileRange() {
+        return 15;
+    }
+    /*------------------------------------*/
 }

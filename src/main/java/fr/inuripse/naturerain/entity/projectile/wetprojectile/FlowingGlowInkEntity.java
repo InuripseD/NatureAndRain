@@ -19,7 +19,7 @@ public class FlowingGlowInkEntity extends WetProjectile{
     public FlowingGlowInkEntity(Level pLevel, Player pPlayer) {
         this(ModEntityTypes.FLOWING_GLOW_INK.get(), pLevel);
         super.setOwner(pPlayer);
-        this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.1F, pPlayer.getZ());
+        this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.2F, pPlayer.getZ());
     }
 
     @Override
