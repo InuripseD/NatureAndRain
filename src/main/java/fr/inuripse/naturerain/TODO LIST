@@ -2,9 +2,7 @@
                     be able to press 'u' with jei for utilities(integration)
                     think about tick and random tick refund
 
--FlowingGlowInkPuddle : allow placement underwater
-                        allow entity to go under water !(entity)
-                        texture and texture item
+-FlowingGlowInkPuddle : texture and texture item
 
 -WetHoneyPuddle :   add a state before block destroy above lava
                     texture refund
@@ -33,9 +31,10 @@
 
 -SnailShellChestplate : tp in havresac (dimension)
 
--WetStuffLauncher : sound and particles
-                    texture refund
+-WetStuffLauncher : texture refund
 
 +A ritual to active power on item, and snail.
+
++Rainbow
 
 when all of it is done : test on servers. And First release !

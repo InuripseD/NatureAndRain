@@ -53,15 +53,15 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
                     WetProjectile wetStuffToShoot = ((WetItem) itemstack.getItem()).getStuffToShoot(pLevel, pPlayer);
                     wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, getProjectileVelocity(i), 1.0F);
                     pLevel.addFreshEntity(wetStuffToShoot);
-                    if (!pPlayer.isCreative()) {
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            pPlayer.getInventory().removeItem(itemstack);
-                        }
-                        pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(player.getUsedItemHand()));
+                    pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(player.getUsedItemHand()));
+                }
+                pLevel.playSound(null,pPlayer, SoundEvents.SLIME_JUMP, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
+                if (!pPlayer.isCreative()) {
+                    itemstack.shrink(1);
+                    if (itemstack.isEmpty()) {
+                        pPlayer.getInventory().removeItem(itemstack);
                     }
                 }
-                pLevel.playSound(null,pPlayer, SoundEvents.SLIME_JUMP, SoundSource.PLAYERS, 0.8f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
             }
         }
     }

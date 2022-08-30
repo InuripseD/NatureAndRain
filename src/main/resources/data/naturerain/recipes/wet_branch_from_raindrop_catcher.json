@@ -1,0 +1,11 @@
+{
+  "type": "naturerain:hydration",
+  "ingredients": [
+    {
+      "item": "naturerain:branch"
+    }
+  ],
+  "output": {
+    "item": "naturerain:wet_branch"
+  }
+}

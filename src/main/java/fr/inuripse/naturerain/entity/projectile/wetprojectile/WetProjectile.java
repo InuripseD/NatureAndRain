@@ -21,8 +21,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.network.NetworkHooks;
 
+import static fr.inuripse.naturerain.block.custom.FlowingGlowInkPuddle.WATERLOGGED;
 import static net.minecraft.world.level.block.MultifaceBlock.getFaceProperty;
 
 public abstract class WetProjectile extends Projectile {
@@ -99,15 +101,17 @@ public abstract class WetProjectile extends Projectile {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         pResult.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), getDamageToDeal());
-        this.playSound(SoundEvents.WATER_AMBIENT, 0.3F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.playSound(SoundEvents.AXOLOTL_SWIM, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.discard();
     }
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        this.spreadAround(result);
-        this.playSound(SoundEvents.WATER_AMBIENT, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        if(!level.isClientSide()) {
+            this.spreadAround(result);
+        }
+        this.playSound(SoundEvents.AXOLOTL_SWIM, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.discard();
     }
 
@@ -116,7 +120,7 @@ public abstract class WetProjectile extends Projectile {
         for(BlockPos pPos : getPosesToPlace(result.getBlockPos(), result.getDirection())){
             BlockState blockState = level.getBlockState(pPos);
             FluidState fluidState = level.getFluidState(pPos);
-            if((blockState.getMaterial().isReplaceable() || blockState==Blocks.AIR.defaultBlockState()) && fluidState.getType()!=Fluids.LAVA && fluidState.getType()!=Fluids.WATER) {
+            if((blockState.getMaterial().isReplaceable() || blockState==Blocks.AIR.defaultBlockState()) && fluidState.getType()!=Fluids.LAVA && (fluidState.getType()!=Fluids.WATER || this instanceof FlowingGlowInkEntity)) {
                 int x = Math.abs(blockPos.getX());
                 int y = Math.abs(blockPos.getY());
                 int z = Math.abs(blockPos.getZ());
@@ -176,6 +180,9 @@ public abstract class WetProjectile extends Projectile {
                 if(random.nextInt(100)<60){
                     blockState = blockState.setValue(getFaceProperty(direction),Boolean.valueOf(true));
                     atLeastOneFace = true;
+                    if(level.getFluidState(blockPos).getType()==Fluids.WATER && this instanceof FlowingGlowInkEntity){
+                        blockState = blockState.setValue(WATERLOGGED, Boolean.valueOf(true));
+                    }
                 }
             }
         }
