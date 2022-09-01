@@ -17,12 +17,23 @@
           }
         ]
       }
+    },
+    {
+      "condition": "minecraft:table_bonus",
+      "enchantment": "minecraft:fortune",
+      "chances": [
+        0.35,
+        0.55,
+        0.75,
+        0.95,
+        1.0
+      ]
     }
   ],
   "addition1": "naturerain:leaf",
   "addition2": "naturerain:wet_leaf",
   "addition3": "naturerain:branch",
   "addition4": "naturerain:wet_branch",
-  "proba12": 0.35,
-  "proba34": 0.007
+  "proba12": 0.5,
+  "proba34": 0.01
 }

@@ -75,7 +75,7 @@ public class LeavesAdditionModifier extends LootModifier {
             Item addition3 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object,"addition3")));
             Item addition4 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object,"addition4")));
             double prob12 = GsonHelper.getAsDouble(object,"proba12");
-            double prob34 = GsonHelper.getAsDouble(object,"probala34");
+            double prob34 = GsonHelper.getAsDouble(object,"proba34");
             return new LeavesAdditionModifier(ailootcondition, addition1, addition2, addition3, addition4, prob12, prob34);
         }
 
