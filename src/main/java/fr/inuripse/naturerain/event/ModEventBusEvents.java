@@ -5,11 +5,13 @@ import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;
 import fr.inuripse.naturerain.entity.LittleSnailEntity;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import fr.inuripse.naturerain.event.loot.LeavesAdditionModifier;
+import fr.inuripse.naturerain.event.loot.lootitemcondition.LootItemTagPropertyCondition;
 import fr.inuripse.naturerain.item.armor.SnailShellChestplate;
 import fr.inuripse.naturerain.item.armor.renderer.SnailShellChestplateRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
@@ -27,13 +29,7 @@ public class ModEventBusEvents {
     public static void registerModifierSerializers(@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event){
         event.getRegistry().registerAll(
                 new LeavesAdditionModifier.ModGlobalLootModifierSerilizer().setRegistryName(
-                        new ResourceLocation(NatureRain.MOD_ID, "birch_leaves_glm")),
-                new LeavesAdditionModifier.ModGlobalLootModifierSerilizer().setRegistryName(
-                        new ResourceLocation(NatureRain.MOD_ID, "dark_oak_leaves_glm")),
-                new LeavesAdditionModifier.ModGlobalLootModifierSerilizer().setRegistryName(
-                        new ResourceLocation(NatureRain.MOD_ID, "jungle_leaves_glm")),
-                new LeavesAdditionModifier.ModGlobalLootModifierSerilizer().setRegistryName(
-                        new ResourceLocation(NatureRain.MOD_ID, "oak_leaves_glm"))
+                        new ResourceLocation(NatureRain.MOD_ID, "leaves_loot_modifier"))
         );
     }
 

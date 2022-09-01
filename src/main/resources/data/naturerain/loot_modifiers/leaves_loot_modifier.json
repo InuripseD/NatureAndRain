@@ -2,8 +2,8 @@
   "type": "naturerain:leaves_loot_modifier",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
-      "loot_table_id": "minecraft:blocks/birch_leaves"
+      "condition": "naturerain:tag",
+      "tag": "minecraft:leaves"
     },
     {
       "condition": "minecraft:match_tool",
@@ -21,5 +21,8 @@
   ],
   "addition1": "naturerain:leaf",
   "addition2": "naturerain:wet_leaf",
-  "addition3": "naturerain:wet_branch"
+  "addition3": "naturerain:branch",
+  "addition4": "naturerain:wet_branch",
+  "proba12": 0.35,
+  "proba34": 0.007
 }

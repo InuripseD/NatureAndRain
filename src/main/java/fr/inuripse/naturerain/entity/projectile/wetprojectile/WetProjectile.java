@@ -111,7 +111,7 @@ public abstract class WetProjectile extends Projectile {
         if(!level.isClientSide()) {
             this.spreadAround(result);
         }
-        this.playSound(SoundEvents.AXOLOTL_SWIM, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.playSound(SoundEvents.AXOLOTL_SWIM, 0.7F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.discard();
     }
 

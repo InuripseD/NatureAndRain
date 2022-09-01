@@ -64,7 +64,7 @@ public class ModBlocks {
             () -> new WetLeavesCarpet(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_GREEN).noCollission().strength(0.2F).sound(SoundType.GRASS)), ModGroupTab.NATURERAIN_TAB);
 
 
-    public static final RegistryObject<Block> WET_FARMLAND = registerBlockWithoutItem("wet_farmland",
+    public static final RegistryObject<Block> WET_FARMLAND = registerBlock("wet_farmland",
             () -> new FarmBlock(BlockBehaviour.Properties.copy(Blocks.FARMLAND)){
                 @Override
                 public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
@@ -80,7 +80,7 @@ public class ModBlocks {
                 public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
                     pLevel.setBlock(pPos,pState.setValue(MOISTURE, Integer.valueOf(7)),2);
                 }
-            });
+            }, ModGroupTab.NATURERAIN_TAB);
 
 
 

@@ -15,7 +15,10 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -28,10 +31,12 @@ import java.util.Random;
 
 public class WetHoneyPuddle extends WetMultifaceBlock {
 
+    public static final BooleanProperty ABOVE_LAVA = BooleanProperty.create("above_lava");
+
     public WetHoneyPuddle(Properties p_153822_) {
         super(p_153822_);
+        this.registerDefaultState(this.defaultBlockState().setValue(ABOVE_LAVA, Boolean.valueOf(false)));
     }
-
 
     /*------------ Things to do above lava ----------*/
     @Override
@@ -60,14 +65,21 @@ public class WetHoneyPuddle extends WetMultifaceBlock {
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
         if(lavaBelow(pPos, pLevel)){
-            if(pRandom.nextInt(2)==1){
+            if(pRandom.nextInt(2)==1 && pState.getValue(ABOVE_LAVA)){
                 pLevel.destroyBlock(pPos, false);
+            }else{
+                pLevel.setBlock(pPos, pState.setValue(ABOVE_LAVA, Boolean.valueOf(lavaBelow(pPos, pLevel))), 2);
             }
         }
     }
 
     public static boolean lavaBelow(BlockPos pPos, Level pLevel){
         return pLevel.getFluidState(pPos.below()).getType()==Fluids.LAVA || pLevel.getFluidState(pPos.below()).getType()==Fluids.FLOWING_LAVA;
+    }
+
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        super.createBlockStateDefinition(pBuilder);
+        pBuilder.add(ABOVE_LAVA);
     }
     /*-------------------------------------*/
 

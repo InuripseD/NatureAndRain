@@ -1,9 +1,6 @@
 {
   "replace": false,
   "entries": [
-    "naturerain:oak_leaves_glm",
-    "naturerain:dark_oak_leaves_glm",
-    "naturerain:birch_leaves_glm",
-    "naturerain:jungle_leaves_glm"
+    "naturerain:leaves_loot_modifier"
   ]
 }

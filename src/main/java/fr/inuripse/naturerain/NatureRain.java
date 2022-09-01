@@ -15,15 +15,19 @@ import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.FlowingGlow
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedHoneycombRenderer;
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedSlimeballRenderer;
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.WetLeafRenderer;
+import fr.inuripse.naturerain.event.loot.lootitemcondition.ModLootItemConditions;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -58,11 +62,9 @@ public class NatureRain
         ModMenuTypes.register(eventBus);
         ModRecipes.register(eventBus);
         ModEntityTypes.register(eventBus);
+        ModLootItemConditions.register(eventBus);
 
         eventBus.addListener(this::setup);
-
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NatureRainClientConfigs.SPEC, "naturerain-client.toml");
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NatureRainCommonConfigs.SPEC, "naturerain-common.toml");
 
         GeckoLib.initialize();
 

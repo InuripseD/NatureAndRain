@@ -2,10 +2,22 @@
   "multipart": [
     {
       "when": {
-        "up": "true"
+        "up": "true",
+        "above_lava": "false"
       },
       "apply": {
         "model": "naturerain:block/wet_honey_puddle",
+        "x": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "up": "true",
+        "above_lava": "true"
+      },
+      "apply": {
+        "model": "naturerain:block/wet_honey_puddle_hot",
         "x": 270,
         "uvlock": true
       }
@@ -27,10 +39,20 @@
     },
     {
       "when": {
-        "north": "true"
+        "north": "true",
+        "above_lava": "false"
       },
       "apply": {
         "model": "naturerain:block/wet_honey_puddle"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "above_lava": "true"
+      },
+      "apply": {
+        "model": "naturerain:block/wet_honey_puddle_hot"
       }
     },
     {
@@ -48,10 +70,22 @@
     },
     {
       "when": {
-        "west": "true"
+        "west": "true",
+        "above_lava": "false"
       },
       "apply": {
         "model": "naturerain:block/wet_honey_puddle",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "above_lava": "true"
+      },
+      "apply": {
+        "model": "naturerain:block/wet_honey_puddle_hot",
         "y": 270,
         "uvlock": true
       }
@@ -73,10 +107,22 @@
     },
     {
       "when": {
-        "south": "true"
+        "south": "true",
+        "above_lava": "false"
       },
       "apply": {
         "model": "naturerain:block/wet_honey_puddle",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "above_lava": "true"
+      },
+      "apply": {
+        "model": "naturerain:block/wet_honey_puddle_hot",
         "y": 180,
         "uvlock": true
       }
@@ -98,10 +144,22 @@
     },
     {
       "when": {
-        "east": "true"
+        "east": "true",
+        "above_lava": "false"
       },
       "apply": {
         "model": "naturerain:block/wet_honey_puddle",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "above_lava": "true"
+      },
+      "apply": {
+        "model": "naturerain:block/wet_honey_puddle_hot",
         "y": 90,
         "uvlock": true
       }
@@ -123,10 +181,22 @@
     },
     {
       "when": {
-        "down": "true"
+        "down": "true",
+        "above_lava": "false"
       },
       "apply": {
         "model": "naturerain:block/wet_honey_puddle",
+        "x": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "down": "true",
+        "above_lava": "true"
+      },
+      "apply": {
+        "model": "naturerain:block/wet_honey_puddle_hot",
         "x": 90,
         "uvlock": true
       }

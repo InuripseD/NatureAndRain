@@ -4,15 +4,12 @@
 
 -FlowingGlowInkPuddle : texture and texture item
 
--WetHoneyPuddle :   add a state before block destroy above lava
-                    texture refund
+-WetHoneyPuddle : texture refund
 
 -WetLeavesCarpet :  find a use to this
                     texture refund
 
 -WetProjectile : each entity is own particles/sound (entity)
-
--WetFarmland : is it ok ?
 
 -CONFIGURATIONS!!
 
