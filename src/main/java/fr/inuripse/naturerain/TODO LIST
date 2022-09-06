@@ -1,37 +1,55 @@
--RaindropCatcher :  update texture and screen, because drops are behind "Inventory"(screen)
-                    be able to press 'u' with jei for utilities(integration)
-                    think about tick and random tick refund
+Blocks :
+    ~RaindropCatcher :  Update texture and screen(GUI) texture, because drops are behind "Inventory"(in screen).
+                        Being able to press 'u' with jei for utilities (integration).
+                        Think about tick and random tick refund (can be really long to be consider under rain).
 
--FlowingGlowInkPuddle : texture and texture item
+    ~WetLeavesCarpet :  Find a use to this.
+                        Texture refund.
 
--WetHoneyPuddle : texture refund
+    +Flowers : For the ritual.
 
--WetLeavesCarpet :  find a use to this
-                    texture refund
+    +RitualBlock : For the ritual. Block in the middle surrounded by flowers
+                   Should be a BlockEntity or should show Item in it
 
--WetProjectile : each entity is own particles/sound (entity)
+    +ItemStand : A block to place item on.
 
--CONFIGURATIONS!!
++Rituals :
+    +RainRitual : A ritual to summon the rain.
 
-+Enchantment to climb honey blocks/puddles
-+Effect to see under lava
+    +SnailUpgradeRitual : A ritual to change the little Snail into mount snail.
 
--LittleSnail :  find out how animations works.
-                world gen check!
-+Snail
-+SnailMount etc.
+    +BowToWetStuffLauncher : A ritual to change the bow to a WetStuffLauncher.
 
--LeavesAdditionModifier : should allow fortune
+Items :
+    ~WetItem(s) : Texture Refund.
 
--SnailArmor :   texture refund
-                create craft
+    ~SnailInShell : Should spawn a snail like a spawn egg works.
 
--SnailShellChestplate : tp in havresac (dimension)
+    ~WetStuffLauncher : Texture refund.
 
--WetStuffLauncher : texture refund
+    ~SnailChestPlate : Add the dimension. The
 
-+A ritual to active power on item, and snail.
+    +RainWaterBottle : Can be filled in the RainDropCatcher. Will be use to craft potion to see under lava.
 
-+Rainbow
+    ++ItemThatMakeSound : This item is easy to craft and should be use to start rain.
+
+Enchantments/Effects :
+    +LavaVision : This effects should allow the player to see under lava like in spectator.
+
+    +HoneyMaster : The player would be able to climb on honey block/puddle.
+
+    +ChestplateSnailUpgrade : Increase the size of the "house" when in the snailshell.
+
+Features:
+    +Rainbow : Should spawn after rain and we can find a treasure (or a sprite to trade with him).
+
+    +Ritual : For rain, to transform snail, to get the bow.
+
+Entities:
+    +MountSnail : Add the drop of shell, add the mountable, the climbable...
+
+Configurations:
+    +Need them to works.
+    +Configure files to be NATURE AND RAIN mod!
 
 when all of it is done : test on servers. And First release !

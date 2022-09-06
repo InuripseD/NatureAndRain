@@ -81,7 +81,7 @@ public class NatureRain
         SpawnPlacements.register(ModEntityTypes.LITTLE_SNAIL.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.WORLD_SURFACE,
-                LittleSnailEntity::checkMobSpawnRules);
+                LittleSnailEntity::checkSnailSpawnRules);
 
     }
 

@@ -49,6 +49,12 @@ public class ModItems {
     /*--------------------------------------------------------*/
 
 
+    /*------------------- Custom Items ----------------*/
+    public static final RegistryObject<Item> SNAIL_IN_SHELL = ITEMS.register("snail_in_shell",
+            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).stacksTo(1)));
+    /*--------------------------------------------------------*/
+
+
     /*------------------- Wet Items ----------------*/
     public static final RegistryObject<Item> WET_LEAF = ITEMS.register("wet_leaf",
             () -> new WetItem(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)) {
