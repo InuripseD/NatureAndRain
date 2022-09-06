@@ -4,9 +4,11 @@ import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;
 import fr.inuripse.naturerain.block.screen.RaindropCatcherMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -43,6 +45,7 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 120;
+    private ItemStack previousItem = ItemStack.EMPTY;
 
     public RaindropCatcherEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModBlockEntities.RAINDROP_CATCHER_ENTITY.get(), pWorldPosition, pBlockState);
@@ -104,6 +107,7 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
         pTag.putInt("raindrop_catcher.progress", progress);
+        pTag.putString("raindrop_catcher.previousitem", previousItem.getItem().toString());
         super.saveAdditional(pTag);
     }
 
@@ -112,6 +116,7 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
         super.load(pTag);
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
         progress = pTag.getInt("raindrop_catcher.progress");
+        previousItem = (Registry.ITEM.get(new ResourceLocation(pTag.getString("raindrop_catcher.previousitem")))).getDefaultInstance();
     }
 
     public void drops() {
@@ -123,6 +128,11 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
     }
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, RaindropCatcherEntity pBlockEntity) {
+        if(pBlockEntity.progress != 0) {
+            if(pBlockEntity.itemHandler.getStackInSlot(0).getItem().toString() != pBlockEntity.previousItem.getItem().toString()){
+                pBlockEntity.resetProgress();
+            }
+        }
         if(hasRecipe(pBlockEntity) && pState.getValue(UNDER_RAIN)) {
             pBlockEntity.progress++;
             setChanged(pLevel, pPos, pState);
@@ -133,6 +143,7 @@ public class RaindropCatcherEntity extends BlockEntity implements MenuProvider {
             pBlockEntity.resetProgress();
             setChanged(pLevel, pPos, pState);
         }
+        pBlockEntity.previousItem = pBlockEntity.itemHandler.getStackInSlot(0);
     }
 
     private static boolean hasRecipe(RaindropCatcherEntity entity) {
