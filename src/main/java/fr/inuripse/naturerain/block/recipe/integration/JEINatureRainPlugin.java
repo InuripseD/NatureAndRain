@@ -1,14 +1,17 @@
 package fr.inuripse.naturerain.block.recipe.integration;
 
 import fr.inuripse.naturerain.NatureRain;
+import fr.inuripse.naturerain.block.ModBlocks;
 import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 import java.util.List;
@@ -32,5 +35,11 @@ public class JEINatureRainPlugin implements IModPlugin {
         RecipeManager rm = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
         List<RaindropCatcherRecipe> recipes = rm.getAllRecipesFor(RaindropCatcherRecipe.Type.INSTANCE);
         registration.addRecipes(new RecipeType<>(RainDropCatcherRecipeCategory.UID, RaindropCatcherRecipe.class), recipes);
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.RAINDROP_CATCHER.get()),
+                RainDropCatcherRecipeCategory.UID);
     }
 }
