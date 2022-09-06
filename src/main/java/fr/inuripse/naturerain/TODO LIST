@@ -1,6 +1,5 @@
 Blocks :
     ~RaindropCatcher :  Update texture and screen(GUI) texture, because drops are behind "Inventory"(in screen).
-                        Being able to press 'u' with jei for utilities (integration).
                         Think about tick and random tick refund (can be really long to be consider under rain).
 
     ~WetLeavesCarpet :  Find a use to this.

@@ -31,11 +31,11 @@ public class RaindropCatcherScreen extends AbstractContainerScreen<RaindropCatch
         this.blit(pPoseStack, x, y, 0, 0, imageWidth, imageHeight);
 
         if(menu.blockEntity.getBlockState().getValue(UNDER_RAIN)){
-            this.blit(pPoseStack, x+82, y+19, 176, 0, 13, 17);
+            this.blit(pPoseStack, x+82, y+18, 176, 0, 13, 17);
         }
 
         if(menu.isCrafting()){
-            this.blit(pPoseStack, x + 4, y + 20,176,17,76, menu.getScaledProgress());
+            this.blit(pPoseStack, x + 4, y + 20,176, 77,76, menu.getScaledProgress());
             this.blit(pPoseStack, x + 97, y + 20,176,17,76, menu.getScaledProgress());
         }
 
