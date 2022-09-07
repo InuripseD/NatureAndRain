@@ -126,8 +126,7 @@
         "down": "true"
       },
       "apply": {
-        "model": "naturerain:block/wet_slimeball_puddle",
-        "x": 90,
+        "model": "naturerain:block/wet_slime_puddle_down",
         "uvlock": true
       }
     },

@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -49,13 +50,13 @@ public class SoftenedHoneycombEntity extends WetProjectile {
     protected BlockState blockForPlace(BlockPos blockPos) {
         BlockState superState = super.blockForPlace(blockPos);
         if(superState!=null){
-            if(level.getBlockState(blockPos)==Blocks.AIR.defaultBlockState() && level.getBlockState(blockPos.below())==Blocks.LAVA.defaultBlockState()){
+            if(level.getBlockState(blockPos).getMaterial() == Material.AIR && level.getBlockState(blockPos.below())==Blocks.LAVA.defaultBlockState()){
                 if(random.nextInt(100)<60){
                     superState = superState.setValue(getFaceProperty(Direction.DOWN), Boolean.valueOf(true));
                 }
             }
         }else {
-            if (level.getBlockState(blockPos) == Blocks.AIR.defaultBlockState() && level.getBlockState(blockPos.below()) == Blocks.LAVA.defaultBlockState()) {
+            if (level.getBlockState(blockPos).getMaterial() == Material.AIR && level.getBlockState(blockPos.below()) == Blocks.LAVA.defaultBlockState()) {
                 if (random.nextInt(100) < 60) {
                     superState = this.getBlockForScratch().setValue(getFaceProperty(Direction.DOWN), Boolean.valueOf(true));
                 }

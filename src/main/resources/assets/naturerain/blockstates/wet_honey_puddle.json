@@ -185,8 +185,7 @@
         "above_lava": "false"
       },
       "apply": {
-        "model": "naturerain:block/wet_honey_puddle",
-        "x": 90,
+        "model": "naturerain:block/wet_honey_puddle_down",
         "uvlock": true
       }
     },
@@ -196,8 +195,7 @@
         "above_lava": "true"
       },
       "apply": {
-        "model": "naturerain:block/wet_honey_puddle_hot",
-        "x": 90,
+        "model": "naturerain:block/wet_honey_puddle_hot_down",
         "uvlock": true
       }
     },

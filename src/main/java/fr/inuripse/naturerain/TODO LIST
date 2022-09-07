@@ -1,6 +1,5 @@
 Blocks :
     ~WetLeavesCarpet :  Find a use to this.
-                        Texture refund.
 
     +Flowers : For the ritual.
 
@@ -19,13 +18,13 @@ Blocks :
 Items :
     ~WetItem(s) : Texture Refund.
 
-    ~SnailInShell : Should spawn a snail like a spawn egg works.
+    ~BigSnailInShell : Should spawn a snail like a spawn egg works.
 
-    ~WetStuffLauncher : Texture refund.
-
-    ~SnailChestPlate : Add the dimension. The
+    ~SnailChestPlate : Add the dimension. The key to click on.
 
     +RainWaterBottle : Can be filled in the RainDropCatcher. Will be use to craft potion to see under lava.
+
+    +SnailSlimeBottle : Right click with a empty bottle on big snail to get it.
 
     ++ItemThatMakeSound : This item is easy to craft and should be use to start rain.
 
