@@ -1,7 +1,6 @@
 package fr.inuripse.naturerain.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import org.lwjgl.system.CallbackI;
 
 public class NatureRainCommonConfigs {
 

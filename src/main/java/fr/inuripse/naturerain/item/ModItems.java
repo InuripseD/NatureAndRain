@@ -11,10 +11,18 @@ import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import fr.inuripse.naturerain.item.tiers.ModArmorMaterials;
 import fr.inuripse.naturerain.item.tiers.ModTiers;
 import fr.inuripse.naturerain.item.toolandweapon.*;
+import fr.inuripse.naturerain.world.dimension.ModDimensions;
+import fr.inuripse.naturerain.world.dimension.ModTeleporter;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,7 +38,24 @@ public class ModItems {
 
     /*------------------- Simple Items ----------------*/
     public static final RegistryObject<Item> ZIRMS = ITEMS.register("zirms",
-            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
+            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)) {
+                @Override
+                public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+                    if (!pPlayer.isPassenger() && pPlayer.canChangeDimensions()) {
+                        MinecraftServer minecraftserver = pLevel.getServer();
+                        ResourceKey<Level> destination = pPlayer.level.dimension() == ModDimensions.SNAIL_HOUSE_KEY ? Level.OVERWORLD : ModDimensions.SNAIL_HOUSE_KEY;
+                        if(minecraftserver != null) {
+                            ServerLevel destinationWorld = minecraftserver.getLevel(destination);
+                                pPlayer.level.getProfiler().push("portal");
+                                //pPlayer.setPortalCooldown();
+                                pPlayer.changeDimension(destinationWorld, new ModTeleporter(destinationWorld));
+                                pPlayer.level.getProfiler().pop();
+
+                        }
+                    }
+                    return super.use(pLevel, pPlayer, pUsedHand);
+                }
+            });
 
     public static final RegistryObject<Item> BRANCH = ITEMS.register("branch",
             () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));

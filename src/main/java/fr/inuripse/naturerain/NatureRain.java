@@ -17,6 +17,7 @@ import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedSli
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.WetLeafRenderer;
 import fr.inuripse.naturerain.event.loot.lootitemcondition.ModLootItemConditions;
 import fr.inuripse.naturerain.item.ModItems;
+import fr.inuripse.naturerain.world.dimension.ModDimensions;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -63,6 +64,7 @@ public class NatureRain
         ModRecipes.register(eventBus);
         ModEntityTypes.register(eventBus);
         ModLootItemConditions.register(eventBus);
+        ModDimensions.register();
 
         eventBus.addListener(this::setup);
 
