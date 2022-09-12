@@ -1,9 +1,8 @@
-package fr.inuripse.naturerain.block.custom;
+package fr.inuripse.naturerain.block.custom.puddle;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,7 +24,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.antlr.v4.tool.LabelElementPair;
 
 import java.util.Random;
 

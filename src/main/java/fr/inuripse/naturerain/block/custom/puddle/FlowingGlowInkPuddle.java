@@ -1,4 +1,4 @@
-package fr.inuripse.naturerain.block.custom;
+package fr.inuripse.naturerain.block.custom.puddle;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
