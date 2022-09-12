@@ -2,6 +2,10 @@ package fr.inuripse.naturerain.block;
 
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.block.custom.*;
+import fr.inuripse.naturerain.block.custom.puddle.FlowingGlowInkPuddle;
+import fr.inuripse.naturerain.block.custom.puddle.WetHoneyPuddle;
+import fr.inuripse.naturerain.block.custom.puddle.WetLeavesCarpet;
+import fr.inuripse.naturerain.block.custom.puddle.WetSlimeballPuddle;
 import fr.inuripse.naturerain.item.ModItems;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import net.minecraft.core.BlockPos;
@@ -50,6 +54,12 @@ public class ModBlocks {
     public static final RegistryObject<Block> RAINDROP_CATCHER = registerBlock("raindrop_catcher",
             () -> new RaindropCatcher(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
 
+    public static final RegistryObject<Block> RAIN_RITUAL_BLOCK = registerBlock("rain_ritual_block",
+            () -> new RainRitualBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> SIMPLE_PILLAR = registerBlock("simple_pillar",
+            () -> new SimplePillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()), ModGroupTab.NATURERAIN_TAB);
+
     public static final RegistryObject<Block> WET_HONEY_PUDDLE = registerBlock("wet_honey_puddle",
             () -> new WetHoneyPuddle(BlockBehaviour.Properties.of(Material.REPLACEABLE_FIREPROOF_PLANT, MaterialColor.COLOR_ORANGE).randomTicks().strength(0.25F).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK)), ModGroupTab.NATURERAIN_TAB);
 
@@ -80,8 +90,6 @@ public class ModBlocks {
                     pLevel.setBlock(pPos,pState.setValue(MOISTURE, Integer.valueOf(7)),2);
                 }
             }, ModGroupTab.NATURERAIN_TAB);
-
-
 
 
     /*---------Register Block and linked Item---------*/

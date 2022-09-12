@@ -17,6 +17,7 @@ import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedSli
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.WetLeafRenderer;
 import fr.inuripse.naturerain.event.loot.lootitemcondition.ModLootItemConditions;
 import fr.inuripse.naturerain.item.ModItems;
+import fr.inuripse.naturerain.networking.ModMessages;
 import fr.inuripse.naturerain.world.dimension.ModDimensions;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -79,6 +80,10 @@ public class NatureRain
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        event.enqueueWork(() -> {
+            ModMessages.register();
+        });
 
         SpawnPlacements.register(ModEntityTypes.LITTLE_SNAIL.get(),
                 SpawnPlacements.Type.ON_GROUND,

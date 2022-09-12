@@ -4,7 +4,7 @@ Blocks :
     +Flowers : For the ritual.
 
     +RitualBlock : For the ritual. Block in the middle surrounded by flowers
-                   Should be a BlockEntity or should show Item in it
+                   Should show Item in it
 
     +ItemStand : A block to place item on.
 

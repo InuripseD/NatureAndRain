@@ -212,7 +212,7 @@ public class LittleSnailEntity extends Animal implements IAnimatable {
     public static boolean checkSnailSpawnRules(EntityType<LittleSnailEntity> pSnail, LevelAccessor pLevel, MobSpawnType pReason, BlockPos pPos, Random pRandom) {
         if (pPos.getY() >= 62 && pPos.getY() <= 120) {
             if(pLevel.getBlockState(pPos.below()) == Blocks.GRASS_BLOCK.defaultBlockState()) {
-                System.out.println("snail spawn at : " + pPos);
+                //System.out.println("snail spawn at : " + pPos);
                 return pLevel.getLevelData().isRaining() && checkMobSpawnRules(pSnail, pLevel, pReason, pPos, pRandom);
             }
         }
