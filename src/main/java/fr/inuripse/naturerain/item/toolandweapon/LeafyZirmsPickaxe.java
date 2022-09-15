@@ -3,6 +3,7 @@ package fr.inuripse.naturerain.item.toolandweapon;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 public class LeafyZirmsPickaxe extends PickaxeItem {
 
@@ -33,13 +35,13 @@ public class LeafyZirmsPickaxe extends PickaxeItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
         BlockHitResult blockhitresult = getPlayerPOVHitResult(pLevel, pPlayer, ClipContext.Fluid.ANY);
         BlockPlaceContext blockPlaceContext = new BlockPlaceContext(new UseOnContext(pPlayer, pUsedHand, blockhitresult));
         return new InteractionResultHolder<>(tryPlace(blockPlaceContext), pPlayer.getItemInHand(pUsedHand));
     }
 
-    /*When right click, this methode is called to check if
+    /*When right click, this method is call to check if
     * the pos the player clicked is a lava source or lava flow
     * and then replace it by obsi or stone if it's modifiable*/
     private InteractionResult tryPlace(BlockPlaceContext pContext) {
@@ -50,58 +52,52 @@ public class LeafyZirmsPickaxe extends PickaxeItem {
         } else {
 
             /*Are we really targeting a block ?*/
-            if (pContext == null) {
+            BlockState blockstate = Blocks.OBSIDIAN.defaultBlockState();
+            FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());
+
+            /*Are we targeting a fluid that is lava ?*/
+            if(fluidstate.getType() != Fluids.LAVA && fluidstate.getType() != Fluids.FLOWING_LAVA) {
                 return InteractionResult.FAIL;
             } else {
-                BlockState blockstate = Blocks.OBSIDIAN.defaultBlockState();
-                FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());
 
-                /*Are we targeting a fluid that is lava ?*/
-                if(fluidstate.getType() != Fluids.LAVA && fluidstate.getType() != Fluids.FLOWING_LAVA) {
+                /*Is the block placed ?*/
+                if (!this.placeBlock(pContext, blockstate, fluidstate)) {
                     return InteractionResult.FAIL;
                 } else {
-
-                    /*Is the block placed ?*/
-                    if (!this.placeBlock(pContext, blockstate, fluidstate)) {
-                        return InteractionResult.FAIL;
-                    } else {
-                        BlockPos blockpos = pContext.getClickedPos();
-                        Level level = pContext.getLevel();
-                        Player player = pContext.getPlayer();
-                        ItemStack itemstack = pContext.getItemInHand();
-                        BlockState blockstate1 = level.getBlockState(blockpos);
-                        Block block = blockstate1.getBlock();
-                        if (blockstate1.is(blockstate.getBlock())) {
-                            block.onBlockStateChange(level,blockpos,fluidstate.createLegacyBlock(),blockstate);
-                            blockstate1.getBlock().setPlacedBy(level, blockpos, blockstate1, player, itemstack);
-                            if (player instanceof ServerPlayer) {
-                                CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, blockpos, itemstack);
-                            }
+                    BlockPos blockpos = pContext.getClickedPos();
+                    Level level = pContext.getLevel();
+                    Player player = pContext.getPlayer();
+                    ItemStack itemstack = pContext.getItemInHand();
+                    BlockState blockstate1 = level.getBlockState(blockpos);
+                    Block block = blockstate1.getBlock();
+                    if (blockstate1.is(blockstate.getBlock())) {
+                        block.onBlockStateChange(level,blockpos,fluidstate.createLegacyBlock(),blockstate);
+                        blockstate1.getBlock().setPlacedBy(level, blockpos, blockstate1, player, itemstack);
+                        if (player instanceof ServerPlayer) {
+                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) player, blockpos, itemstack);
                         }
+                    }
 
-                        /*Play sound and particles.*/
-                        level.gameEvent(player, GameEvent.BLOCK_PLACE, blockpos);
-                        SoundType soundtype = blockstate.getSoundType();
-                        level.playSound(player, blockpos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-                        int i = blockpos.getX();
-                        int j = blockpos.getY();
-                        int k = blockpos.getZ();
-                        for(int l = 0; l < 8; ++l) {
-                            level.addParticle(ParticleTypes.LARGE_SMOKE, (double)i + Math.random(), (double)j + Math.random(), (double)k + Math.random(), 0.0D, 0.0D, 0.0D);
-                        }
+                    /*Play sound.*/
+                    level.gameEvent(player, GameEvent.BLOCK_PLACE, blockpos);
+                    SoundType soundtype = blockstate.getSoundType();
+                    level.playSound(player, blockpos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
-                        /*Decrease durability and return.*/
-                        if (!level.isClientSide) {
+                    /*Decrease durability and return.*/
+                    if (!level.isClientSide) {
+                        if(player!=null) {
                             if (pContext.getLevel().dimensionType().ultraWarm()) {
-                                itemstack.hurtAndBreak(7, player, (player1) -> player1.broadcastBreakEvent(itemstack.getEquipmentSlot()));
+                                itemstack.hurtAndBreak(7, player, (player1) -> player1.broadcastBreakEvent(pContext.getHand()));
                                 player.getCooldowns().addCooldown(this, 30);
-                            }else{
-                                itemstack.hurtAndBreak(5, player, (player1) -> player1.broadcastBreakEvent(itemstack.getEquipmentSlot()));
+                            } else {
+                                itemstack.hurtAndBreak(5, player, (player1) -> player1.broadcastBreakEvent(pContext.getHand()));
                                 player.getCooldowns().addCooldown(this, 10);
                             }
                         }
-                        return InteractionResult.sidedSuccess(level.isClientSide);
+                        /*Particles*/
+                        ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE, blockpos.getX()+0.5, blockpos.getY()+0.8, blockpos.getZ()+0.5, 8, 0.35D, 0.15D, 0.35D, 0.0D);
                     }
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
         }
