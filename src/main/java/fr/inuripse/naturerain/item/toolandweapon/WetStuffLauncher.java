@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
@@ -29,7 +30,7 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
 
     /*----- Do stuff like a bow -----*/
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack launcherItemStack = pPlayer.getItemInHand(pHand);
         ItemStack projectile = pPlayer.getProjectile(launcherItemStack);
         boolean flag = !projectile.isEmpty() && !projectile.is(Items.ARROW);
@@ -43,9 +44,8 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
     }
 
     @Override
-    public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving, int pTimeLeft) {
-        if (pEntityLiving instanceof Player) {
-            Player pPlayer = (Player)pEntityLiving;
+    public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pEntityLiving, int pTimeLeft) {
+        if (pEntityLiving instanceof Player pPlayer) {
             ItemStack itemstack = pPlayer.getProjectile(pStack);
             int i = this.getUseDuration(pStack) - pTimeLeft;
             if(i>5) {
@@ -53,9 +53,11 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
                     WetProjectile wetStuffToShoot = ((WetItem) itemstack.getItem()).getStuffToShoot(pLevel, pPlayer);
                     wetStuffToShoot.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, getProjectileVelocity(i), 1.0F);
                     pLevel.addFreshEntity(wetStuffToShoot);
-                    pStack.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(player.getUsedItemHand()));
+                    pStack.hurtAndBreak(1, pPlayer, (player) -> {
+                        player.broadcastBreakEvent(pPlayer.getUsedItemHand());
+                    });
                 }
-                pLevel.playSound(null,pPlayer, SoundEvents.SLIME_JUMP, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
+                pLevel.playSound(pPlayer,pPlayer, SoundEvents.SLIME_JUMP, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
                 if (!pPlayer.isCreative()) {
                     itemstack.shrink(1);
                     if (itemstack.isEmpty()) {
@@ -71,17 +73,17 @@ public class WetStuffLauncher extends ProjectileWeaponItem {
     }
 
     @Override
-    public Predicate<ItemStack> getAllSupportedProjectiles() {
+    public @NotNull Predicate<ItemStack> getAllSupportedProjectiles() {
         return WET_STUFF;
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack pStack) {
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack pStack) {
         return UseAnim.BOW;
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
+    public int getUseDuration(@NotNull ItemStack pStack) {
         return 72000;
     }
 
