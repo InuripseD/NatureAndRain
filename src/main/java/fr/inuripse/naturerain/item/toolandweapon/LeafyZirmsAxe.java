@@ -6,7 +6,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -21,6 +20,7 @@ import net.minecraft.world.level.block.BaseCoralWallFanBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -34,32 +34,33 @@ public class LeafyZirmsAxe extends AxeItem {
     /*----------------------------------------------------------------------*/
     /*Basically it's the BoneMealItem class but I remove the stack.shrink(1)*/
     /*                 to place by damageItem(5) instead                    */
+    /*                 I also Added sounds and particles                    */
     /*----------------------------------------------------------------------*/
     @Override
-    public InteractionResult useOn(UseOnContext pContext) {
+    public @NotNull InteractionResult useOn(UseOnContext pContext) {
         Level level = pContext.getLevel();
         BlockPos blockpos = pContext.getClickedPos();
         BlockPos blockpos1 = blockpos.relative(pContext.getClickedFace());
         ItemStack holdItem = pContext.getItemInHand();
         Player pPlayer = pContext.getPlayer();
-        if (applyBonemeal(pContext.getItemInHand(), level, blockpos, pContext.getPlayer())) {
-            level.playSound(null,pPlayer, SoundEvents.WET_GRASS_PLACE, SoundSource.PLAYERS, 1.0f,2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
+        if (applyBonemeal(holdItem, level, blockpos, pContext.getPlayer())) {
+            level.playSound(pPlayer, blockpos1, SoundEvents.WET_GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
+            holdItem.hurtAndBreak(5, pPlayer, (player) -> player.broadcastBreakEvent(holdItem.getEquipmentSlot()));
+            pPlayer.getCooldowns().addCooldown(this, 20);
             if (!level.isClientSide) {
-                ((ServerLevel)level).sendParticles((ServerPlayer) pPlayer,ParticleTypes.RAIN, true, blockpos.getX(),blockpos.getY(),blockpos.getZ(), 30, 1.5D,1.0D,1.5D,1);
+                ((ServerLevel)level).sendParticles(ParticleTypes.RAIN, blockpos.getX(), blockpos.getY(), blockpos.getZ(), 30, 1.5D,1.0D,1.5D,1);
                 level.levelEvent(1505, blockpos, 0);
-                holdItem.hurtAndBreak(5, pPlayer, (player) -> player.broadcastBreakEvent(holdItem.getEquipmentSlot()));
-                pPlayer.getCooldowns().addCooldown(this, 20);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else {
             BlockState blockstate = level.getBlockState(blockpos);
             boolean flag = blockstate.isFaceSturdy(level, blockpos, pContext.getClickedFace());
-            if (flag && growWaterPlant(pContext.getItemInHand(), level, blockpos1, pContext.getClickedFace())) {
-                level.playSound(null,pPlayer, SoundEvents.WET_GRASS_PLACE, SoundSource.PLAYERS, 1.0f,2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
+            if (flag && growWaterPlant(level, blockpos1, pContext.getClickedFace())) {
+                level.playSound(pPlayer, blockpos1, SoundEvents.WET_GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
+                holdItem.hurtAndBreak(5, pPlayer, (player) -> player.broadcastBreakEvent(holdItem.getEquipmentSlot()));
+                pPlayer.getCooldowns().addCooldown(this, 20);
                 if (!level.isClientSide) {
-                    level.levelEvent(1505, blockpos1, 0);
-                    holdItem.hurtAndBreak(5, pPlayer, (player) -> player.broadcastBreakEvent(holdItem.getEquipmentSlot()));
-                    pPlayer.getCooldowns().addCooldown(this, 20);
+                    level.levelEvent(1505, blockpos, 0);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             } else {
@@ -72,8 +73,7 @@ public class LeafyZirmsAxe extends AxeItem {
         BlockState blockstate = pLevel.getBlockState(pPos);
         int hook = net.minecraftforge.event.ForgeEventFactory.onApplyBonemeal(player, pLevel, pPos, blockstate, pStack);
         if (hook != 0) return hook > 0;
-        if (blockstate.getBlock() instanceof BonemealableBlock) {
-            BonemealableBlock bonemealableblock = (BonemealableBlock)blockstate.getBlock();
+        if (blockstate.getBlock() instanceof BonemealableBlock bonemealableblock) {
             if (bonemealableblock.isValidBonemealTarget(pLevel, pPos, blockstate, pLevel.isClientSide)) {
                 if (pLevel instanceof ServerLevel) {
                     if (bonemealableblock.isBonemealSuccess(pLevel, pLevel.random, pPos, blockstate)) {
@@ -88,7 +88,7 @@ public class LeafyZirmsAxe extends AxeItem {
         return false;
     }
 
-    public static boolean growWaterPlant(ItemStack pStack, Level pLevel, BlockPos pPos, @Nullable Direction pClickedSide) {
+    public static boolean growWaterPlant(Level pLevel, BlockPos pPos, @Nullable Direction pClickedSide) {
         if (pLevel.getBlockState(pPos).is(Blocks.WATER) && pLevel.getFluidState(pPos).getAmount() == 8) {
             if (!(pLevel instanceof ServerLevel)) {
                 return true;
