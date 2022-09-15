@@ -31,11 +31,11 @@ public class LeafyZirmsAxe extends AxeItem {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
 
-    /*----------------------------------------------------------------------*/
-    /*Basically it's the BoneMealItem class but I remove the stack.shrink(1)*/
-    /*                 to place by damageItem(5) instead                    */
-    /*                 I also Added sounds and particles                    */
-    /*----------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------*/
+    /*Basically it's the BoneMealItem class but I removed the stack.shrink(1)*/
+    /*                 to replace by damageItem(5) instead                   */
+    /*                 I also Added sounds and particles                     */
+    /*-----------------------------------------------------------------------*/
     @Override
     public @NotNull InteractionResult useOn(UseOnContext pContext) {
         Level level = pContext.getLevel();
