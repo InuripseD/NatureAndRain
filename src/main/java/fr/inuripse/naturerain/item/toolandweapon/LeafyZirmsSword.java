@@ -92,7 +92,7 @@ public class LeafyZirmsSword extends SwordItem {
                 double i = pPlayer.getX();
                 double j = pPlayer.getY();
                 double k = pPlayer.getZ();
-                pLevel.playSound(null,pPlayer,SoundEvents.AMBIENT_UNDERWATER_EXIT, SoundSource.PLAYERS, 1.0f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
+                pLevel.playSound(null,pPlayer,SoundEvents.AMBIENT_UNDERWATER_EXIT, SoundSource.PLAYERS, 0.5f,2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
                 if(!pLevel.isClientSide()) {
                     ((ServerLevel) pLevel).sendParticles((ServerPlayer) pPlayer, ParticleTypes.DRIPPING_WATER, true, i, j, k, 63, 3.0D, 3.0D, 3.0D, 1);
                     ((ServerLevel) pLevel).sendParticles((ServerPlayer) pPlayer, ParticleTypes.RAIN, true, i, j, k, 127, 3.0D, 3.0D, 3.0D, 1);
