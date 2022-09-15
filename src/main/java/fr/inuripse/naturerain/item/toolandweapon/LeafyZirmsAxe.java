@@ -91,7 +91,6 @@ public class LeafyZirmsAxe extends AxeItem {
                 return true;
             }
         }
-
         return false;
     }
 
