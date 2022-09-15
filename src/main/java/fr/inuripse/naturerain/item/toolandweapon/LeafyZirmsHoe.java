@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import fr.inuripse.naturerain.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -26,6 +27,9 @@ public class LeafyZirmsHoe extends HoeItem {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
 
+    /*    It's the useOn method from HoeItem    */
+    /* with a new method to get farmlands etc...*/
+    /*      with a new sound and particles      */
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
         int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(pContext);
@@ -42,8 +46,8 @@ public class LeafyZirmsHoe extends HoeItem {
             if (predicate.test(pContext)) {
                 Player player = pContext.getPlayer();
                 level.playSound(player, blockpos, SoundEvents.WET_GRASS_PLACE, SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
-                this.getParticulesWhenHoeUsed(level, blockpos);
                 if (!level.isClientSide) {
+                    this.getParticulesWhenHoeUsed(level, blockpos);
                     consumer.accept(pContext);
                     if (player != null) {
                         pContext.getItemInHand().hurtAndBreak(1, player, (p_150845_) -> {
@@ -60,17 +64,15 @@ public class LeafyZirmsHoe extends HoeItem {
     }
 
     private void getParticulesWhenHoeUsed(Level level, BlockPos blockpos) {
-        int i = blockpos.getX();
-        int j = blockpos.getY();
-        int k = blockpos.getZ();
-        for(int l = 0; l < 8; ++l) {
-            level.addParticle(ParticleTypes.RAIN, (double)i + Math.random(), (double)j + Math.random(), (double)k + Math.random(), 0.0D, 0.0D, 0.0D);
-        }
+        double i = blockpos.getX();
+        double j = blockpos.getY();
+        double k = blockpos.getZ();
+        ((ServerLevel) level).sendParticles(ParticleTypes.RAIN, i+0.5, j+0.8, k+0.5, 8, 0.25D, 0.25D, 0.25D, 1);
     }
 
     /*Methode that return the blockstate for the right clicked block.*/
     private BlockState getCorrespondingBlockWhenUseHoeOn(BlockState blockState, BlockPos blockpos, Level level, UseOnContext pContext) {
-        if(blockState== Blocks.GRASS_BLOCK.defaultBlockState()||blockState==Blocks.DIRT.defaultBlockState()||blockState==Blocks.DIRT_PATH.defaultBlockState()) {
+        if(blockState==Blocks.GRASS_BLOCK.defaultBlockState()||blockState==Blocks.DIRT.defaultBlockState()||blockState==Blocks.DIRT_PATH.defaultBlockState()) {
             if(level.getBlockState(blockpos.above())==Blocks.AIR.defaultBlockState()) {
                 return ModBlocks.WET_FARMLAND.get().defaultBlockState().setValue(MOISTURE, Integer.valueOf(7));
             }
