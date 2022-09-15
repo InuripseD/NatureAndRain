@@ -14,9 +14,7 @@ public class ModArmorItem extends ArmorItem {
 
     public static boolean hasFullArmorSet(Player player, ArmorMaterial armorMaterial){
         for(ItemStack armorSlot : player.getArmorSlots()){
-            if(!armorSlot.isEmpty() && (armorSlot.getItem() instanceof ArmorItem) && ((ArmorItem)armorSlot.getItem()).getMaterial() == armorMaterial){
-
-            }else{
+            if(armorSlot.isEmpty() || !(armorSlot.getItem() instanceof ArmorItem) || (((ArmorItem)armorSlot.getItem()).getMaterial()!=armorMaterial)){
                 return false;
             }
         }

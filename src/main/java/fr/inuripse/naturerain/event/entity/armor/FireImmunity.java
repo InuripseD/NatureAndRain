@@ -15,8 +15,7 @@ public class FireImmunity {
     @SubscribeEvent
     public static void livingAttackEvent(final LivingAttackEvent event){
         if(!event.getEntity().getLevel().isClientSide()){
-            if(event.getEntityLiving() instanceof ServerPlayer){
-                ServerPlayer player = (ServerPlayer)event.getEntityLiving();
+            if(event.getEntityLiving() instanceof ServerPlayer player){
                 if(LeafyZirmsArmor.hasFullArmorSet(player, ModArmorMaterials.LEAFY_ZIRMS)){
                     DamageSource source = event.getSource();
                     if(source.isFire()) {
