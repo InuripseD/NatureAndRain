@@ -89,6 +89,11 @@ public class ModBlocks {
                 public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
                     pLevel.setBlock(pPos,pState.setValue(MOISTURE, Integer.valueOf(7)),2);
                 }
+
+                @Override
+                public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRand) {
+                    this.randomTick(pState,pLevel,pPos,pRand);
+                }
             }, ModGroupTab.NATURERAIN_TAB);
 
 
