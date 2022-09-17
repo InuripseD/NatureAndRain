@@ -19,7 +19,7 @@ public class RainRitualBlockRenderer implements BlockEntityRenderer<MainPillarBl
     public void render(MainPillarBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         pPoseStack.pushPose();
-        pPoseStack.translate(0.5,0.749,0.5);
+        pPoseStack.translate(0.5,0.6249,0.5);
         pPoseStack.scale(0.375f,0.375f,0.375f);
         pPoseStack.mulPose(Vector3f.XP.rotationDegrees(90));
 
