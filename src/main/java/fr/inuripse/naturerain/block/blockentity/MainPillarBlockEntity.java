@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -86,6 +87,17 @@ public abstract class MainPillarBlockEntity extends BlockEntity {
 
 
     /*-----Necessary stuff for networking and saving block information-----*/
+
+    /*----------Network for Rendering--------------*/
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
+    /*---------------------------------------------*/
+
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
