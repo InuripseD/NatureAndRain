@@ -1,6 +1,7 @@
 package fr.inuripse.naturerain.block.blockentity;
 
 import fr.inuripse.naturerain.block.ModBlocks;
+import fr.inuripse.naturerain.block.custom.RainRitualBlock;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +23,7 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
     protected final ContainerData data;
 
     private int progress = 0;
-    private int maxProgress = 500;
+    private int maxProgress = 600;
 
     public RainRitualBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModBlockEntities.RAIN_RITUAL_BLOCK_ENTITY.get(), pWorldPosition, pBlockState);
@@ -64,18 +65,6 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
 
 
     /*--------------------------Tick Methods-------------------------*/
-    public static void animationTick(Level pLevel, BlockPos pPos, BlockState pState, RainRitualBlockEntity pBlockEntity) {
-        //if (pBlockEntity.progress > 0){
-            int x = pPos.getX();
-            int y = pPos.getY();
-            int z = pPos.getZ();
-            //if ((pBlockEntity.progress % 10) == 1) {
-            for (int i = 0; i < 1; i++) {
-                pBlockEntity.level.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) x + Math.random(), (double) y + Math.random(), (double) z + Math.random(), 5.0D, -0.5D, 5.0D);
-            }
-            //}
-        //}
-    }
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, RainRitualBlockEntity pBlockEntity) {
         if(pState.getValue(UNDER_RAIN)) {
@@ -83,6 +72,7 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                 List<SimplePillarBlockEntity> pillars = pillarAround(pBlockEntity);
                 boolean recipe = pillars.size() == 4 && hasBowRecipe(pillars);
                 if(recipe) {
+                    pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
                     pBlockEntity.progress++;
                     if(pBlockEntity.progress>pBlockEntity.maxProgress) {
                         pBlockEntity.consumeItem();
@@ -90,22 +80,40 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                         setChanged(pLevel, pPos, pState);
                         pillars.forEach(MainPillarBlockEntity::consumeItem);
                         pBlockEntity.resetProgress();
+                        pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
                     }
                 }else{
                     pBlockEntity.resetProgress();
+                    pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
                 }
             }else{
                 pBlockEntity.resetProgress();
+                pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
             }
+        }else if(hasRainRecipe(pillarAround(pBlockEntity))){
+            /*pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
+            pBlockEntity.progress++;
+            if(pBlockEntity.progress>pBlockEntity.maxProgress) {
+                pBlockEntity.consumeItem();
+                setChanged(pLevel, pPos, pState);
+                pillars.forEach(MainPillarBlockEntity::consumeItem);
+                pBlockEntity.resetProgress();
+                pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
+            }*/
         }else{
             pBlockEntity.resetProgress();
+            pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
         }
-
+        pLevel.setBlock(pPos, pState, 3);
     }
     /*----------------------------------------------------------*/
 
 
     /*---------------------Methods for crafting-----------------*/
+    private static boolean hasRainRecipe(List<SimplePillarBlockEntity> pillars){
+        return pillars.stream().allMatch(p -> p.getItem().getItem()==ModItems.ZIRMS.get());
+    }
+
     private static boolean hasBowRecipe(List<SimplePillarBlockEntity> pillars) {
         return pillars.stream().allMatch(p -> p.getItem().getItem()==ModItems.LEAFY_ZIRMS.get());
     }
