@@ -40,7 +40,6 @@ public class LootItemTagPropertyCondition implements LootItemCondition {
     @Override
     public boolean test(LootContext lootContext) {
         BlockState blockstate = lootContext.getParamOrNull(LootContextParams.BLOCK_STATE);
-        //System.out.println("It's leave :" + blockstate.is(this.tag));
         return blockstate != null && blockstate.is(this.tag);
     }
 

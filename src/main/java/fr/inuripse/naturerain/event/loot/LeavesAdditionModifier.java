@@ -53,7 +53,6 @@ public class LeavesAdditionModifier extends LootModifier {
         Vec3 vec3 = context.getParamOrNull(LootContextParams.ORIGIN);
         Biome biome = serverlevel.getBiome(new BlockPos(vec3.x(),vec3.y(),vec3.z())).value();
         boolean goodBiome = biome.getPrecipitation() == Biome.Precipitation.RAIN;
-        //System.out.println("Rain here :" + goodBiome);
 
         if(context.getLevel().isRaining() && goodBiome){
             if(context.getRandom().nextFloat() < this.prob12){
