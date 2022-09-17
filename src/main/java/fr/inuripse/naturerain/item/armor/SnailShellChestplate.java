@@ -13,12 +13,14 @@ import software.bernie.geckolib3.item.GeoArmorItem;
 
 public class SnailShellChestplate extends GeoArmorItem implements IAnimatable {
 
+    //For the renderer
     private AnimationFactory factory = new AnimationFactory(this);
 
     public SnailShellChestplate(ArmorMaterial pMaterial, EquipmentSlot pSlot, Properties pProperties) {
         super(pMaterial, pSlot, pProperties);
     }
 
+    /*-----------For the custom model/renderer-----------*/
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<SnailShellChestplate>(this, "controller",
@@ -34,4 +36,5 @@ public class SnailShellChestplate extends GeoArmorItem implements IAnimatable {
     public AnimationFactory getFactory() {
         return this.factory;
     }
+    /*----------------------------------------------------*/
 }
