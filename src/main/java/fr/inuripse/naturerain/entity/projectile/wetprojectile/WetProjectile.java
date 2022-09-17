@@ -24,6 +24,9 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
 
 import static fr.inuripse.naturerain.block.custom.puddle.FlowingGlowInkPuddle.WATERLOGGED;
 import static net.minecraft.world.level.block.MultifaceBlock.getFaceProperty;
@@ -34,6 +37,7 @@ public abstract class WetProjectile extends Projectile {
         super(entityType, level);
     }
 
+    //Necessary to render far away.
     public boolean shouldRenderAtSqrDistance(double pDistance) {
         double d0 = this.getBoundingBox().getSize() * 10.0D;
         if (Double.isNaN(d0)) {
@@ -43,6 +47,7 @@ public abstract class WetProjectile extends Projectile {
         return pDistance < d0 * d0;
     }
 
+    /*Basically the methode from AbstractArrow*/
     @Override
     public void tick() {
         super.tick();
@@ -102,7 +107,7 @@ public abstract class WetProjectile extends Projectile {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         pResult.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), getDamageToDeal());
-        this.playSound(SoundEvents.HONEY_BLOCK_FALL, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.playSound(SoundEvents.HONEY_BLOCK_FALL, 0.6F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.discard();
     }
 
@@ -120,16 +125,18 @@ public abstract class WetProjectile extends Projectile {
         this.discard();
     }
 
+    /*-----------Impact effect on a block-------------*/
+    //Try to place puddle on a list a block.
     protected void spreadAround(BlockHitResult result) {
         BlockPos blockPos = result.getBlockPos();
+        int x = Math.abs(blockPos.getX());
+        int y = Math.abs(blockPos.getY());
+        int z = Math.abs(blockPos.getZ());
         for(BlockPos pPos : getPosesToPlace(blockPos, result.getDirection())){
             BlockState blockState = level.getBlockState(pPos);
             FluidState fluidState = level.getFluidState(pPos);
-            System.out.println(blockState.getMaterial() + " " +pPos.getX() + " " + pPos.getY() + " " +pPos.getZ());
             if((blockState.getMaterial().isReplaceable() || blockState.getMaterial() == Material.AIR) && fluidState.getType()!=Fluids.LAVA && (fluidState.getType()!=Fluids.WATER || this instanceof FlowingGlowInkEntity)) {
-                int x = Math.abs(blockPos.getX());
-                int y = Math.abs(blockPos.getY());
-                int z = Math.abs(blockPos.getZ());
+                //Farest we are from impact point the less the chances are for a puddle to be place.
                 int d1 = Math.abs(Math.abs(pPos.getX()) - x);
                 int d2 = Math.abs(Math.abs(pPos.getY()) - y);
                 int d3 = Math.abs(Math.abs(pPos.getZ()) - z);
@@ -156,6 +163,7 @@ public abstract class WetProjectile extends Projectile {
         }
     }
 
+    //Give the list of block to try to place puddle.
     private Iterable<BlockPos> getPosesToPlace(BlockPos blockPos, Direction direction){
         BlockPos bP1 = blockPos.relative(direction).relative(direction);
         BlockPos bP2 = blockPos.relative(direction.getOpposite());
@@ -175,7 +183,8 @@ public abstract class WetProjectile extends Projectile {
         return BlockPos.betweenClosed(bP1,bP2);
     }
 
-    protected BlockState blockForPlace(BlockPos blockPos){
+    //Do tests and return the block that should be place at a given BlockPos. (can be null)
+    protected @Nullable BlockState blockForPlace(BlockPos blockPos){
         BlockState blockState = getBlockForScratch();
         boolean atLeastOneFace = false;
         for(Direction direction : Direction.values()){
@@ -194,10 +203,11 @@ public abstract class WetProjectile extends Projectile {
         }
         return atLeastOneFace ? blockState : null;
     }
+    /*-------------------------------------------------------*/
 
+    /*-----Necessary methods for network or for the implementing classes----*/
     @Override
     protected void defineSynchedData() {
-
     }
 
     @Override
@@ -212,5 +222,6 @@ public abstract class WetProjectile extends Projectile {
     public abstract BlockState getBlockForScratch();
 
     public abstract float getDamageToDeal();
+    /*------------------------------------------------------------------------*/
 
 }

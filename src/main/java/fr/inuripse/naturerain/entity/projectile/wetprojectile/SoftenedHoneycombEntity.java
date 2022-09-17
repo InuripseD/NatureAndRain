@@ -14,7 +14,6 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
@@ -37,6 +36,7 @@ public class SoftenedHoneycombEntity extends WetProjectile {
         this.setPos(pPlayer.getX(), pPlayer.getEyeY() - (double)0.2F, pPlayer.getZ());
     }
 
+    //When this hit lava source it will start onHitBlock methode.
     @Override
     public void tick() {
         super.tick();
@@ -46,6 +46,7 @@ public class SoftenedHoneycombEntity extends WetProjectile {
         }
     }
 
+    //We need to consider lava as a good surface to place the puddle.
     @Override
     protected BlockState blockForPlace(BlockPos blockPos) {
         BlockState superState = super.blockForPlace(blockPos);
@@ -65,6 +66,7 @@ public class SoftenedHoneycombEntity extends WetProjectile {
         return superState;
     }
 
+    //Add a slow effect on hit entity.
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
