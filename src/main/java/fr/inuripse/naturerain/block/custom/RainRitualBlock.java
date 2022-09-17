@@ -4,6 +4,7 @@ import fr.inuripse.naturerain.block.blockentity.ModBlockEntities;
 import fr.inuripse.naturerain.block.blockentity.RainRitualBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -12,9 +13,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class RainRitualBlock extends SimplePillarBlock {
 
@@ -24,6 +30,17 @@ public class RainRitualBlock extends SimplePillarBlock {
         super(p_49224_);
         this.registerDefaultState(this.stateDefinition.any().setValue(UNDER_RAIN, Boolean.valueOf(false)));
     }
+
+    /*-------------------------SHAPE AND ROTATE----------------------*/
+    private static final VoxelShape SHAPES = Stream.of(
+            Block.box(3, 0, 3, 13, 8, 13),
+            Block.box(2, 8, 2, 14, 10, 14)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return SHAPES;
+    }
+    /*----------------------------------------------------------------------*/
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
