@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -91,8 +92,10 @@ public class SimplePillarBlock extends BaseEntityBlock {
         if (blockentity instanceof MainPillarBlockEntity) {
             ItemStack itemstack = pPlayer.getItemInHand(pHand);
             if (!pLevel.isClientSide && ((MainPillarBlockEntity)blockentity).placeItem(pPlayer.getAbilities().instabuild ? itemstack.copy() : itemstack)) {
-                pPlayer.awardStat(Stats.INTERACT_WITH_CAMPFIRE);
                 return InteractionResult.SUCCESS;
+            }else if(!pLevel.isClientSide){
+                ((MainPillarBlockEntity)blockentity).drops();
+                pLevel.sendBlockUpdated(pPos, pState, pState, 3);
             }
             return InteractionResult.CONSUME;
         }

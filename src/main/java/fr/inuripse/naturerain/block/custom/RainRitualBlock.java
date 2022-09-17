@@ -3,6 +3,7 @@ package fr.inuripse.naturerain.block.custom;
 import fr.inuripse.naturerain.block.blockentity.ModBlockEntities;
 import fr.inuripse.naturerain.block.blockentity.RainRitualBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -12,6 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 public class RainRitualBlock extends SimplePillarBlock {
 
@@ -27,15 +30,24 @@ public class RainRitualBlock extends SimplePillarBlock {
         pBuilder.add(UNDER_RAIN);
     }
 
+    @Override
+    public boolean isRandomlyTicking(BlockState pState) {
+        return true;
+    }
+
+    @Override
+    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
+        pLevel.setBlock(pPos, pState.setValue(UNDER_RAIN, Boolean.valueOf(pLevel.isRainingAt(pPos.above()))), 2);
+    }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        /*if (pLevel.isClientSide) {
-            return pState.getValue(LIT) ? createTickerHelper(pBlockEntityType, ModBlockEntities.RAIN_RITUAL_BLOCK_ENTITY.get(), RainRitualBlockEntity::particleTick) : null;
+        if (pLevel.isClientSide) {
+            return createTickerHelper(pBlockEntityType, ModBlockEntities.RAIN_RITUAL_BLOCK_ENTITY.get(), RainRitualBlockEntity::animationTick);
         } else {
-            return pState.getValue(LIT) ? createTickerHelper(pBlockEntityType, BlockEntityType.CAMPFIRE, CampfireBlockEntity::cookTick) : createTickerHelper(pBlockEntityType, BlockEntityType.CAMPFIRE, CampfireBlockEntity::cooldownTick);
-        }*/
-        return pLevel.isClientSide ? null : createTickerHelper(pBlockEntityType, ModBlockEntities.RAIN_RITUAL_BLOCK_ENTITY.get(), RainRitualBlockEntity::tick);
+            return createTickerHelper(pBlockEntityType, ModBlockEntities.RAIN_RITUAL_BLOCK_ENTITY.get(), RainRitualBlockEntity::tick);
+        }
     }
 
     @Nullable
