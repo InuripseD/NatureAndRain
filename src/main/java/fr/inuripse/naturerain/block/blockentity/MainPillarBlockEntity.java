@@ -1,13 +1,16 @@
 package fr.inuripse.naturerain.block.blockentity;
 
+import fr.inuripse.naturerain.block.custom.SimplePillarBlock;
 import fr.inuripse.naturerain.networking.ModMessages;
 import fr.inuripse.naturerain.networking.packet.ItemStackRendererSyncStoCpacket;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class MainPillarBlockEntity extends BlockEntity {
 
+    /*--------Inventory section-------*/
     private final ItemStackHandler itemHandler = new ItemStackHandler(1){
         @Override
         protected void onContentsChanged(int slot) {
@@ -31,9 +35,19 @@ public abstract class MainPillarBlockEntity extends BlockEntity {
     };
 
     private LazyOptional<ItemStackHandler> lazyItemHandler = LazyOptional.empty();
+    /*-------------------------------*/
+
 
     public MainPillarBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
+    }
+
+
+    /*------Basic stuff to do or to get from a block entity-----*/
+    public int getLightLevel() {
+        int bLight = level.getBrightness(LightLayer.BLOCK, worldPosition);
+        int sLight = level.getBrightness(LightLayer.SKY, worldPosition);
+        return LightTexture.pack(bLight, sLight);
     }
 
     public ItemStackHandler getItemHandler() {
@@ -50,6 +64,10 @@ public abstract class MainPillarBlockEntity extends BlockEntity {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
+        if(this.level.getBlockState(this.worldPosition).getBlock() instanceof SimplePillarBlock){
+            this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
     }
 
     public boolean placeItem(ItemStack itemStack){
@@ -60,6 +78,14 @@ public abstract class MainPillarBlockEntity extends BlockEntity {
         return false;
     }
 
+    public void consumeItem(){
+        this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+        this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+    }
+    /*----------------------------------------------------*/
+
+
+    /*-----Necessary stuff for networking and saving block information-----*/
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
@@ -98,4 +124,5 @@ public abstract class MainPillarBlockEntity extends BlockEntity {
             getItemHandler().setStackInSlot(i, itemStackHandler.getStackInSlot(i));
         }
     }
+    /*----------------------------------------------------*/
 }
