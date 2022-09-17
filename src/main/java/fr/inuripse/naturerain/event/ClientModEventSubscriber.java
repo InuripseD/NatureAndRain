@@ -3,7 +3,8 @@ package fr.inuripse.naturerain.event;
 import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.block.ModBlocks;
 import fr.inuripse.naturerain.block.blockentity.ModBlockEntities;
-import fr.inuripse.naturerain.block.blockentity.blockentityrenderer.MainPillarBlockRenderer;
+import fr.inuripse.naturerain.block.blockentity.blockentityrenderer.RainRitualBlockRenderer;
+import fr.inuripse.naturerain.block.blockentity.blockentityrenderer.SimplePillarBlockRenderer;
 import fr.inuripse.naturerain.block.screen.ModMenuTypes;
 import fr.inuripse.naturerain.block.screen.RaindropCatcherScreen;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
@@ -39,14 +40,15 @@ public class ClientModEventSubscriber {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event){
-        event.registerBlockEntityRenderer(ModBlockEntities.RAIN_RITUAL_BLOCK_ENTITY.get(), MainPillarBlockRenderer::new);
-        event.registerBlockEntityRenderer(ModBlockEntities.SIMPLE_PILLAR_BLOCK_ENTITY.get(), MainPillarBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.RAIN_RITUAL_BLOCK_ENTITY.get(), RainRitualBlockRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.SIMPLE_PILLAR_BLOCK_ENTITY.get(), SimplePillarBlockRenderer::new);
     }
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event){
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAINDROP_CATCHER.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIN_RITUAL_BLOCK.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SIMPLE_PILLAR.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_HONEY_PUDDLE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_SLIMEBALL_PUDDLE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWING_GLOW_INK_PUDDLE.get(), RenderType.translucent());
