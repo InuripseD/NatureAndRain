@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class FlowingGlowInkEntity extends WetProjectile{
 
-    public static final float FLOWING_GLOW_INK_DAMAGE = 2.0F;
+    public static final float FLOWING_GLOW_INK_DAMAGE = 4.0F;
 
     public FlowingGlowInkEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
