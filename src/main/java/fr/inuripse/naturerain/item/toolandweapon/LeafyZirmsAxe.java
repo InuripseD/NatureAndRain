@@ -38,6 +38,10 @@ public class LeafyZirmsAxe extends AxeItem {
     /*-----------------------------------------------------------------------*/
     @Override
     public @NotNull InteractionResult useOn(UseOnContext pContext) {
+        InteractionResult superRes = super.useOn(pContext);
+        if(superRes!=InteractionResult.PASS){
+            return superRes;
+        }
         Level level = pContext.getLevel();
         BlockPos blockpos = pContext.getClickedPos();
         BlockPos blockpos1 = blockpos.relative(pContext.getClickedFace());
