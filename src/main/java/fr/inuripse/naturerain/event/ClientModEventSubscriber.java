@@ -16,11 +16,13 @@ import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.WetLeafRend
 import fr.inuripse.naturerain.entity.renderer.LittleSnailRenderer;
 import fr.inuripse.naturerain.item.armor.SnailShellChestplate;
 import fr.inuripse.naturerain.item.armor.renderer.SnailShellChestplateRenderer;
+import fr.inuripse.naturerain.util.ModKeyBindings;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -61,6 +63,8 @@ public class ClientModEventSubscriber {
         EntityRenderers.register(ModEntityTypes.SOFTENED_SLIMEBALL.get(), SoftenedSlimeballRenderer::new);
         EntityRenderers.register(ModEntityTypes.WET_LEAF.get(), WetLeafRenderer::new);
         EntityRenderers.register(ModEntityTypes.LITTLE_SNAIL.get(), LittleSnailRenderer::new);
+
+        ClientRegistry.registerKeyBinding(ModKeyBindings.ENTERING_SHELL_KEY);
     }
 
     @SubscribeEvent
