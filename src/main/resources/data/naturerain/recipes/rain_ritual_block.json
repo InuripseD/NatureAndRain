@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "#Z#",
+    "LOL"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:diamond"
+    },
+    "L": {
+      "item": "naturerain:leaf"
+    },
+    "X": {
+      "item": "minecraft:red_wool"
+    },
+    "O": {
+      "item": "minecraft:oak_log"
+    },
+    "Z": {
+      "item": "naturerain:leafy_zirms"
+    }
+  },
+  "result": {
+    "item": "naturerain:rain_ritual_block"
+  }
+}

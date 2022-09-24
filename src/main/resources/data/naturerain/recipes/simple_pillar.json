@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "L#L",
+    "#Z#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "X": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "Z": {
+      "item": "minecraft:oak_planks"
+    },
+    "L": {
+      "item": "naturerain:leaf"
+    }
+  },
+  "result": {
+    "item": "naturerain:simple_pillar"
+  }
+}
