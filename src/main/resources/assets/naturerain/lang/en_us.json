@@ -44,5 +44,9 @@
 
   "entity.naturerain.little_snail": "Little Snail",
 
+  "key.category.naturerain.naturerain": "Nature and Rain",
+
+  "key.naturerain.enter_shell": "Enter in your shell",
+
   "itemGroup.naturerain_tab": "Nature and Rain"
 }
