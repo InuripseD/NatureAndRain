@@ -9,7 +9,6 @@ import fr.inuripse.naturerain.world.dimension.ModDimensions;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -26,6 +25,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SnailHouseTeleportHandler {
@@ -56,20 +56,6 @@ public class SnailHouseTeleportHandler {
     }
 
     public void tryToTeleportPlayer(ServerPlayer player, ServerLevel serverLevel, ServerLevel destinationWorld, MinecraftServer minecraftServer){
-
-        SnailHouseTeleportData snailHouseTeleportData = SnailHouseTeleportData.get(minecraftServer);
-
-        //Player doesn't have a house! We create one!
-        if(!snailHouseTeleportData.playerHasHouse(player)){
-            int nbHouse = snailHouseTeleportData.getNumberOfHouse();
-            int x = (nbHouse*16)+8;
-            int y = 1;
-            int z = (nbHouse*16)+8;
-            BlockPos housePos = new BlockPos(x, y, z);
-            setHouse(destinationWorld, housePos);
-            snailHouseTeleportData.addHouseInList(player, housePos);
-        }
-
         //We teleport the player!
         if(destinationWorld.dimension()==Level.OVERWORLD){
 
@@ -83,17 +69,35 @@ public class SnailHouseTeleportHandler {
                 zPlayer.set(posBeforeTp.getPos().getZ());
             });
 
-            player.teleportTo(destinationWorld, xPlayer.get(), yPlayer.get()+1, zPlayer.get(), player.getXRot(), player.getYRot());
+            player.teleportTo(destinationWorld, xPlayer.get(), yPlayer.get()+1, zPlayer.get(), player.getYRot(), player.getXRot());
         }else{
+            SnailHouseTeleportData snailHouseTeleportData = SnailHouseTeleportData.get(minecraftServer);
+
+            for(UUID ui : snailHouseTeleportData.getHouses().keySet()){
+                System.out.println(ui + " " + snailHouseTeleportData.getHouses().get(ui));
+            }
+
+            //Player doesn't have a house! We create one!
+            if(!snailHouseTeleportData.playerHasHouse(player)){
+                int nbHouse = snailHouseTeleportData.getNumberOfHouse();
+                int x = (nbHouse*16)+8;
+                int y = 1;
+                int z = (nbHouse*16)+8;
+                BlockPos housePos = new BlockPos(x, y, z);
+                setHouse(destinationWorld, housePos);
+                snailHouseTeleportData.addHouseInList(player, housePos);
+            }
 
             player.getCapability(PlayerPosBeforeTpCapability.PLAYER_POS_BEFORE_TP).ifPresent(posBeforeTp -> {
                 posBeforeTp.setPos(player.getOnPos());
             });
 
-            int xHouse = snailHouseTeleportData.getPosByPlayer(player).getX();
-            int yHouse = snailHouseTeleportData.getPosByPlayer(player).getY()+1;
-            int zHouse = snailHouseTeleportData.getPosByPlayer(player).getZ();
-            player.teleportTo(destinationWorld, xHouse+0.5, yHouse+0.5, zHouse+0.5, player.getXRot(), player.getYRot());
+            BlockPos playerHousePos = snailHouseTeleportData.getHousePosByPlayer(player);
+
+            int xHouse = playerHousePos.getX();
+            int yHouse = playerHousePos.getY()+1;
+            int zHouse = playerHousePos.getZ();
+            player.teleportTo(destinationWorld, xHouse+0.5, yHouse+0.5, zHouse+0.5, player.getYRot(), player.getXRot());
         }
     }
     /*-------------------------------------------------------*/
@@ -117,7 +121,6 @@ public class SnailHouseTeleportHandler {
         }
         level.setBlock(blockPos, ModBlocks.DEEPSLATE_ZIRMS_ORE.get().defaultBlockState(), 1);
     }
-
     /*-------------------------------------------------------*/
 
 
