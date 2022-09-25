@@ -39,14 +39,14 @@ public class SnailHouseTeleportData extends SavedData {
             listtag.add(compoundtag);
         });
 
-        pCompoundTag.put(NatureRain.MOD_ID + "PlayersHouses", listtag);
+        pCompoundTag.put(NatureRain.MOD_ID + ":PlayersHouses", listtag);
         return pCompoundTag;
     }
 
     public static SnailHouseTeleportData load(CompoundTag pCompoundTag) {
         SnailHouseTeleportData data = create();
 
-        ListTag listtag = pCompoundTag.getList("PlayersHouses", Tag.TAG_COMPOUND);
+        ListTag listtag = pCompoundTag.getList(NatureRain.MOD_ID + ":PlayersHouses", Tag.TAG_COMPOUND);
 
         for(int i = 0; i<listtag.size(); i++){
             data.playersHouses.put(listtag.getCompound(i).getUUID("player"), NbtUtils.readBlockPos(listtag.getCompound(i).getCompound("housePos")));
@@ -59,9 +59,14 @@ public class SnailHouseTeleportData extends SavedData {
 
 
     /*-----------------For houses interactions---------------*/
-    public void addHouseInList(ServerPlayer player, BlockPos pos){
-        playersHouses.put(player.getUUID(), pos);
-        setDirty();
+    public boolean addHouseInList(ServerPlayer player, BlockPos pos){
+        if(!playerHasHouse(player)){
+            playersHouses.put(player.getUUID(), pos);
+            setDirty();
+        }else{
+            return false;
+        }
+        return true;
     }
 
     public Map<UUID, BlockPos> getHouses(){
@@ -76,7 +81,7 @@ public class SnailHouseTeleportData extends SavedData {
         return playersHouses.size();
     }
 
-    public BlockPos getPosByPlayer(ServerPlayer player){
+    public BlockPos getHousePosByPlayer(ServerPlayer player){
         return playersHouses.get(player.getUUID());
     }
     /*-------------------------------------------------------*/
