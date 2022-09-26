@@ -6,7 +6,7 @@ import net.minecraft.nbt.NbtUtils;
 
 public class PlayerPosBeforeTp {
 
-    private BlockPos pos;
+    private BlockPos pos = BlockPos.ZERO;
 
 
     public void saveNBTData(CompoundTag compoundTag){
