@@ -50,6 +50,7 @@ public class ClientModEventSubscriber {
     public static void clientSetup(final FMLClientSetupEvent event){
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAINDROP_CATCHER.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIN_RITUAL_BLOCK.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIN_RITUAL_BLOCK.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SIMPLE_PILLAR.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_HONEY_PUDDLE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_SLIMEBALL_PUDDLE.get(), RenderType.translucent());
