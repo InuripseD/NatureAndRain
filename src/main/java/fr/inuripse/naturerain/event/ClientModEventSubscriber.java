@@ -52,6 +52,7 @@ public class ClientModEventSubscriber {
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIN_RITUAL_BLOCK.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RAIN_RITUAL_BLOCK.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SIMPLE_PILLAR.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SIMPLE_PILLAR.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_HONEY_PUDDLE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.WET_SLIMEBALL_PUDDLE.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLOWING_GLOW_INK_PUDDLE.get(), RenderType.translucent());
