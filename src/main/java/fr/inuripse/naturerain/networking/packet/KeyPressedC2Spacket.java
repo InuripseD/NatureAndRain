@@ -2,11 +2,9 @@ package fr.inuripse.naturerain.networking.packet;
 
 import fr.inuripse.naturerain.util.handler.SnailHouseTeleportHandler;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -25,27 +23,19 @@ public class KeyPressedC2Spacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            ServerLevel level = player.getLevel();
-            MinecraftServer minecraftServer = player.getServer();
 
-            SnailHouseTeleportHandler snailHouseTeleportHandler = new SnailHouseTeleportHandler();
+            if(player!=null) {
 
-            if(snailHouseTeleportHandler.isPlayerReadyForTeleportation(player)){
+                ServerLevel currentLevel = player.getLevel(); //AKA current Dimension here.
+                MinecraftServer minecraftServer = player.getServer();
 
-                ResourceKey<Level> destination = snailHouseTeleportHandler.playerDestination(level);
+                SnailHouseTeleportHandler snailHouseTeleportHandler = new SnailHouseTeleportHandler();
 
-                if(destination!=null && minecraftServer!=null){
+                if (snailHouseTeleportHandler.isPlayerReadyForTeleportation(player)) {
 
-                    ServerLevel destinationWorld = minecraftServer.getLevel(destination);
-
-                    if(destinationWorld != null && minecraftServer.isNetherEnabled()){
-
-                        snailHouseTeleportHandler.tryToTeleportPlayer(player, level, destinationWorld, minecraftServer);
-
-                    }
+                    snailHouseTeleportHandler.tryToTeleportPlayer(player, currentLevel, minecraftServer);
 
                 }
-
             }
         });
         return true;
