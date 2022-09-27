@@ -15,7 +15,6 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onKeyInput(InputEvent.KeyInputEvent event){
         if(ModKeyBindings.ENTERING_SHELL_KEY.consumeClick()){
-            //Minecraft.getInstance().player.displayClientMessage(new TextComponent("OK"), false);
             ModMessages.sendToServer(new KeyPressedC2Spacket());
         }
     }
