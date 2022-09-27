@@ -1,7 +1,6 @@
 package fr.inuripse.naturerain.util.handler;
 
 import fr.inuripse.naturerain.NatureRain;
-import fr.inuripse.naturerain.block.ModBlocks;
 import fr.inuripse.naturerain.item.armor.SnailShellChestplate;
 import fr.inuripse.naturerain.util.capability.PlayerPosBeforeTpCapability;
 import fr.inuripse.naturerain.util.data.SnailHouseTeleportData;
@@ -43,7 +42,7 @@ public class SnailHouseTeleportHandler {
     }
 
     @Nullable
-    private ResourceKey<Level> playerDestination(ServerPlayer player, ServerLevel currentLevel){
+    private ResourceKey<Level> getPlayerDestination(ServerPlayer player, ServerLevel currentLevel){
         if(currentLevel.dimension()==ModDimensions.SNAIL_HOUSE_KEY){
             return player.getCapability(PlayerPosBeforeTpCapability.PLAYER_POS_BEFORE_TP).resolve().get().getDim();
         }else{
@@ -55,7 +54,7 @@ public class SnailHouseTeleportHandler {
 
         if(currentLevel!=null){
 
-            ResourceKey<Level> destinationDimension = this.playerDestination(player, currentLevel);
+            ResourceKey<Level> destinationDimension = this.getPlayerDestination(player, currentLevel);
 
             if(destinationDimension!=null && minecraftServer!=null){
 
