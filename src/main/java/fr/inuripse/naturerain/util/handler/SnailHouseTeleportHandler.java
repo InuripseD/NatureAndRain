@@ -25,8 +25,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class SnailHouseTeleportHandler {
 
@@ -45,73 +43,92 @@ public class SnailHouseTeleportHandler {
     }
 
     @Nullable
-    public ResourceKey<Level> playerDestination(ServerLevel serverLevel){
-        if(serverLevel.dimension() == Level.OVERWORLD){
+    private ResourceKey<Level> playerDestination(ServerPlayer player, ServerLevel currentLevel){
+        if(currentLevel.dimension()==ModDimensions.SNAIL_HOUSE_KEY){
+            return player.getCapability(PlayerPosBeforeTpCapability.PLAYER_POS_BEFORE_TP).resolve().get().getDim();
+        }else{
             return ModDimensions.SNAIL_HOUSE_KEY;
-        }else if(serverLevel.dimension() == ModDimensions.SNAIL_HOUSE_KEY){
-            return Level.OVERWORLD;
-        }else{
-            return null;
         }
     }
 
-    public void tryToTeleportPlayer(ServerPlayer player, ServerLevel serverLevel, ServerLevel destinationWorld, MinecraftServer minecraftServer){
-        //We teleport the player!
-        if(destinationWorld.dimension()==Level.OVERWORLD){
+    public void tryToTeleportPlayer(ServerPlayer player, ServerLevel currentLevel, MinecraftServer minecraftServer){
 
-            AtomicInteger xPlayer = new AtomicInteger();
-            AtomicInteger yPlayer = new AtomicInteger();
-            AtomicInteger zPlayer = new AtomicInteger();
+        if(currentLevel!=null){
 
-            player.getCapability(PlayerPosBeforeTpCapability.PLAYER_POS_BEFORE_TP).ifPresent(posBeforeTp -> {
-                xPlayer.set(posBeforeTp.getPos().getX());
-                yPlayer.set(posBeforeTp.getPos().getY());
-                zPlayer.set(posBeforeTp.getPos().getZ());
-            });
+            ResourceKey<Level> destinationDimension = this.playerDestination(player, currentLevel);
 
-            player.teleportTo(destinationWorld, xPlayer.get(), yPlayer.get()+1, zPlayer.get(), player.getYRot(), player.getXRot());
-        }else{
-            SnailHouseTeleportData snailHouseTeleportData = SnailHouseTeleportData.get(minecraftServer);
+            if(destinationDimension!=null && minecraftServer!=null){
 
-            for(UUID ui : snailHouseTeleportData.getHouses().keySet()){
-                System.out.println(ui + " " + snailHouseTeleportData.getHouses().get(ui));
+                ServerLevel destinationLevel = minecraftServer.getLevel(destinationDimension);
+
+                if (destinationLevel != null && minecraftServer.isNetherEnabled()) {
+
+                    if(destinationDimension == ModDimensions.SNAIL_HOUSE_KEY){
+
+                        this.teleportPlayerInHisHouse(player, currentLevel, minecraftServer);
+
+                    }else{
+
+                        this.teleportPlayerBack(player, destinationLevel);
+
+                    }
+
+                }
+
             }
 
-            //Player doesn't have a house! We create one!
-            if(!snailHouseTeleportData.playerHasHouse(player)){
-                int nbHouse = snailHouseTeleportData.getNumberOfHouse();
-                int x = (nbHouse*16)+8;
-                int y = 1;
-                int z = (nbHouse*16)+8;
-                BlockPos housePos = new BlockPos(x, y, z);
-                setHouse(destinationWorld, housePos);
-                snailHouseTeleportData.addHouseInList(player, housePos);
+        }
+    }
+
+    private void teleportPlayerInHisHouse(ServerPlayer player, ServerLevel currentLevel, MinecraftServer minecraftServer) {
+
+        //We save the player dimension origin and pos//
+        player.getCapability(PlayerPosBeforeTpCapability.PLAYER_POS_BEFORE_TP).ifPresent(posBeforeTp -> {
+            posBeforeTp.setPos(player.getOnPos());
+            posBeforeTp.setDim(currentLevel.dimension());
+        });
+
+        //We take the data about all houses and prepare the destination world//
+        SnailHouseTeleportData snailHouseTeleportData = SnailHouseTeleportData.get(minecraftServer);
+        ServerLevel snailHouseLevel = minecraftServer.getLevel(ModDimensions.SNAIL_HOUSE_KEY);
+
+        if(snailHouseLevel != null) {
+
+            //We check if the player has a house//
+            if (!snailHouseTeleportData.playerHasHouse(player)) {
+                this.generateHouse(player, snailHouseTeleportData, snailHouseLevel);
             }
 
-            player.getCapability(PlayerPosBeforeTpCapability.PLAYER_POS_BEFORE_TP).ifPresent(posBeforeTp -> {
-                posBeforeTp.setPos(player.getOnPos());
-            });
-
+            //We teleport the player to his house location//
             BlockPos playerHousePos = snailHouseTeleportData.getHousePosByPlayer(player);
+            player.teleportTo(snailHouseLevel, playerHousePos.getX() + 0.5, playerHousePos.getY() + 1.5, playerHousePos.getZ() + 0.5, player.getYRot(), player.getXRot());
 
-            int xHouse = playerHousePos.getX();
-            int yHouse = playerHousePos.getY()+1;
-            int zHouse = playerHousePos.getZ();
-            player.teleportTo(destinationWorld, xHouse+0.5, yHouse+0.5, zHouse+0.5, player.getYRot(), player.getXRot());
         }
+
     }
+
+    private void teleportPlayerBack(ServerPlayer player, ServerLevel destinationLevel) {
+        player.getCapability(PlayerPosBeforeTpCapability.PLAYER_POS_BEFORE_TP).ifPresent(posBeforeTp -> {
+            player.teleportTo(destinationLevel, posBeforeTp.getPos().getX(), posBeforeTp.getPos().getY()+1, posBeforeTp.getPos().getZ(), player.getYRot(), player.getXRot());
+        });
+    }
+
     /*-------------------------------------------------------*/
 
 
     /*-----------------For houses interactions---------------*/
-    public void setHouse(ServerLevel level, BlockPos blockPos){
-        Optional<StructureTemplate> optional = null;
+    private void buildHouse(ServerLevel level, BlockPos blockPos){
+        Optional<StructureTemplate> optional = Optional.empty();
         StructureManager structuremanager = level.getStructureManager();
+
+        //We take the house pattern (.nbt file)//
         try {
             optional = structuremanager.get(new ResourceLocation(NatureRain.MOD_ID, "littlesnail_house"));
-        } catch (ResourceLocationException resourcelocationexception) {
+        } catch (ResourceLocationException ignored) {
 
         }
+
+        //We generate the structure into the snail dimension//
         if (optional.isPresent()){
             StructureTemplate structureTemplate = optional.get();
 
@@ -121,6 +138,21 @@ public class SnailHouseTeleportHandler {
         }
         level.setBlock(blockPos, ModBlocks.DEEPSLATE_ZIRMS_ORE.get().defaultBlockState(), 1);
     }
+
+    private void generateHouse(ServerPlayer player, SnailHouseTeleportData snailHouseTeleportData, ServerLevel snailHouseLevel) {
+
+        //If we have a House.class it will be here to init it//
+        int nbHouse = snailHouseTeleportData.getNumberOfHouse();
+        int x = (nbHouse*160)+8;
+        int y = 1;
+        int z = (nbHouse*160)+8;
+        BlockPos housePos = new BlockPos(x, y, z);
+        this.buildHouse(snailHouseLevel, housePos);
+
+        //We add the house in the data//
+        snailHouseTeleportData.addHouseInList(player, housePos);
+    }
+
     /*-------------------------------------------------------*/
 
 
