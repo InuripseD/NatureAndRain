@@ -41,6 +41,9 @@
   "block.naturerain.wet_farmland": "Wet Farmland",
   "block.naturerain.rain_ritual_block": "Rain Ritual Block",
   "block.naturerain.simple_pillar": "Simple Pillar",
+  "block.naturerain.snail_shell_block": "Snail Shell Block",
+  "block.naturerain.snail_shell_light_block": "Snail Shell Light Block",
+
 
   "entity.naturerain.little_snail": "Little Snail",
 

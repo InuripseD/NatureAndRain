@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -41,6 +42,12 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> ZIRMS_BLOCK = registerBlock("zirms_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK)), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> SNAIL_SHELL_BLOCK = registerBlock("snail_shell_block",
+            () -> new Block(BlockBehaviour.Properties.of(Material.SHULKER_SHELL, DyeColor.BROWN).sound(SoundType.SHROOMLIGHT).strength(-1.0F, 3600000.0F).noDrops()), ModGroupTab.NATURERAIN_TAB);
+
+    public static final RegistryObject<Block> SNAIL_SHELL_LIGHT_BLOCK = registerBlock("snail_shell_light_block",
+            () -> new Block(BlockBehaviour.Properties.of(Material.SHULKER_SHELL, DyeColor.BROWN).strength(-1.0F, 3600000.0F).noDrops().lightLevel((light) -> { return 10;})), ModGroupTab.NATURERAIN_TAB);
 
     /*------------ Ore Blocks ------------*/
 

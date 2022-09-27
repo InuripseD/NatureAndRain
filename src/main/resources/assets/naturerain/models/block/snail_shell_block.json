@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "naturerain:block/snail_shell_block"
+  }
+}
