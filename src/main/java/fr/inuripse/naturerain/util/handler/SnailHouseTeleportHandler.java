@@ -136,7 +136,6 @@ public class SnailHouseTeleportHandler {
 
             structureTemplate.placeInWorld(level, blockPos.relative(Direction.WEST, 4).relative(Direction.NORTH, 4), blockPos.relative(Direction.WEST, 4).relative(Direction.NORTH, 4), structureplacesettings, new Random(level.getSeed()), 2);
         }
-        level.setBlock(blockPos, ModBlocks.DEEPSLATE_ZIRMS_ORE.get().defaultBlockState(), 1);
     }
 
     private void generateHouse(ServerPlayer player, SnailHouseTeleportData snailHouseTeleportData, ServerLevel snailHouseLevel) {
