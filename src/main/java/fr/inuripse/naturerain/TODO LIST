@@ -1,26 +1,17 @@
 Blocks :
     ~WetLeavesCarpet :  Find a use to this.
 
-    +Flowers : For the ritual.
-
-    +RitualBlock : For the ritual. Block in the middle surrounded by flowers
-                   Should show Item in it
-
-    +ItemStand : A block to place item on.
-
 +Rituals :
     +RainRitual : A ritual to summon the rain.
 
     +SnailUpgradeRitual : A ritual to change the little Snail into mount snail.
 
-    +BowToWetStuffLauncher : A ritual to change the bow to a WetStuffLauncher.
-
 Items :
     ~WetItem(s) : Texture Refund.
 
-    ~BigSnailInShell : Should spawn a snail like a spawn egg works.
+    ~SnailFragment : Texture Refund.
 
-    ~SnailChestPlate : Add the dimension. The key to click on.
+    +BigSnailInShell : Should spawn a snail like a spawn egg works.
 
     +RainWaterBottle : Can be filled in the RainDropCatcher. Will be use to craft potion to see under lava.
 
@@ -31,17 +22,17 @@ Items :
 Enchantments/Effects :
     +LavaVision : This effects should allow the player to see under lava like in spectator.
 
-    +HoneyMaster : The player would be able to climb on honey block/puddle.
+    ++HoneyMaster : The player would be able to climb on honey block/puddle.
 
     +ChestplateSnailUpgrade : Increase the size of the "house" when in the snailshell.
 
 Features:
     +Rainbow : Should spawn after rain and we can find a treasure (or a sprite to trade with him).
 
-    +Ritual : For rain, to transform snail, to get the bow.
-
 Entities:
     +MountSnail : Add the drop of shell, add the mountable, the climbable...
+
+    +Sprite for trade.
 
 Configurations:
     +Need them to works.
