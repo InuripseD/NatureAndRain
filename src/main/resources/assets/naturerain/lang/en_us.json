@@ -44,6 +44,11 @@
   "block.naturerain.snail_shell_block": "Snail Shell Block",
   "block.naturerain.snail_shell_light_block": "Snail Shell Light Block",
 
+  "item.minecraft.potion.effect.lava_vision_potion": "Lava Vision Potion",
+  "item.minecraft.splash_potion.effect.lava_vision_potion": "Splash Potion of Lava Vision",
+  "item.minecraft.lingering_potion.effect.lava_vision_potion": "Lingering Potion of Lava Vision",
+
+  "effect.naturerain.lava_vision": "Lava Vision",
 
   "entity.naturerain.little_snail": "Little Snail",
 

@@ -7,12 +7,14 @@ import fr.inuripse.naturerain.block.recipe.ModRecipes;
 import fr.inuripse.naturerain.block.screen.ModMenuTypes;
 import fr.inuripse.naturerain.config.NatureRainClientConfigs;
 import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
+import fr.inuripse.naturerain.effect.ModEffects;
 import fr.inuripse.naturerain.enchantment.ModEnchantments;
 import fr.inuripse.naturerain.entity.LittleSnailEntity;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import fr.inuripse.naturerain.event.loot.lootitemcondition.ModLootItemConditions;
 import fr.inuripse.naturerain.item.ModItems;
 import fr.inuripse.naturerain.networking.ModMessages;
+import fr.inuripse.naturerain.potion.ModPotions;
 import fr.inuripse.naturerain.world.dimension.ModDimensions;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.block.Blocks;
@@ -52,6 +54,8 @@ public class NatureRain
         ModEntityTypes.register(eventBus);
         ModLootItemConditions.register(eventBus);
         ModDimensions.register();
+        ModEffects.register(eventBus);
+        ModPotions.register(eventBus);
 
         eventBus.addListener(this::setup);
 
