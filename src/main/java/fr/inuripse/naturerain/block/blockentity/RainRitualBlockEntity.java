@@ -5,8 +5,9 @@ import fr.inuripse.naturerain.block.custom.RainRitualBlock;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -67,9 +68,9 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
     /*--------------------------Tick Methods-------------------------*/
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, RainRitualBlockEntity pBlockEntity) {
+        List<SimplePillarBlockEntity> pillars = pillarAround(pBlockEntity);
         if(pState.getValue(UNDER_RAIN)) {
             if(pBlockEntity.getItem().getItem() == Items.BOW) {
-                List<SimplePillarBlockEntity> pillars = pillarAround(pBlockEntity);
                 boolean recipe = pillars.size() == 4 && hasBowRecipe(pillars);
                 if(recipe) {
                     pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
@@ -86,20 +87,48 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                     pBlockEntity.resetProgress();
                     pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
                 }
+            }else if(pBlockEntity.getItem().getItem() == ModItems.SNAIL_IN_SHELL.get()){
+                boolean recipe = pillars.size() == 4 && hasSnailRecipe(pillars);
+                if(recipe) {
+                    pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
+                    pBlockEntity.progress++;
+                    if(pBlockEntity.progress>pBlockEntity.maxProgress) {
+                        pBlockEntity.consumeItem();
+                        pBlockEntity.placeItem(ModItems.SNAIL_SHELL_FRAGMENT.get().getDefaultInstance());
+                        setChanged(pLevel, pPos, pState);
+                        pillars.forEach(MainPillarBlockEntity::consumeItem);
+                        Containers.dropItemStack(pLevel, pPos.getX()+0.5, pPos.getY()+0.75, pPos.getZ()+0.5, ModItems.SNAIL_SHELL_FRAGMENT.get().getDefaultInstance());
+                        pBlockEntity.resetProgress();
+                        pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
+                    }
+                }else{
+                    pBlockEntity.resetProgress();
+                    pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
+                }
             }else{
                 pBlockEntity.resetProgress();
                 pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
             }
-        }else if(hasRainRecipe(pillarAround(pBlockEntity))){
-            /*pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
-            pBlockEntity.progress++;
-            if(pBlockEntity.progress>pBlockEntity.maxProgress) {
-                pBlockEntity.consumeItem();
-                setChanged(pLevel, pPos, pState);
-                pillars.forEach(MainPillarBlockEntity::consumeItem);
+        }else if(hasRainRecipe(pillars) && pBlockEntity.getItem().getItem() == Items.WATER_BUCKET){
+            boolean recipe = pillars.size() == 4;
+            if(recipe) {
+                pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
+                pBlockEntity.progress++;
+                if(pBlockEntity.progress>pBlockEntity.maxProgress) {
+                    pBlockEntity.consumeItem();
+                    setChanged(pLevel, pPos, pState);
+                    pillars.forEach(MainPillarBlockEntity::consumeItem);
+                    pBlockEntity.resetProgress();
+                    if(!pLevel.isClientSide()){
+                        ServerLevel serverLevel = (ServerLevel) pLevel;
+                        serverLevel.setWeatherParameters(0, 6000, true, false);
+                    }
+                    pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
+                }
+            }else{
                 pBlockEntity.resetProgress();
                 pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
-            }*/
+            }
         }else{
             pBlockEntity.resetProgress();
             pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
@@ -116,6 +145,10 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
 
     private static boolean hasBowRecipe(List<SimplePillarBlockEntity> pillars) {
         return pillars.stream().allMatch(p -> p.getItem().getItem()==ModItems.LEAFY_ZIRMS.get());
+    }
+
+    private static boolean hasSnailRecipe(List<SimplePillarBlockEntity> pillars) {
+        return pillars.stream().allMatch(p -> p.getItem().getItem()==ModItems.SOFTENED_SLIMEBALL.get());
     }
 
     private static List<SimplePillarBlockEntity> pillarAround(RainRitualBlockEntity pBlockEntity){
