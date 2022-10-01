@@ -17,6 +17,8 @@ import fr.inuripse.naturerain.networking.ModMessages;
 import fr.inuripse.naturerain.potion.ModPotions;
 import fr.inuripse.naturerain.world.dimension.ModDimensions;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
@@ -70,6 +72,8 @@ public class NatureRain
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        PotionBrewing.addMix(Potions.AWKWARD, ModItems.FLOWING_GLOW_INK.get(), ModPotions.LAVA_VISION.get());
 
         event.enqueueWork(() -> {
             ModMessages.register();
