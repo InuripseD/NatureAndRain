@@ -6,6 +6,7 @@ import fr.inuripse.naturerain.entity.ModEntityTypes;
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.*;
 import fr.inuripse.naturerain.item.armor.LeafyZirmsArmor;
 import fr.inuripse.naturerain.item.armor.SnailShellChestplate;
+import fr.inuripse.naturerain.item.custom.MountSnailInShellItem;
 import fr.inuripse.naturerain.item.custom.WetItem;
 import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import fr.inuripse.naturerain.item.tiers.ModArmorMaterials;
@@ -50,8 +51,11 @@ public class ModItems {
 
 
     /*------------------- Custom Items ----------------*/
-    public static final RegistryObject<Item> SNAIL_IN_SHELL = ITEMS.register("snail_in_shell",
+    public static final RegistryObject<Item> LITTLE_SNAIL_IN_SHELL = ITEMS.register("little_snail_in_shell",
             () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).stacksTo(1)));
+
+    public static final RegistryObject<Item> MOUNT_SNAIL_IN_SHELL = ITEMS.register("mount_snail_in_shell",
+            () -> new MountSnailInShellItem(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).stacksTo(1)));
     /*--------------------------------------------------------*/
 
 

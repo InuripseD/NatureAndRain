@@ -87,7 +87,7 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                     pBlockEntity.resetProgress();
                     pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
                 }
-            }else if(pBlockEntity.getItem().getItem() == ModItems.SNAIL_IN_SHELL.get()){
+            }else if(pBlockEntity.getItem().getItem() == ModItems.LITTLE_SNAIL_IN_SHELL.get()){
                 boolean recipe = pillars.size() == 4 && hasSnailRecipe(pillars);
                 if(recipe) {
                     pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
