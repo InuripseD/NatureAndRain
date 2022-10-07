@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "naturerain:item/snail_in_shell"
+    "layer0": "naturerain:item/little_snail_in_shell"
   }
 }

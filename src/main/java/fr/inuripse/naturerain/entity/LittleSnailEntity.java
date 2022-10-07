@@ -101,7 +101,7 @@ public class LittleSnailEntity extends Animal implements IAnimatable {
 
     private boolean isGatherByPlayer(Player player, ItemStack inHand) {
         if(inHand == ItemStack.EMPTY){
-            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ModItems.SNAIL_IN_SHELL.get()));
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ModItems.LITTLE_SNAIL_IN_SHELL.get()));
             this.discard();
             this.level.playSound(null, player, SoundEvents.CHICKEN_EGG, SoundSource.PLAYERS, 1.0f,2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
             return true;
