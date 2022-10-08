@@ -14,6 +14,7 @@ import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedHon
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.SoftenedSlimeballRenderer;
 import fr.inuripse.naturerain.entity.projectile.wetprojectile.render.WetLeafRenderer;
 import fr.inuripse.naturerain.entity.renderer.LittleSnailRenderer;
+import fr.inuripse.naturerain.entity.renderer.MountSnailRenderer;
 import fr.inuripse.naturerain.item.armor.SnailShellChestplate;
 import fr.inuripse.naturerain.item.armor.renderer.SnailShellChestplateRenderer;
 import fr.inuripse.naturerain.util.ModKeyBindings;
@@ -65,6 +66,7 @@ public class ClientModEventSubscriber {
         EntityRenderers.register(ModEntityTypes.SOFTENED_SLIMEBALL.get(), SoftenedSlimeballRenderer::new);
         EntityRenderers.register(ModEntityTypes.WET_LEAF.get(), WetLeafRenderer::new);
         EntityRenderers.register(ModEntityTypes.LITTLE_SNAIL.get(), LittleSnailRenderer::new);
+        EntityRenderers.register(ModEntityTypes.MOUNT_SNAIL.get(), MountSnailRenderer::new);
 
         ClientRegistry.registerKeyBinding(ModKeyBindings.ENTERING_SHELL_KEY);
     }

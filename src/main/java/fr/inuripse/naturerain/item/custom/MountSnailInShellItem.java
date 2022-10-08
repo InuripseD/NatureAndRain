@@ -40,7 +40,7 @@ public class MountSnailInShellItem extends Item {
                 blockpos1 = blockpos.relative(direction);
             }
 
-            EntityType<?> entitytype = ModEntityTypes.LITTLE_SNAIL.get();
+            EntityType<?> entitytype = ModEntityTypes.MOUNT_SNAIL.get();
             if (entitytype.spawn((ServerLevel)level, itemstack, pContext.getPlayer(), blockpos1, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
                 itemstack.shrink(1);
                 level.gameEvent(pContext.getPlayer(), GameEvent.ENTITY_PLACE, blockpos);

@@ -160,6 +160,10 @@ public class ModItems {
     public static final RegistryObject<Item> LITTLE_SNAIL_SPAWN_EGG = ITEMS.register("little_snail_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntityTypes.LITTLE_SNAIL, 0x5f44ab, 0x394ac2,
                     new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
+
+    public static final RegistryObject<Item> MOUNT_SNAIL_SPAWN_EGG = ITEMS.register("mount_snail_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntityTypes.MOUNT_SNAIL, 0x5ff4a2, 0x3941ca,
+                    new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
     /*--------------------------------------------------------*/
 
     //Register items.

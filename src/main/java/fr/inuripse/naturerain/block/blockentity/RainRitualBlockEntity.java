@@ -94,10 +94,12 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                     pBlockEntity.progress++;
                     if(pBlockEntity.progress>pBlockEntity.maxProgress) {
                         pBlockEntity.consumeItem();
-                        pBlockEntity.placeItem(ModItems.SNAIL_SHELL_FRAGMENT.get().getDefaultInstance());
+                        pBlockEntity.placeItem(ModItems.MOUNT_SNAIL_IN_SHELL.get().getDefaultInstance());
                         setChanged(pLevel, pPos, pState);
                         pillars.forEach(MainPillarBlockEntity::consumeItem);
-                        Containers.dropItemStack(pLevel, pPos.getX()+0.5, pPos.getY()+0.75, pPos.getZ()+0.5, ModItems.SNAIL_SHELL_FRAGMENT.get().getDefaultInstance());
+                        for(int i = 0; i < pLevel.random.nextInt(1,3); i++) {
+                            Containers.dropItemStack(pLevel, pPos.getX() + 0.5, pPos.getY() + 0.75, pPos.getZ() + 0.5, ModItems.SNAIL_SHELL_FRAGMENT.get().getDefaultInstance());
+                        }
                         pBlockEntity.resetProgress();
                         pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
                     }
@@ -121,7 +123,7 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                     pBlockEntity.resetProgress();
                     if(!pLevel.isClientSide()){
                         ServerLevel serverLevel = (ServerLevel) pLevel;
-                        serverLevel.setWeatherParameters(0, 6000, true, false);
+                        serverLevel.setWeatherParameters(0, 12000, true, false);
                     }
                     pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
                 }

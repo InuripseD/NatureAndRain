@@ -4,6 +4,7 @@ import fr.inuripse.naturerain.NatureRain;
 import fr.inuripse.naturerain.block.recipe.RaindropCatcherRecipe;
 import fr.inuripse.naturerain.entity.LittleSnailEntity;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
+import fr.inuripse.naturerain.entity.MountSnailEntity;
 import fr.inuripse.naturerain.event.loot.LeavesAdditionModifier;
 import fr.inuripse.naturerain.event.loot.lootitemcondition.LootItemTagPropertyCondition;
 import fr.inuripse.naturerain.item.armor.SnailShellChestplate;
@@ -41,6 +42,7 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void entityAttributeEvent(EntityAttributeCreationEvent event){
         event.put(ModEntityTypes.LITTLE_SNAIL.get(), LittleSnailEntity.createAttributes());
+        event.put(ModEntityTypes.MOUNT_SNAIL.get(), MountSnailEntity.createAttributes());
     }
 
 }

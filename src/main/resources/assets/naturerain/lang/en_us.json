@@ -28,6 +28,7 @@
   "item.naturerain.snail_shell_chestplate": "Snail Shell Chestplate",
   "item.naturerain.snail_shell_helmet": "Snail Shell Helmet",
   "item.naturerain.little_snail_spawn_egg": "Little Snail Spawn Egg",
+  "item.naturerain.mount_snail_spawn_egg": "Mount Snail Spawn Egg",
 
   "enchantment.naturerain.defoliate": "Defoliate",
 
@@ -52,6 +53,7 @@
   "effect.naturerain.lava_vision": "Lava Vision",
 
   "entity.naturerain.little_snail": "Little Snail",
+  "entity.naturerain.mount_snail": "Mount Snail",
 
   "key.category.naturerain.naturerain": "Nature and Rain",
 
