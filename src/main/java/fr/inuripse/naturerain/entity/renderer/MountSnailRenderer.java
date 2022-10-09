@@ -16,7 +16,7 @@ public class MountSnailRenderer extends GeoEntityRenderer<MountSnailEntity> {
 
     public MountSnailRenderer(EntityRendererProvider.Context context) {
         super(context, new MountSnailModel());
-        this.shadowRadius = 1.0f;
+        this.shadowRadius = 0.4f;
     }
 
     @Override

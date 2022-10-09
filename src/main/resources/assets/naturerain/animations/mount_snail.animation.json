@@ -1,50 +1,105 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.mount_snail.idle": {
+		"animation.model.walk": {
 			"loop": true,
-			"animation_length": 8,
+			"animation_length": 4,
 			"bones": {
 				"Shell": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"4.0": {
-							"vector": [10, 0, 0],
+						"2.0": {
+							"vector": [-5, 0, 0],
 							"easing": "easeInOutSine"
 						},
-						"8.0": {
+						"4.0": {
 							"vector": [0, 0, 0],
-							"easing": "easeInSine"
+							"easing": "easeInOutSine"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"2.0": {
+							"vector": [0, -0.5, 0],
+							"easing": "easeInOutSine"
+						},
+						"4.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				},
-				"Head": {
+				"Tail": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, -7.5, 0],
+							"easing": "easeInOutSine"
+						},
+						"2.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"3.0": {
+							"vector": [0, 7.5, 0],
+							"easing": "easeInOutSine"
+						},
+						"4.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"Neck": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"2.0": {
+							"vector": [0, -0.2, 0],
+							"easing": "easeInOutSine"
+						},
+						"4.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"Head2": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
 						"2.0": {
-							"vector": [0, 5, 0],
-							"easing": "easeOutSine"
+							"vector": [-10, 0, 0],
+							"easing": "easeInOutSine"
 						},
 						"4.0": {
 							"vector": [0, 0, 0],
-							"easing": "easeInSine"
+							"easing": "easeInOutSine"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
 						},
-						"6.0": {
-							"vector": [0, -5, 0],
-							"easing": "easeInSine"
+						"2.0": {
+							"vector": [0, 0, 0.4],
+							"easing": "easeInOutSine"
 						},
-						"8.0": {
+						"4.0": {
 							"vector": [0, 0, 0],
-							"easing": "easeOutSine"
+							"easing": "easeInOutSine"
 						}
 					}
 				}
 			}
 		}
-	},
-	"geckolib_format_version": 2
+	}
 }

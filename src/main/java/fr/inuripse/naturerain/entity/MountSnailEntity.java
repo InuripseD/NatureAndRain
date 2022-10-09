@@ -40,8 +40,8 @@ public class MountSnailEntity extends Animal implements IAnimatable {
 
     public static AttributeSupplier createAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 4.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.03D)
+                .add(Attributes.MAX_HEALTH, 30.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.05D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D).build();
     }
 
@@ -89,22 +89,57 @@ public class MountSnailEntity extends Animal implements IAnimatable {
 
     /*------Acte like a mount-----*/
     public double getPassengersRidingOffset() {
-        return (double)(this.getBbHeight() * 0.5F);
+        return (this.getBbHeight()-0.25F);
     }
 
     @Override
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        if (this.isVehicle()) {
+            return super.mobInteract(pPlayer, pHand);
+        }
         if (!this.level.isClientSide) {
-            pPlayer.setYRot(this.getYRot());
-            pPlayer.setXRot(this.getXRot());
             pPlayer.startRiding(this);
         }
         return InteractionResult.sidedSuccess(this.level.isClientSide);
     }
 
     @Override
+    public boolean canBeControlledByRider() {
+        return true;
+    }
+
+    @Override
     public Entity getControllingPassenger() {
         return this.getFirstPassenger();
+    }
+
+    public void travel(Vec3 pTravelVector) {
+        if (this.isAlive()) {
+            if (this.isVehicle() && this.canBeControlledByRider()) {
+                LivingEntity livingentity = (LivingEntity)this.getControllingPassenger();
+                this.setYRot(livingentity.getYRot());
+                this.yRotO = this.getYRot();
+                this.setXRot(livingentity.getXRot() * 0.5F);
+                this.setRot(this.getYRot(), this.getXRot());
+                this.yBodyRot = this.getYRot();
+                this.yHeadRot = this.yBodyRot;
+                float f = livingentity.xxa * 0.5F;
+                float f1 = livingentity.zza;
+                this.flyingSpeed = this.getSpeed() * 0.1F;
+                if (this.isControlledByLocalInstance()) {
+                    this.setSpeed((float)this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    super.travel(new Vec3((double)f, pTravelVector.y, (double)f1));
+                } else if (livingentity instanceof Player) {
+                    this.setDeltaMovement(Vec3.ZERO);
+                }
+
+                this.calculateEntityAnimation(this, false);
+                this.tryCheckInsideBlocks();
+            } else {
+                this.flyingSpeed = 0.02F;
+                super.travel(pTravelVector);
+            }
+        }
     }
 
     /*----------------------------*/
@@ -205,7 +240,7 @@ public class MountSnailEntity extends Animal implements IAnimatable {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.model.move", true));
             return PlayState.CONTINUE;
         }*/
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.mount_snail.idle", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.model.walk", true));
         return PlayState.CONTINUE;
     }
 

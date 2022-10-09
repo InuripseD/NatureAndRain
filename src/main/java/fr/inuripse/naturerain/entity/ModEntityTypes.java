@@ -53,7 +53,7 @@ public class ModEntityTypes {
 
     public static final RegistryObject<EntityType<MountSnailEntity>> MOUNT_SNAIL = ENTITY_TYPES.register("mount_snail",
             () -> EntityType.Builder.of(MountSnailEntity::new, MobCategory.AMBIENT)
-                    .sized(1.4F, 1.0F).clientTrackingRange(10)
+                    .sized(0.90F, 0.9F).clientTrackingRange(10)
                     .build(new ResourceLocation(NatureRain.MOD_ID, "mount_snail").toString()));
 
     public static void register(IEventBus eventBus){
