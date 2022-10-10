@@ -84,7 +84,7 @@ public class WetHoneyPuddle extends WetMultifaceBlock {
 
     /*---------- HoneyBlock LIKE ----------*/
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return hasFace(pState, Direction.DOWN) ? DOWN_AABB : Shapes.empty();
+        return hasFace(pState, Direction.DOWN) ? WetMultifaceBlock.DOWN_AABB : Shapes.empty();
     }
 
     public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float p_153376_) {
