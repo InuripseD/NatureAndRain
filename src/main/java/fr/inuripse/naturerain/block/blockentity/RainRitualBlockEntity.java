@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static fr.inuripse.naturerain.block.custom.RaindropCatcher.UNDER_RAIN;
+import static fr.inuripse.naturerain.config.NatureRainCommonConfigs.AllowRainRitual;
 
 public class RainRitualBlockEntity extends MainPillarBlockEntity{
 
@@ -111,7 +112,7 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                 pBlockEntity.resetProgress();
                 pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(false));
             }
-        }else if(hasRainRecipe(pillars) && pBlockEntity.getItem().getItem() == Items.WATER_BUCKET){
+        }else if(AllowRainRitual.get() && hasRainRecipe(pillars) && pBlockEntity.getItem().getItem() == Items.WATER_BUCKET){
             boolean recipe = pillars.size() == 4;
             if(recipe) {
                 pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
