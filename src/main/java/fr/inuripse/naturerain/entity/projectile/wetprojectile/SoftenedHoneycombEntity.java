@@ -1,6 +1,7 @@
 package fr.inuripse.naturerain.entity.projectile.wetprojectile;
 
 import fr.inuripse.naturerain.block.ModBlocks;
+import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,8 +24,6 @@ import net.minecraft.world.phys.HitResult;
 import static net.minecraft.world.level.block.MultifaceBlock.getFaceProperty;
 
 public class SoftenedHoneycombEntity extends WetProjectile {
-
-    public static final float SOFTENED_HONEYCOMB_DAMAGE = 14.0F;
 
     public SoftenedHoneycombEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
@@ -82,7 +81,7 @@ public class SoftenedHoneycombEntity extends WetProjectile {
 
     @Override
     public float getDamageToDeal() {
-        return SOFTENED_HONEYCOMB_DAMAGE;
+        return NatureRainCommonConfigs.SoftenedHoneycombDamageWithLauncher.get();
     }
 
 }
