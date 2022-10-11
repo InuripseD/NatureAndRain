@@ -42,9 +42,6 @@ public class NatureRain
 
     public NatureRain()
     {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NatureRainClientConfigs.SPEC, "naturerain-client.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NatureRainCommonConfigs.SPEC, "naturerain-common.toml");
-
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(eventBus);
@@ -62,6 +59,8 @@ public class NatureRain
         eventBus.addListener(this::setup);
 
         GeckoLib.initialize();
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, NatureRainCommonConfigs.SPEC, "naturerain-common.toml");
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

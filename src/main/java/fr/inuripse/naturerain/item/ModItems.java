@@ -117,7 +117,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> WET_STUFF_LAUNCHER = ITEMS.register("wet_stuff_launcher",
             () -> new WetStuffLauncher(
-                    new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).defaultDurability(NatureRainCommonConfigs.DURABILITY.get())));
+                    new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).defaultDurability(1023)));
     /*--------------------------------------------------------*/
 
 
