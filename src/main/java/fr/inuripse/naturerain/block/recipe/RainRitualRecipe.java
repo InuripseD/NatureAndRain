@@ -33,8 +33,6 @@ public class RainRitualRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer pContainer, Level pLevel) {
-        System.out.println("In " + pContainer.getItem(0) + " " + pContainer.getItem(1) + " " + pContainer.getItem(2) + " " + pContainer.getItem(3) + " " + pContainer.getItem(4));
-        System.out.println("Needed " + Arrays.toString(recipeItems.get(0).getItems()) + " " + recipeItems.get(1) + " " + recipeItems.get(2) + " " + recipeItems.get(3) + " " + recipeItems.get(4));
         return recipeItems.get(0).test(pContainer.getItem(0)) && checkIngredientsPresence(pContainer);
     }
 
