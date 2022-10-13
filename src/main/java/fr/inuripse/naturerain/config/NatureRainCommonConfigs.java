@@ -18,6 +18,8 @@ public class NatureRainCommonConfigs {
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> AllowRainRitual;
 
+    public static final ForgeConfigSpec.ConfigValue<Boolean> AllowPersonnalSnailHouse;
+
     static {
         BUILDER.push("Config for Nature and Rain");
 
@@ -44,6 +46,10 @@ public class NatureRainCommonConfigs {
 
         AllowRainRitual = BUILDER.comment("Allow player to summon rain with a ritual")
                 .define("Rain Ritual", true);
+
+        AllowPersonnalSnailHouse = BUILDER.comment("Allow player to teleport to his house in his shell")
+                .define("Shell House", true);
+
 
         BUILDER.pop();
         SPEC = BUILDER.build();
