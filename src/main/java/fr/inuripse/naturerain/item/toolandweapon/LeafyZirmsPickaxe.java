@@ -28,6 +28,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
+import static fr.inuripse.naturerain.config.NatureRainCommonConfigs.ZirmsPickaxePowerInNether;
+
 public class LeafyZirmsPickaxe extends PickaxeItem {
 
     public LeafyZirmsPickaxe(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
@@ -58,8 +60,9 @@ public class LeafyZirmsPickaxe extends PickaxeItem {
             /*Are we targeting a fluid that is lava ?*/
             if(fluidstate.getType() != Fluids.LAVA && fluidstate.getType() != Fluids.FLOWING_LAVA) {
                 return InteractionResult.FAIL;
+            } else if(pContext.getLevel().dimensionType().ultraWarm() && !ZirmsPickaxePowerInNether.get()){
+                return InteractionResult.FAIL;
             } else {
-
                 /*Is the block placed ?*/
                 if (!this.placeBlock(pContext, blockstate, fluidstate)) {
                     return InteractionResult.FAIL;

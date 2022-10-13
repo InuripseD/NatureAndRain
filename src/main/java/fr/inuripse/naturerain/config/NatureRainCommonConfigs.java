@@ -8,6 +8,7 @@ public class NatureRainCommonConfigs {
     public static final ForgeConfigSpec SPEC;
 
     public static final ForgeConfigSpec.ConfigValue<Integer> ZirmsSwordPowerDamage;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ZirmsPickaxePowerInNether;
     public static final ForgeConfigSpec.ConfigValue<Integer> WetLeafDamageWithLauncher;
     public static final ForgeConfigSpec.ConfigValue<Integer> SoftenedSlimeballDamageWithLauncher;
     public static final ForgeConfigSpec.ConfigValue<Integer> SoftenedHoneycombDamageWithLauncher;
@@ -25,6 +26,9 @@ public class NatureRainCommonConfigs {
 
         ZirmsSwordPowerDamage = BUILDER.comment("Zirms sword power damage (Half hearts)")
                 .defineInRange("Zirms Sword Power", 8, 1, 255);
+
+        ZirmsPickaxePowerInNether = BUILDER.comment("Zirms pickaxe power allow in the nether")
+                .define("Zirms Pickaxe Power in Nether", true);
 
         WetLeafDamageWithLauncher = BUILDER.comment("Damage deal by Wet Leaf as a projectile (Half hearts)")
                 .defineInRange("Wet Leaf", 8, 1, 255);
