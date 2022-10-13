@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class MainPillarBlockEntity extends BlockEntity {
 
     /*--------Inventory section-------*/
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1){
+    protected final ItemStackHandler itemHandler = new ItemStackHandler(1){
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -74,6 +74,7 @@ public abstract class MainPillarBlockEntity extends BlockEntity {
     public boolean placeItem(ItemStack itemStack){
         if (getItemHandler().getStackInSlot(0).isEmpty()) {
             this.getItemHandler().setStackInSlot(0, itemStack.split(1));
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
             return true;
         }
         return false;

@@ -1,0 +1,23 @@
+{
+  "type": "naturerain:rain_ritual",
+  "ingredients": [
+    {
+      "item": "minecraft:bow"
+    },
+    {
+      "item": "naturerain:leafy_zirms"
+    },
+    {
+      "item": "naturerain:leafy_zirms"
+    },
+    {
+      "item": "naturerain:leafy_zirms"
+    },
+    {
+      "item": "naturerain:leafy_zirms"
+    }
+  ],
+  "output": {
+    "item": "naturerain:wet_stuff_launcher"
+  }
+}

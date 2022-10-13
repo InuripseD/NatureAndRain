@@ -1,0 +1,23 @@
+{
+  "type": "naturerain:rain_ritual",
+  "ingredients": [
+    {
+      "item": "naturerain:little_snail_in_shell"
+    },
+    {
+      "item": "naturerain:softened_slimeball"
+    },
+    {
+      "item": "naturerain:softened_slimeball"
+    },
+    {
+      "item": "naturerain:softened_slimeball"
+    },
+    {
+      "item": "naturerain:leafy_zirms"
+    }
+  ],
+  "output": {
+    "item": "naturerain:mount_snail_in_shell"
+  }
+}
