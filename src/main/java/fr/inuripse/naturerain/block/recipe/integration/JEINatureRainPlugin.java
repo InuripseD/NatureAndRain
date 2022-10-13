@@ -45,5 +45,8 @@ public class JEINatureRainPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.RAINDROP_CATCHER.get()),
                 RainDropCatcherRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.RAIN_RITUAL_BLOCK.get()),
+                RainRitualRecipeCategory.UID);
     }
+
 }

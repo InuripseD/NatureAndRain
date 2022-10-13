@@ -22,14 +22,14 @@ public class RainRitualRecipeCategory implements IRecipeCategory<RainRitualRecip
 
     public final static ResourceLocation UID = new ResourceLocation(NatureRain.MOD_ID, "rain_ritual");
     public final static ResourceLocation TEXTURE =
-            new ResourceLocation(NatureRain.MOD_ID, "textures/gui/raindrop_catcher_gui_jei.png");
+            new ResourceLocation(NatureRain.MOD_ID, "textures/gui/rain_ritual_gui_jei.png");
 
     private final IDrawable background;
     private final IDrawable icon;
 
     public RainRitualRecipeCategory(IGuiHelper helper) {
-        this.background = helper.drawableBuilder(TEXTURE, 0, 0, 1920, 1001).setTextureSize(1920,1001).build();
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(ModBlocks.RAIN_RITUAL_BLOCK.get()));
+        this.background = helper.drawableBuilder(TEXTURE, 0, 0, 222, 149).setTextureSize(222,149).build();
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.RAIN_RITUAL_BLOCK.get()));
     }
 
     @Override
@@ -59,10 +59,11 @@ public class RainRitualRecipeCategory implements IRecipeCategory<RainRitualRecip
 
     @Override
     public void setRecipe(@Nonnull IRecipeLayoutBuilder builder, @Nonnull RainRitualRecipe recipe, @Nonnull IFocusGroup focusGroup) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 860, 30).addIngredients(recipe.getIngredients().get(1));
-        builder.addSlot(RecipeIngredientRole.INPUT, 300, 300).addIngredients(recipe.getIngredients().get(2));
-        builder.addSlot(RecipeIngredientRole.INPUT, 1450, 300).addIngredients(recipe.getIngredients().get(3));
-        builder.addSlot(RecipeIngredientRole.INPUT, 860, 800).addIngredients(recipe.getIngredients().get(3));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 860, 400).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.INPUT, 104, 30).addIngredients(recipe.getIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 16, 42).addIngredients(recipe.getIngredients().get(1));
+        builder.addSlot(RecipeIngredientRole.INPUT, 104, 0).addIngredients(recipe.getIngredients().get(2));
+        builder.addSlot(RecipeIngredientRole.INPUT, 103, 121).addIngredients(recipe.getIngredients().get(3));
+        builder.addSlot(RecipeIngredientRole.INPUT, 191, 43).addIngredients(recipe.getIngredients().get(4));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 201, 2).addItemStack(recipe.getResultItem());
     }
 }
