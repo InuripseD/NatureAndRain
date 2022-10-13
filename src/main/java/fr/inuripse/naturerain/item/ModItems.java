@@ -12,16 +12,24 @@ import fr.inuripse.naturerain.item.grouptab.ModGroupTab;
 import fr.inuripse.naturerain.item.tiers.ModArmorMaterials;
 import fr.inuripse.naturerain.item.tiers.ModTiers;
 import fr.inuripse.naturerain.item.toolandweapon.*;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ModItems {
 
@@ -34,16 +42,43 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
 
     public static final RegistryObject<Item> BRANCH = ITEMS.register("branch",
-            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
+            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)){
+                @Override
+                public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+                    if(Screen.hasShiftDown()){
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.branch.tooltip.shift"));
+                    }else{
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.branch.tooltip"));
+                    }
+                }
+            });
     
     public static final RegistryObject<Item> WET_BRANCH = ITEMS.register("wet_branch",
-            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
+            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)){
+                @Override
+                public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+                    if(Screen.hasShiftDown()){
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.wet_branch.tooltip.shift"));
+                    }else{
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.wet_branch.tooltip"));
+                    }
+                }
+            });
 
     public static final RegistryObject<Item> LEAFY_ZIRMS = ITEMS.register("leafy_zirms",
             () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
 
     public static final RegistryObject<Item> SNAIL_SHELL_FRAGMENT = ITEMS.register("snail_shell_fragment",
-            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
+            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)){
+                @Override
+                public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+                    if(Screen.hasShiftDown()){
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.snail_shell_fragment.tooltip.shift"));
+                    }else{
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.snail_shell_fragment.tooltip"));
+                    }
+                }
+            });
 
     public static final RegistryObject<Item> LEAF = ITEMS.register("leaf",
             () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB)));
