@@ -64,6 +64,8 @@
   "tooltip.naturerain.wet_branch.tooltip": "Press §eSHIFT§r for more Information!",
   "tooltip.naturerain.snail_shell_chestplate.tooltip.shift": "Sneak and press the 'Enter in your shell' key to enter your shell like a snail!",
   "tooltip.naturerain.snail_shell_chestplate.tooltip": "Press §eSHIFT§r for more Information!",
+  "tooltip.naturerain.little_snail_in_shell.tooltip.shift": "Punch with an empty hand, a little snail when it's raining to get one!",
+  "tooltip.naturerain.little_snail_in_shell.tooltip": "Press §eSHIFT§r for more Information!",
 
   "key.category.naturerain.naturerain": "Nature and Rain",
 

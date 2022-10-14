@@ -87,7 +87,16 @@ public class ModItems {
 
     /*------------------- Custom Items ----------------*/
     public static final RegistryObject<Item> LITTLE_SNAIL_IN_SHELL = ITEMS.register("little_snail_in_shell",
-            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).stacksTo(1)));
+            () -> new Item(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).stacksTo(1)){
+                @Override
+                public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+                    if(Screen.hasShiftDown()){
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.little_snail_in_shell.tooltip.shift"));
+                    }else{
+                        pTooltipComponents.add(new TranslatableComponent("tooltip.naturerain.little_snail_in_shell.tooltip"));
+                    }
+                }
+            });
 
     public static final RegistryObject<Item> MOUNT_SNAIL_IN_SHELL = ITEMS.register("mount_snail_in_shell",
             () -> new MountSnailInShellItem(new Item.Properties().tab(ModGroupTab.NATURERAIN_TAB).stacksTo(1)));

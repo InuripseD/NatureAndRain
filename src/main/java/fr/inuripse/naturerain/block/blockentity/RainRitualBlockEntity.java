@@ -74,7 +74,7 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
 
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, RainRitualBlockEntity pBlockEntity) {
         List<SimplePillarBlockEntity> pillars = pillarAround(pBlockEntity);
-        if(pState.getValue(UNDER_RAIN) && pillars.size()==4 && hasRecipe(pBlockEntity, pillars)){
+        if(pLevel.isRainingAt(pPos.above()) && pillars.size()==4 && hasRecipe(pBlockEntity, pillars)){
             pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
             pBlockEntity.progress++;
             if (pBlockEntity.progress > pBlockEntity.maxProgress) {
@@ -82,7 +82,7 @@ public class RainRitualBlockEntity extends MainPillarBlockEntity{
                 craftItem(pBlockEntity, pillars);
                 setChanged(pLevel, pPos, pState);
             }
-        }else if(AllowRainRitual.get() && !pState.getValue(UNDER_RAIN) && pillars.size() == 4 && hasRainRecipe(pillars) && pBlockEntity.getItem().is(ModItems.ZIRMS.get())){
+        }else if(AllowRainRitual.get() && !pLevel.isRainingAt(pPos.above()) && pillars.size() == 4 && hasRainRecipe(pillars) && pBlockEntity.getItem().is(ModItems.ZIRMS.get())){
             pState = pBlockEntity.getBlockState().setValue(RainRitualBlock.PROCESSING, Boolean.valueOf(true));
             pBlockEntity.progress++;
             if(pBlockEntity.progress > pBlockEntity.maxProgress) {
