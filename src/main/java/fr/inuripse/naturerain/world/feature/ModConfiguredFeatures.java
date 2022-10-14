@@ -10,6 +10,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguratio
 
 import java.util.List;
 
+import static fr.inuripse.naturerain.config.NatureRainCommonConfigs.ZirmsVaineSize;
+
 public class ModConfiguredFeatures {
 
     public static final List<OreConfiguration.TargetBlockState> OVERWORLD_ZIRMS_ORES = List.of(
@@ -17,6 +19,6 @@ public class ModConfiguredFeatures {
             OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_ZIRMS_ORE.get().defaultBlockState()));
 
     public static final Holder<ConfiguredFeature<OreConfiguration, ?>> ZIRMS_ORE = FeatureUtils.register("zirms_ore",
-            Feature.ORE, new OreConfiguration(OVERWORLD_ZIRMS_ORES, 4));
+            Feature.ORE, new OreConfiguration(OVERWORLD_ZIRMS_ORES, ZirmsVaineSize.get()));
 
 }

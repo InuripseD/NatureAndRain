@@ -1,6 +1,7 @@
 package fr.inuripse.naturerain.entity.projectile.wetprojectile;
 
 import fr.inuripse.naturerain.block.ModBlocks;
+import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -9,8 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class WetLeafEntity extends WetProjectile{
-
-    public static final float WET_LEAF_DAMAGE = 8.0F;
 
     public WetLeafEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
@@ -29,6 +28,6 @@ public class WetLeafEntity extends WetProjectile{
 
     @Override
     public float getDamageToDeal() {
-        return WET_LEAF_DAMAGE;
+        return NatureRainCommonConfigs.WetLeafDamageWithLauncher.get();
     }
 }

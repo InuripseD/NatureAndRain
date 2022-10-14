@@ -14,6 +14,9 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<RaindropCatcherRecipe>> RAINDROP_CATCHER_SERIALIZER =
             SERIALIZERS.register("hydration", () -> RaindropCatcherRecipe.Serializer.INSTANCE);
 
+    public static final RegistryObject<RecipeSerializer<RainRitualRecipe>> RAIN_RITUAL_SERIALIZER =
+            SERIALIZERS.register("rain_ritual", () -> RainRitualRecipe.Serializer.INSTANCE);
+
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
     }

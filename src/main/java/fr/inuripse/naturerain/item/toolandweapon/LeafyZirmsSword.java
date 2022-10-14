@@ -1,7 +1,10 @@
 package fr.inuripse.naturerain.item.toolandweapon;
 
+import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
 import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -19,8 +22,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Random;
@@ -29,11 +34,15 @@ import java.util.function.Predicate;
 public class LeafyZirmsSword extends SwordItem {
 
     private static final Random rand = new Random();
-    private static final float POWER_DAMAGE = 8.0F;
     private static final Predicate<ItemStack> WET_STUFF = (stack) -> stack.getItem().equals(ModItems.WET_LEAF.get());
 
     public LeafyZirmsSword(Tier pTier, int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(pTier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add( new TextComponent("Power Damage "+NatureRainCommonConfigs.ZirmsSwordPowerDamage.get()+".0"));
     }
 
     @Override
@@ -70,7 +79,7 @@ public class LeafyZirmsSword extends SwordItem {
             for (Entity entity : entitiesAround) {
                 if(!pLevel.isClientSide()) {
                     if (entity instanceof LivingEntity) {
-                        entity.hurt(DamageSource.playerAttack(pPlayer), POWER_DAMAGE);
+                        entity.hurt(DamageSource.playerAttack(pPlayer), NatureRainCommonConfigs.ZirmsSwordPowerDamage.get());
                         atLeastOneLivingEntityAround = true;
 
                         if (rand.nextInt(10) > 7 && entity instanceof Zombie && !(entity instanceof Drowned)) {

@@ -9,6 +9,8 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
+import static fr.inuripse.naturerain.config.NatureRainCommonConfigs.AllowPersonnalSnailHouse;
+
 public class KeyPressedC2Spacket {
 
     public KeyPressedC2Spacket(){
@@ -31,7 +33,7 @@ public class KeyPressedC2Spacket {
 
                 SnailHouseTeleportHandler snailHouseTeleportHandler = new SnailHouseTeleportHandler();
 
-                if (snailHouseTeleportHandler.isPlayerReadyForTeleportation(player)) {
+                if (AllowPersonnalSnailHouse.get() && snailHouseTeleportHandler.isPlayerReadyForTeleportation(player)) {
 
                     snailHouseTeleportHandler.tryToTeleportPlayer(player, currentLevel, minecraftServer);
 

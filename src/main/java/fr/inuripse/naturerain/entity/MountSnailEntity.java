@@ -1,6 +1,8 @@
 package fr.inuripse.naturerain.entity;
 
+import fr.inuripse.naturerain.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -33,10 +35,27 @@ import javax.annotation.Nullable;
 public class MountSnailEntity extends Animal implements IAnimatable {
 
     private AnimationFactory factory = new AnimationFactory(this);
+    private int softenedSlimeballExtraction = this.random.nextInt(6000) + 6000;;
 
     public MountSnailEntity(EntityType<? extends MountSnailEntity> entityType, Level level) {
         super(entityType, level);
     }
+
+    /*---------Register Data------------*/
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        if(pCompound.contains("softened_slimeball_extraction")){
+            this.softenedSlimeballExtraction = pCompound.getInt("softened_slimeball_extraction");
+        }
+    }
+
+    @Override
+    public void load(CompoundTag pCompound) {
+        super.load(pCompound);
+        pCompound.putInt("softened_slimeball_extraction", softenedSlimeballExtraction);
+    }
+    /*----------------------------------*/
 
     public static AttributeSupplier createAttributes() {
         return Animal.createMobAttributes()
@@ -143,6 +162,16 @@ public class MountSnailEntity extends Animal implements IAnimatable {
     }
 
     /*----------------------------*/
+
+    //Pop a softened slimeball
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if(!this.level.isClientSide && --softenedSlimeballExtraction<=0){
+            this.spawnAtLocation(ModItems.SOFTENED_SLIMEBALL.get());
+            softenedSlimeballExtraction = this.random.nextInt(6000) + 4000;
+        }
+    }
 
     @Override
     public boolean canBreatheUnderwater() {

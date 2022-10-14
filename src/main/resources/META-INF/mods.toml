@@ -19,7 +19,7 @@ modId="naturerain" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 # ${file.jarVersion} will substitute the value of the Implementation-Version as read from the mod's JAR file metadata
 # see the associated build.gradle script for how to populate this completely automatically during a build
-version="0.0.1" #mandatory
+version="1.0.1" #mandatory
  # A display name for the mod
 displayName="Nature and Rain" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
@@ -29,11 +29,11 @@ displayName="Nature and Rain" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="" #optional
 # A text field displayed in the mod UI
-credits="Kaupenjoe, TurtyWurty, lumien231(Random Things Dev)," #optional
+credits="Kaupenjoe, TurtyWurty, lumien231(Random Things Dev)" #optional
 # A text field displayed in the mod UI
 authors="inuripse" #optional
 # The description text for the mod (multi line!) (#mandatory)
-description='''A mod about Rain and Nature'''
+description='''A mod about Rain and Nature. I hope you will enjoy the rain a little more with this mod ^^ !'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.naturerain]] #optional
     # the modid of the dependency

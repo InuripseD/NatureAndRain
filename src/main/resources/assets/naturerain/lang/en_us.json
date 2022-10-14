@@ -49,11 +49,23 @@
   "item.minecraft.potion.effect.lava_vision_potion": "Lava Vision Potion",
   "item.minecraft.splash_potion.effect.lava_vision_potion": "Splash Potion of Lava Vision",
   "item.minecraft.lingering_potion.effect.lava_vision_potion": "Lingering Potion of Lava Vision",
+  "item.minecraft.tipped_arrow.effect.lava_vision_potion": "Arrow of Lava Vision",
 
   "effect.naturerain.lava_vision": "Lava Vision",
 
   "entity.naturerain.little_snail": "Little Snail",
   "entity.naturerain.mount_snail": "Mount Snail",
+
+  "tooltip.naturerain.snail_shell_fragment.tooltip.shift": "Craft Mount Snail to obtain it!",
+  "tooltip.naturerain.snail_shell_fragment.tooltip": "Press §eSHIFT§r for more Information!",
+  "tooltip.naturerain.branch.tooltip.shift": "Break Leaves with a Hoe enchanted with Defoliate to get it!",
+  "tooltip.naturerain.branch.tooltip": "Press §eSHIFT§r for more Information!",
+  "tooltip.naturerain.wet_branch.tooltip.shift": "Break Leaves when it's raining with a Hoe enchanted with Defoliate to get it!",
+  "tooltip.naturerain.wet_branch.tooltip": "Press §eSHIFT§r for more Information!",
+  "tooltip.naturerain.snail_shell_chestplate.tooltip.shift": "Sneak and press the 'Enter in your shell' key to enter your shell like a snail!",
+  "tooltip.naturerain.snail_shell_chestplate.tooltip": "Press §eSHIFT§r for more Information!",
+  "tooltip.naturerain.little_snail_in_shell.tooltip.shift": "Punch with an empty hand, a little snail when it's raining to get one!",
+  "tooltip.naturerain.little_snail_in_shell.tooltip": "Press §eSHIFT§r for more Information!",
 
   "key.category.naturerain.naturerain": "Nature and Rain",
 

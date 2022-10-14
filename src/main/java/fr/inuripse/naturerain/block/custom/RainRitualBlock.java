@@ -4,7 +4,6 @@ import fr.inuripse.naturerain.block.blockentity.ModBlockEntities;
 import fr.inuripse.naturerain.block.blockentity.RainRitualBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.BlockGetter;
@@ -27,12 +26,11 @@ import java.util.stream.Stream;
 
 public class RainRitualBlock extends SimplePillarBlock {
 
-    public static final BooleanProperty UNDER_RAIN = BooleanProperty.create("under_rain");
     public static final BooleanProperty PROCESSING = BooleanProperty.create("processing");
 
     public RainRitualBlock(Properties p_49224_) {
         super(p_49224_);
-        this.registerDefaultState(this.stateDefinition.any().setValue(UNDER_RAIN, Boolean.valueOf(false)).setValue(PROCESSING, Boolean.valueOf(false)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(PROCESSING, Boolean.valueOf(false)));
     }
 
     /*-------------------------SHAPE AND ROTATE----------------------*/
@@ -48,17 +46,7 @@ public class RainRitualBlock extends SimplePillarBlock {
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(UNDER_RAIN, PROCESSING);
-    }
-
-    @Override
-    public boolean isRandomlyTicking(BlockState pState) {
-        return true;
-    }
-
-    @Override
-    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
-        pLevel.setBlock(pPos, pState.setValue(UNDER_RAIN, Boolean.valueOf(pLevel.isRainingAt(pPos.above()))), 2);
+        pBuilder.add(PROCESSING);
     }
 
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRand) {

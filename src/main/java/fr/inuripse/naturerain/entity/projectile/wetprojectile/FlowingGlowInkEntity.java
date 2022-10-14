@@ -1,6 +1,7 @@
 package fr.inuripse.naturerain.entity.projectile.wetprojectile;
 
 import fr.inuripse.naturerain.block.ModBlocks;
+import fr.inuripse.naturerain.config.NatureRainCommonConfigs;
 import fr.inuripse.naturerain.entity.ModEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -9,8 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class FlowingGlowInkEntity extends WetProjectile{
-
-    public static final float FLOWING_GLOW_INK_DAMAGE = 4.0F;
 
     public FlowingGlowInkEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
@@ -29,6 +28,6 @@ public class FlowingGlowInkEntity extends WetProjectile{
 
     @Override
     public float getDamageToDeal() {
-        return FLOWING_GLOW_INK_DAMAGE;
+        return NatureRainCommonConfigs.FlowingGlowInkDamageWithLauncher.get();
     }
 }
